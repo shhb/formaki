@@ -2,6 +2,7 @@ package org.noranj.formak.server.domain.core;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -86,12 +87,33 @@ public abstract class Party implements Serializable {
   /**
    * 
    * @param name
-   * @param roles
+   * @param logoURI
+   * @param activityType
+   * @param partyRoles
    */
   public Party(String name, URI logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
     super();
     this.name = name;
     this.logoURI = logoURI;
+    this.activityType = activityType;
+    this.roles = partyRoles;
+  }
+
+  /**
+   * 
+   * @param name
+   * @param logoURI
+   * @param activityType
+   * @param partyRoles
+   */
+  public Party(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
+    super();
+    this.name = name;
+    try {
+      this.logoURI = (logoURI!=null)?new URI(logoURI) : null;
+    } catch(URISyntaxException uriex) {
+      uriex.printStackTrace(); //FIXME LOG BA-2012-FEB-25
+    }
     this.activityType = activityType;
     this.roles = partyRoles;
   }
