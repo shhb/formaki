@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='formak'>
+   <!-- Other module inherits                                      -->
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.place.Place"/>
+  
+  <!-- Specify the app entry point class.-->
+  <inherits name="com.google.gwt.user.User"/>
+  <inherits name="com.google.gwt.resources.Resources" />
+  <inherits name="com.google.gwt.user.theme.clean.Clean"/>
+  <entry-point class="org.noranj.formak.client.Formak"/>
+  
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+  <!-- 
+  NOTE 1: the server source must not be in the list otherwise, you will get a lot of compile errors because GWT is not supporting all JDK or even GAE classes.
+  NOTE 2: Make sure none of the classes from server package is used in any classes of client or shared packages.
+  -->
+  <!--  source path='server'-->
+  
+</module>

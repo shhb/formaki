@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:image field='article32' src='../resources/en/images/article32.png' />
+	<ui:image field='logo_small' src='../resources/en/images/logo_small.png' />
+	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
+<g:HTMLPanel>
+	<g:DecoratorPanel >
+      <g:VerticalPanel >
+      <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
+			<g:Anchor href="#" text="Add" styleName="{style.button} {style.left}" ui:field="addButton"></g:Anchor>
+			<g:Anchor href="#" text="Delete" styleName="{style.button} {style.left}" ui:field="deleteButton"></g:Anchor>		
+	    </g:HorizontalPanel>
+        <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
+	     	<g:ListBox ui:field="businessDocumentTypeList"></g:ListBox>
+	    </g:HorizontalPanel>
+	    <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
+      		<g:FlexTable ui:field="businessDocumentViewTable" addStyleNames="{style.businessDocumentViewflexTable}"/>
+      	</g:HorizontalPanel>
+      </g:VerticalPanel>
+	</g:DecoratorPanel>
+</g:HTMLPanel>
+</ui:UiBinder> 
