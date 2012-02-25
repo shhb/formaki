@@ -5,6 +5,7 @@ import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
+import org.noranj.formak.shared.exception.NotFoundException;
 
 /**
  * 
@@ -47,14 +48,17 @@ public class SystemAdminServiceImpl {
    * It adds a new party client to the data store.
    * 
    * @param systemClientParty holds the data for the new client.
+   * @return the id that is generated and assigned to the client party.
    */
-  public void addSystemClientParty(SystemClientPartyDTO systemClientParty) {
+  public String addSystemClientParty(SystemClientPartyDTO systemClientParty) {
 
     DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
     
     SystemClientParty newSystemClientParty = new SystemClientParty(systemClientParty);
     
     systemClientHelper.storeEntity(newSystemClientParty);
+    
+    return(newSystemClientParty.getId());
         
   }
 
@@ -64,13 +68,21 @@ public class SystemAdminServiceImpl {
    * 
    * @param systemUser holds the data for the new user.
    */
-  public void addSystemUser(SystemUserDTO systemUser) {
+  public void addSystemUser(SystemUserDTO systemUser) throws NotFoundException {
 
     DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
     
-    SystemClientParty sysClientParty = systemClientHelper.getEntityById(systemUser.getParentClient().getId(), 
-                                                                        new String[] {SystemClientParty.C_FETCH_GROUP_USERS}, 
-                                                                        1 /* Fetch depth */);
+    SystemClientParty sysClientParty = null;
+    try {
+      
+      sysClientParty = systemClientHelper.getEntityById(systemUser.getParentClient().getId(), 
+                                                        new String[] {SystemClientParty.C_FETCH_GROUP_USERS}, 
+                                                        1 /* Fetch depth */);
+    } catch (Exception ex) {
+      ex.printStackTrace(); //FXIME LOG
+      throw new NotFoundException(String.format("An exception [%s] happened when tried to get the parent party of user [%s]", ex.getMessage(), systemUser.getEmailAddress()));
+    }
+    
     // It adds the user to the list of users for sysClientParty and reset the systemUser.parentClient to sysClientParty. 
     sysClientParty.addUser(systemUser); 
     

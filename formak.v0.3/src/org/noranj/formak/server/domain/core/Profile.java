@@ -16,6 +16,9 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.noranj.formak.shared.dto.ProfileDTO;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 /**
  * 
  * 
@@ -40,7 +43,8 @@ public abstract class Profile {
   
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long id;
+//  private Long id;
+  private Key id;
 
   @Persistent
   private ContactInfo contactInfo; //FIXME this must be a class
@@ -57,15 +61,23 @@ public abstract class Profile {
   //////              METHODS               //////
   //////                                    //////
   ////////////////////////////////////////////////
-
-  public Long getId() {
-    return id;
+  public Profile() {
+    super();
+    // TODO Auto-generated constructor stub
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  /**
+   * 
+   */
+  //public Long getId() {
+  public String getId() {
+    return ((id!=null)?KeyFactory.keyToString(id):null);
   }
 
+  //public void setId(Long id) {
+  public void setId(String id) {
+    this.id = (id!=null)?KeyFactory.stringToKey(id):null;
+  }
 
   public ContactInfo getContactInfo() {
     return contactInfo;
@@ -88,7 +100,7 @@ public abstract class Profile {
    * @return
    */
   public ProfileDTO getProfileDTO() {
-    ProfileDTO profileDTO = new ProfileDTO(id, (contactInfo!=null?contactInfo.getContactInfoDTO():null));
+    ProfileDTO profileDTO = new ProfileDTO(getId(), (contactInfo!=null?contactInfo.getContactInfoDTO():null));
     return(profileDTO);
   }
   

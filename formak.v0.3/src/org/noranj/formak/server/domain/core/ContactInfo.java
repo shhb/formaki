@@ -15,6 +15,9 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.noranj.formak.shared.dto.ContactInfoDTO;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 /**
  * 
  * 
@@ -35,7 +38,7 @@ public class ContactInfo implements Serializable {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long id;
+  private Key id;
   
   /** stores the name of party. */
   @Persistent
@@ -48,12 +51,22 @@ public class ContactInfo implements Serializable {
   ///////////////////////////////////
   //////       Methods          /////
   ///////////////////////////////////
-  public Long getId() {
-    return id;
+  public ContactInfo() {
+    super();
+    // TODO Auto-generated constructor stub
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  /**
+   * 
+   */
+  //public Long getId() {
+  public String getId() {
+    return ((id!=null)?KeyFactory.keyToString(id):null);
+  }
+
+  //public void setId(Long id) {
+  public void setId(String id) {
+    this.id = (id!=null)?KeyFactory.stringToKey(id):null;
   }
 
   public Address getAddress() {
@@ -77,7 +90,7 @@ public class ContactInfo implements Serializable {
    * @return
    */
   public ContactInfoDTO getContactInfoDTO () {
-    ContactInfoDTO contactInfoDTO = new ContactInfoDTO(id, (address!=null?address.getAddressDTO():null));
+    ContactInfoDTO contactInfoDTO = new ContactInfoDTO(getId(), (address!=null?address.getAddressDTO():null));
     
     return(contactInfoDTO);  
   }

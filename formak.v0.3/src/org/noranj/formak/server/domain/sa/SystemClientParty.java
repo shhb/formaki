@@ -30,7 +30,7 @@ import org.noranj.formak.shared.type.PartyRoleType;
 public class SystemClientParty extends Party implements Serializable{
 
   public static final String C_FETCH_GROUP_USERS = "users"; 
-  public static final String C_FETCH_GROUP_PROFILE = "profile"; 
+  //public static final String C_FETCH_GROUP_PROFILE = "profile"; 
   
   
   /** 
@@ -56,13 +56,15 @@ public class SystemClientParty extends Party implements Serializable{
   //////              METHODS               //////
   //////                                    //////
   ////////////////////////////////////////////////
-  
+  public SystemClientParty() {
+    
+  }
   /**
    * 
    * @param name
    * @param roles
    */
-  public SystemClientParty(String name, URI logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
+  public SystemClientParty(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
     super(name, logoURI, activityType, roles);
   }
 
@@ -72,7 +74,6 @@ public class SystemClientParty extends Party implements Serializable{
             systemClientPartyDTO.getActivityType(), 
             systemClientPartyDTO.getRoles());
   }
-
   
   public List<SystemUser> getUsers() {
     return users;

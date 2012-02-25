@@ -16,6 +16,9 @@ import org.noranj.formak.server.domain.core.Profile;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 /**
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
@@ -41,7 +44,8 @@ public class SystemUser implements Serializable{
   /** A unique identifier for the user. */
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long id;
+  //private Long id; // Child object can not have LONG key.
+  private Key id; // Child object can not have LONG key.
   
   @Persistent
   private SystemClientParty parentClient;
@@ -75,11 +79,11 @@ public class SystemUser implements Serializable{
   //////                                    //////
   ////////////////////////////////////////////////
 
-  public SystemUser(Long id, SystemClientParty parentClient, String firstName,
+  public SystemUser(String id, SystemClientParty parentClient, String firstName,
                     String lastName, String emailAddress, ActivityType activityType,
                     UserProfile profile/*, long version*/) {
     super();
-    this.id = id;
+    setId(id);
     this.parentClient = parentClient;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -108,14 +112,15 @@ public class SystemUser implements Serializable{
   
   /**
    * 
-   * @return
    */
-  public Long getId() {
-    return id;
+  //public Long getId() {
+  public String getId() {
+    return ((id!=null)?KeyFactory.keyToString(id):null);
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  //public void setId(Long id) {
+  public void setId(String id) {
+    this.id = (id!=null)?KeyFactory.stringToKey(id):null;
   }
 
   public SystemClientParty getParentClient() {
@@ -177,7 +182,7 @@ public class SystemUser implements Serializable{
   public SystemUserDTO getSystemUserDTO () {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
-    SystemUserDTO suDTO = new SystemUserDTO(id, firstName, lastName, emailAddress, 
+    SystemUserDTO suDTO = new SystemUserDTO(getId(), firstName, lastName, emailAddress, 
                                             (parentClient!=null?parentClient.getPartyDTO():null), 
                                             activityType, 
                                             (profile!=null?profile.getUserProfileDTO():null));

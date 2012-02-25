@@ -17,7 +17,7 @@ public class SystemUserDTO implements Serializable {
 
   private static final long serialVersionUID = 85316669519477098L;
 
-  private Long id;
+  private String id;
 
   private String firstName;
   
@@ -38,7 +38,7 @@ public class SystemUserDTO implements Serializable {
   public SystemUserDTO() {
   }
 
-  public SystemUserDTO(long id, String firstName, String lastName,
+  public SystemUserDTO(String id, String firstName, String lastName,
                       String emailAddress, PartyDTO parentClient, ActivityType activityType,
                       UserProfileDTO profile) {
     super();
@@ -51,11 +51,11 @@ public class SystemUserDTO implements Serializable {
     this.profile = profile;
   }
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
