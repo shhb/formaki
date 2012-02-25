@@ -7,9 +7,13 @@ package org.noranj.formak.shared.exception;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @deprecated see if you can use GWT NotFoundException instead of this one.
  */
-public class NotFoundException extends Exception {
+public class NotFoundException extends Exception { // DO not use GWT NotFoundException because GWT is for UI and we should not mix UI with backend.
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 2095565017645574441L;
 
   public NotFoundException() {
     super();

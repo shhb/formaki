@@ -1,6 +1,7 @@
 package org.noranj.formak.client.service;
 
 import org.noranj.formak.shared.dto.SystemUserDTO;
+import org.noranj.formak.shared.exception.NotFoundException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -23,6 +24,6 @@ public interface SystemAdminServiceAsync {
    * 
    * @param systemUser holds the data for the new user.
    */
-  public void addSystemUser(SystemUserDTO systemUser, AsyncCallback<Void> callback);
+  public void addSystemUser(SystemUserDTO systemUser, AsyncCallback<Void> callback); // the implementation throws NotFoundException;
 
 }

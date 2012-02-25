@@ -46,7 +46,7 @@ public class DALHelper<T> {
    *          is the primary key for order and is a long integer.
    * 
    */
-  public T getEntityById(Long id, String[] fetchGroups, int maxFetchDepth) {
+  public T getEntityById(String id, String[] fetchGroups, int maxFetchDepth) {
     assert (id != null);
 
     T entity, detachedEntity= null;

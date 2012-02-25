@@ -49,6 +49,9 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
  */
 public class SystemAdminServiceImplTest {
 
+  /** if set to TRUE, it means there is no data in data store for the test and test data must be created.*/
+  private boolean generateTestData = true;
+  
   private final static LocalServiceTestHelper helper =
       new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   
@@ -64,6 +67,11 @@ public class SystemAdminServiceImplTest {
 
   @Before
   public void setUp() throws Exception {
+    if (generateTestData) {
+      makeTestDataUserRetailerParty();
+      makeTestDataUserManufacturerParty();
+      generateTestData = false;
+    }
   }
 
   @After
@@ -80,9 +88,12 @@ public class SystemAdminServiceImplTest {
       SystemAdminServiceImpl service = new SystemAdminServiceImpl();
 
       SystemUserDTO sysUser = service.getSystemUser(emailAddress);
-      
-      System.out.printf("System user found. parentClient ID [%d]\r\n", sysUser.getParentClient().getId());
-      
+      if (sysUser != null) {
+        System.out.printf("System user [%s] found. parentClient ID [%d]\r\n", emailAddress, sysUser.getParentClient().getId());
+      } 
+      else {
+        fail(String.format("User not found [%s]", emailAddress));
+      }
     } catch (Exception ex) {
       ex.printStackTrace();
       fail("AN exception happened " + ex.getMessage());
@@ -90,14 +101,11 @@ public class SystemAdminServiceImplTest {
     System.out.println("=====================================================================");
   }
 
-  @Test
+  //@ Test
   public void testCreateUser() {
     System.out.println("--------------------------------------------------------------------");
     
     try {
-      
-      HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
-      roles.add(PartyRoleType.Buyer);
       
       makeTestDataUserRetailerParty();
       makeTestDataUserManufacturerParty();
@@ -112,24 +120,24 @@ public class SystemAdminServiceImplTest {
   /**
    * 
    */
-  private void makeTestDataUserRetailerParty() {
+  private void makeTestDataUserRetailerParty() throws Exception {
     
     SystemAdminServiceImpl service = new SystemAdminServiceImpl();
     
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Buyer);
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(0, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    service.addSystemClientParty(parentClient);
+    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    parentClient.setId(service.addSystemClientParty(parentClient));
 
     // Adding two users
     SystemUserDTO user = null;
     
-    user = new SystemUserDTO(0L, "Babak", "Retailer", "babak@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
+    user = new SystemUserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
     service.addSystemUser(user);
     System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
 
-    user = new SystemUserDTO(0L, "Buyer", "Retailer", "buyer@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
+    user = new SystemUserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
     service.addSystemUser(user);
     System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
     
@@ -138,23 +146,23 @@ public class SystemAdminServiceImplTest {
   /**
    * 
    */
-  private void makeTestDataUserManufacturerParty() {
+  private void makeTestDataUserManufacturerParty() throws Exception {
     
     SystemAdminServiceImpl service = new SystemAdminServiceImpl();
     
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Seller);
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(0, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    service.addSystemClientParty(parentClient);
+    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    parentClient.setId(service.addSystemClientParty(parentClient));
 
     SystemUserDTO user = null;
     
-    user = new SystemUserDTO(0L, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
+    user = new SystemUserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
     service.addSystemUser(user);
     System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
 
-    user = new SystemUserDTO(0L, "Seller", "Manufacturer", "seller@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
+    user = new SystemUserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
     service.addSystemUser(user);
     System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
     

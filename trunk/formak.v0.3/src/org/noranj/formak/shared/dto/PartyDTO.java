@@ -21,7 +21,7 @@ public class PartyDTO implements Serializable {
    */
   private static final long serialVersionUID = 8032558360718706251L;
   
-  private long id;
+  private String id;
   
   private String name;
   
@@ -47,10 +47,6 @@ public class PartyDTO implements Serializable {
   }
   
   public PartyDTO(String id, String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
-    this(Long.parseLong(id), name, logoURI, activityType, partyRoles);
-  }
-  
-  public PartyDTO(long id, String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
     
     super();
     this.id = id;
@@ -60,18 +56,14 @@ public class PartyDTO implements Serializable {
     this.roles = partyRoles;
   }
 
-  public long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(String id) {
     this.id = id;
   }
   
-  public void setId(String id) {
-    this.id = Long.parseLong(id);
-  }
-
   public String getName() {
     return name;
   }

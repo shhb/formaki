@@ -30,7 +30,7 @@ public class TradingParty extends Party {
    * @param name
    * @param roles
    */
-  public TradingParty(String name, URI logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
+  public TradingParty(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
     super(name, logoURI, activityType, roles);
   }
 

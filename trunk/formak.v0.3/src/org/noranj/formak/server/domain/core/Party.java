@@ -22,6 +22,9 @@ import org.noranj.formak.shared.dto.PartyDTO;
 import org.noranj.formak.shared.type.ActivityType;
 import org.noranj.formak.shared.type.PartyRoleType;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 
 /**
  * 
@@ -37,7 +40,7 @@ import org.noranj.formak.shared.type.PartyRoleType;
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 @Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION", //@Version is used to implement optimistic locking but we may use it for another purposes.
          extensions={@Extension(vendorName="datanucleus", key="field-name", value="version")})
-@FetchGroup(name=Party.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}) 
+//@ FetchGroup(name=Party.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}) 
 public abstract class Party implements Serializable {
 
   @NotPersistent
@@ -48,7 +51,7 @@ public abstract class Party implements Serializable {
   
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long id;
+  private Key id;
   
   /** stores the name of party. */
   @Persistent
@@ -58,17 +61,17 @@ public abstract class Party implements Serializable {
   private ActivityType activityType = ActivityType.Deactive; 
   
   /**
-   * URI of the logo.
+   * URI of the logo in String format.
    * It could be the link to the logo on their web site.
    */
   @Persistent
-  private URI logoURI;
+  private String logoURI;
   
   /**
    * A party can have one or more roles such as buyer and seller.
    * Or client and trading party.
    */
-  @Persistent(defaultFetchGroup="true")
+  //@ Persistent(defaultFetchGroup="true")
   private Set<PartyRoleType> roles;
 
   /** 
@@ -87,11 +90,11 @@ public abstract class Party implements Serializable {
   /**
    * 
    * @param name
-   * @param logoURI
+   * @param logoURI it is URI of the logo but stored as String because data store doesn't support the URI.
    * @param activityType
    * @param partyRoles
    */
-  public Party(String name, URI logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
+  protected Party(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
     super();
     this.name = name;
     this.logoURI = logoURI;
@@ -99,33 +102,24 @@ public abstract class Party implements Serializable {
     this.roles = partyRoles;
   }
 
+  protected Party() {
+    super();
+    // TODO Auto-generated constructor stub
+  }
+
   /**
    * 
-   * @param name
-   * @param logoURI
-   * @param activityType
-   * @param partyRoles
    */
-  public Party(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
-    super();
-    this.name = name;
-    try {
-      this.logoURI = (logoURI!=null)?new URI(logoURI) : null;
-    } catch(URISyntaxException uriex) {
-      uriex.printStackTrace(); //FIXME LOG BA-2012-FEB-25
-    }
-    this.activityType = activityType;
-    this.roles = partyRoles;
+  //public Long getId() {
+  public String getId() {
+    return ((id!=null)?KeyFactory.keyToString(id):null);
   }
 
-  public Long getId() {
-    return id;
+  //public void setId(Long id) {
+  public void setId(String id) {
+    this.id = (id!=null)?KeyFactory.stringToKey(id):null;
   }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
+  
   public String getName() {
     return name;
   }
@@ -159,11 +153,11 @@ public abstract class Party implements Serializable {
     this.roles = roles;
   }
 
-  public URI getLogoURI() {
+  public String getLogoURI() {
     return logoURI;
   }
 
-  public void setLogoURI(URI logoURI) {
+  public void setLogoURI(String logoURI) {
     this.logoURI = logoURI;
   }
 
@@ -177,7 +171,7 @@ public abstract class Party implements Serializable {
   
   /** creates DTO and fill it with the data. */ 
   public PartyDTO getPartyDTO() {
-    PartyDTO partyDTO = new PartyDTO( id, name, logoURI.toString(), activityType, cloneRoles());
+    PartyDTO partyDTO = new PartyDTO(getId(), name, logoURI.toString(), activityType, cloneRoles());
     return(partyDTO);
   }
 

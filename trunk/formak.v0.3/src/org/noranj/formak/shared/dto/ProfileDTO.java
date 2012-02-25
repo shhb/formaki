@@ -12,21 +12,21 @@ package org.noranj.formak.shared.dto;
  */
 public class ProfileDTO {
 
-  private Long id;
+  private String id;
 
   private ContactInfoDTO contactInfo;
 
-  public ProfileDTO(Long id, ContactInfoDTO contactInfo) {
+  public ProfileDTO(String id, ContactInfoDTO contactInfo) {
     super();
     this.id = id;
     this.contactInfo = contactInfo;
   }
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
