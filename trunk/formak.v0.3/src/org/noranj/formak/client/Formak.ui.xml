@@ -1,0 +1,41 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:app='urn:import:org.noranj.formak.client'
+	xmlns:view='urn:import:org.noranj.formak.client.view'
+	xmlns:formak='urn:import:org.noranj.formak.client.view'>
+
+	<ui:style src="resources/en/GlobalStylesEn.css" />
+	<g:DockLayoutPanel unit='EM' styleName='{style.outer}'>
+		<g:north size='3.5'>
+			<app:HeaderPanel ui:field='headerPanel' />
+		</g:north>
+		<g:west size='15'>
+            <g:HTMLPanel styleName='{style.boxPadding}'>
+            	<div class="{style.titleBar}">Business Folders</div>
+            	<g:ScrollPanel ui:field='folders' styleName='{style.mainPanel}' >
+				</g:ScrollPanel>
+            </g:HTMLPanel>
+		</g:west>
+		<g:center size='15'>
+			<g:HTMLPanel styleName='{style.boxPadding}'>
+				<div class="{style.titleBar}">Business Documents</div>
+				<g:ScrollPanel ui:field='mainPanel' styleName='{style.mainPanel}' >
+				</g:ScrollPanel>
+			</g:HTMLPanel>
+		</g:center>
+		<g:south size="3">
+			<g:HTMLPanel styleName='{style.footerPanel}'>
+				<div>
+					<a href="#">Contact us</a>
+					|
+					<a href="#">Privacy</a>
+					|
+					<a href="#">About</a>
+				</div>
+			</g:HTMLPanel>
+		</g:south>
+
+	</g:DockLayoutPanel>
+
+</ui:UiBinder> 
