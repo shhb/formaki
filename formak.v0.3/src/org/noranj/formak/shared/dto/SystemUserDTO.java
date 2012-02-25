@@ -38,7 +38,7 @@ public class SystemUserDTO implements Serializable {
   public SystemUserDTO() {
   }
 
-  public SystemUserDTO(Long id, String firstName, String lastName,
+  public SystemUserDTO(long id, String firstName, String lastName,
                       String emailAddress, PartyDTO parentClient, ActivityType activityType,
                       UserProfileDTO profile) {
     super();

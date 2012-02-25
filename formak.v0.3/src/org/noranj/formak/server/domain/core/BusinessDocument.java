@@ -4,7 +4,6 @@ package org.noranj.formak.server.domain.core;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.HashSet;
 
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.FetchGroup;
@@ -18,10 +17,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
-<<<<<<< .mine
-
-=======
->>>>>>> .r189
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PartyDTO;

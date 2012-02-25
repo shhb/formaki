@@ -3,6 +3,7 @@ package org.noranj.formak.server.service;
 import org.noranj.formak.server.DALHelper;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
+import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 
 /**
@@ -14,13 +15,14 @@ import org.noranj.formak.shared.dto.SystemUserDTO;
  * @author
  */
 public class SystemAdminServiceImpl {
-
+  
+  // XXX TEST
   /**
    * It uses the users email address to find its detail information.
    * The email address is used as the user ID to sign in to the system.
    * 
    * @param emailAddress
-   * @return
+   * @return the system user that is associated with the emailAddress. If it can not find the user, it returns null.
    */
   public SystemUserDTO getSystemUser(String emailAddress) {
     
@@ -33,12 +35,30 @@ public class SystemAdminServiceImpl {
                                                             new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
                                                             1); /* max fetch depth */
     
-    //XXX what if sysUser is null
-    assert(sysUser!=null);
+    if (sysUser!=null)
+      return(sysUser.getSystemUserDTO());
+    else 
+      return(null);
     
-    return(sysUser.getSystemUserDTO());
   }
 
+  // XXX TEST
+  /**
+   * It adds a new party client to the data store.
+   * 
+   * @param systemClientParty holds the data for the new client.
+   */
+  public void addSystemClientParty(SystemClientPartyDTO systemClientParty) {
+
+    DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+    
+    SystemClientParty newSystemClientParty = new SystemClientParty(systemClientParty);
+    
+    systemClientHelper.storeEntity(newSystemClientParty);
+        
+  }
+
+  //XXX TEST
   /**
    * It adds a new user to the data store.
    * 
@@ -58,4 +78,5 @@ public class SystemAdminServiceImpl {
     
   }
   
+ 
 }

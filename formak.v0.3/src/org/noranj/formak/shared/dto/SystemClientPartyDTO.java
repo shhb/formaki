@@ -45,13 +45,13 @@ public class SystemClientPartyDTO extends PartyDTO {
    * @param partyRoles
    * @param users
    */
-  public SystemClientPartyDTO(String id, String name, String logoURI,
+  public SystemClientPartyDTO(long id, String name, String logoURI,
                               ActivityType activityType, Set<PartyRoleType> partyRoles, 
                               List<SystemUserDTO> users) {
     super(id, name, logoURI, activityType, partyRoles);
     this.users = users;
   }
-
+  
   public List<SystemUserDTO> getUsers() {
     return users;
   }

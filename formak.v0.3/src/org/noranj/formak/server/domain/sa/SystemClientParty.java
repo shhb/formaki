@@ -13,6 +13,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import org.noranj.formak.server.domain.core.Party;
+import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
 import org.noranj.formak.shared.type.PartyRoleType;
@@ -65,6 +66,14 @@ public class SystemClientParty extends Party implements Serializable{
     super(name, logoURI, activityType, roles);
   }
 
+  public SystemClientParty(SystemClientPartyDTO systemClientPartyDTO) {
+    super(  systemClientPartyDTO.getName(), 
+            systemClientPartyDTO.getLogoURI(), 
+            systemClientPartyDTO.getActivityType(), 
+            systemClientPartyDTO.getRoles());
+  }
+
+  
   public List<SystemUser> getUsers() {
     return users;
   }
