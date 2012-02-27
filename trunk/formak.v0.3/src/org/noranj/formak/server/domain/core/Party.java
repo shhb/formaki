@@ -71,7 +71,7 @@ public abstract class Party implements Serializable {
    * A party can have one or more roles such as buyer and seller.
    * Or client and trading party.
    */
-  //@ Persistent(defaultFetchGroup="true")
+  @Persistent(defaultFetchGroup="true")
   private Set<PartyRoleType> roles;
 
   /** 
