@@ -15,4 +15,9 @@ import org.noranj.formak.server.domain.core.Profile;
 @PersistenceCapable(detachable="true")
 public class PartyProfile extends Profile {
 
+  public PartyProfile() {
+    super();
+    // TODO Auto-generated constructor stub
+  }
+  
 }

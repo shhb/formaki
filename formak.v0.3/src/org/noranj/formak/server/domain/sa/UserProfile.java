@@ -1,6 +1,7 @@
 package org.noranj.formak.server.domain.sa;
 
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import org.noranj.formak.server.domain.core.Profile;
 import org.noranj.formak.shared.dto.UserProfileDTO;
@@ -18,8 +19,9 @@ import org.noranj.formak.shared.dto.UserProfileDTO;
 @PersistenceCapable(detachable="true")
 public class UserProfile extends Profile {
 
-  /** In the future when we will have different themes, user can select their favorite theme. */ 
-  //private long themeID;
+  /** @deprecated In the future when we will have different themes, user can select their favorite theme. */ 
+  @Persistent
+  private long themeID;
 
 
   public UserProfile() {
@@ -39,6 +41,14 @@ public class UserProfile extends Profile {
   public UserProfileDTO getUserProfileDTO() {
     UserProfileDTO userProfileDTO = new UserProfileDTO();
     return(userProfileDTO);
+  }
+
+  public long getThemeID() {
+    return themeID;
+  }
+
+  public void setThemeID(long themeID) {
+    this.themeID = themeID;
   }
 
 }

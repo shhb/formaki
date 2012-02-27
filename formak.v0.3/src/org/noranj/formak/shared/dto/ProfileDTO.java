@@ -16,6 +16,12 @@ public class ProfileDTO {
 
   private ContactInfoDTO contactInfo;
 
+  
+  public ProfileDTO() {
+    super();
+    // TODO Auto-generated constructor stub
+  }
+
   public ProfileDTO(String id, ContactInfoDTO contactInfo) {
     super();
     this.id = id;

@@ -2,6 +2,7 @@ package org.noranj.formak.server.domain.sa;
 
 import java.io.Serializable;
 
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.FetchGroups;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -15,6 +16,7 @@ import javax.jdo.annotations.Unique;
 import org.noranj.formak.server.domain.core.Profile;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
+import org.noranj.formak.shared.type.ChildEntity;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -31,8 +33,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 @Index(name="EMAIL", unique="true",  members={SystemUser.C_EMAIL_ADDRESS}) //BA-2012-FEB-23 Added to be able to search by emailAddress
 @FetchGroups({
   @FetchGroup(name=SystemUser.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}),
-  @FetchGroup(name=SystemUser.C_FETCH_GROUP_PARENT_CLIENT, members={@Persistent(name="parentClient")})})
-public class SystemUser implements Serializable{
+  @FetchGroup(name=SystemUser.C_FETCH_GROUP_PARENT_CLIENT, members={@Persistent(name="parentClientId")})})
+public class SystemUser implements Serializable, ChildEntity {
 
   @NotPersistent
   private static final long serialVersionUID = 2739249843928429147L;
@@ -48,7 +50,9 @@ public class SystemUser implements Serializable{
   private Key id; // Child object can not have LONG key.
   
   @Persistent
-  private SystemClientParty parentClient;
+  //private SystemClientParty parentClient;
+  @Extension(vendorName="datanucleus", key="gae.parent-pk", value="true") 
+  private Key parentClientId;
   
   @Persistent
   private String firstName;
@@ -79,12 +83,12 @@ public class SystemUser implements Serializable{
   //////                                    //////
   ////////////////////////////////////////////////
 
-  public SystemUser(String id, SystemClientParty parentClient, String firstName,
+  public SystemUser(String id, String parentClientId, String firstName,
                     String lastName, String emailAddress, ActivityType activityType,
                     UserProfile profile/*, long version*/) {
     super();
     setId(id);
-    this.parentClient = parentClient;
+    setParentClientId(parentClientId);
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
@@ -98,17 +102,19 @@ public class SystemUser implements Serializable{
    * @param systemUserDTO
    * @param parentClient
    * @deprecated NOT NEEDED AND NOT USED. REMOVE THE TAG IF NEEDED. It makes the code complicated.
-   * /
-  public SystemUser(SystemUserDTO systemUserDTO, SystemClientParty parentClient) {
+   */
+  public SystemUser(SystemUserDTO systemUserDTO) {
+    
     this(systemUserDTO.getId(),
-          parentClient,
+          systemUserDTO.getParentClientId(),
           systemUserDTO.getFirstName(),
           systemUserDTO.getLastName(),
           systemUserDTO.getEmailAddress(),
           systemUserDTO.getActivityType(),
           new UserProfile(systemUserDTO.getProfile()));
+    
   }
-  */ 
+   
   
   /**
    * 
@@ -123,12 +129,12 @@ public class SystemUser implements Serializable{
     this.id = (id!=null)?KeyFactory.stringToKey(id):null;
   }
 
-  public SystemClientParty getParentClient() {
-    return parentClient;
+  public String getParentClientId() {
+    return ((this.parentClientId!=null)?KeyFactory.keyToString(this.parentClientId):null);
   }
 
-  public void setParentClient(SystemClientParty parentClient) {
-    this.parentClient = parentClient;
+  public void setParentClientId(String parentClientId) {
+    this.parentClientId = (parentClientId!=null)?KeyFactory.stringToKey(parentClientId):null;
   }
 
   public String getFirstName() {
@@ -183,11 +189,17 @@ public class SystemUser implements Serializable{
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
     SystemUserDTO suDTO = new SystemUserDTO(getId(), firstName, lastName, emailAddress, 
-                                            (parentClient!=null?parentClient.getPartyDTO():null), 
+                                            getParentClientId(), 
                                             activityType, 
-                                            (profile!=null?profile.getUserProfileDTO():null));
+                                            null // can not use Profile because it is not fetched
+                                            /*(profile!=null?profile.getUserProfileDTO():null)*/); //FIXME
     
     return(suDTO);
+  }
+
+  @Override  //ChildEntity
+  public String getParentId() {
+    return getParentClientId();
   }
   
 }

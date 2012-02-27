@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -16,6 +17,7 @@ import org.noranj.formak.server.domain.core.Party;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
+import org.noranj.formak.shared.type.ParentEntity;
 import org.noranj.formak.shared.type.PartyRoleType;
 
 /**
@@ -27,7 +29,7 @@ import org.noranj.formak.shared.type.PartyRoleType;
  */
 @PersistenceCapable(detachable="true")
 @FetchGroup(name=SystemClientParty.C_FETCH_GROUP_USERS, members={@Persistent(name="users")}) //this is used with pm.getFetchPlan().setMaxFetchDepth(n) to control how deep the data is retrieved up front (used in detaching). To get only the order, setMaxFetchDepth(0) and to get order and orderItems, setMaxFetchDepth(1).
-public class SystemClientParty extends Party implements Serializable{
+public class SystemClientParty extends Party implements Serializable, ParentEntity {
 
   public static final String C_FETCH_GROUP_USERS = "users"; 
   //public static final String C_FETCH_GROUP_PROFILE = "profile"; 
@@ -48,8 +50,9 @@ public class SystemClientParty extends Party implements Serializable{
    * list of users belong to the party.
    * All the users in this list share the same namespace.
    */
-  @Persistent(mappedBy="parentClient")
-  private List<SystemUser> users;
+  @Persistent /*(mappedBy="parentClient") BA-2012-FEB-25 the relationship is no longer an owned relationship because we need to search SystemUsr directly. */
+  @Element(dependent = "true") 
+  private List<String> userIds;
   
   ////////////////////////////////////////////////
   //////                                    //////
@@ -75,39 +78,35 @@ public class SystemClientParty extends Party implements Serializable{
             systemClientPartyDTO.getRoles());
   }
   
-  public List<SystemUser> getUsers() {
-    return users;
+  public List<String> getUserIds() {
+    return userIds;
   }
 
-  public void setUsers(List<SystemUser> users) {
-    this.users = users;
-  }
-
-  public void addUser(SystemUserDTO systemUserDTO) {
-    if (users == null) {
-      users = new ArrayList<SystemUser>();
-    }
-    SystemUser sysUser = new SystemUser(systemUserDTO.getId(),
-                                        this,
-                                        systemUserDTO.getFirstName(),
-                                        systemUserDTO.getLastName(),
-                                        systemUserDTO.getEmailAddress(),
-                                        systemUserDTO.getActivityType(),
-                                        new UserProfile(systemUserDTO.getProfile())); 
-    
-    this.users.add(sysUser);
+  public void setUserIds(List<String> usersIds) {
+    this.userIds = userIds;
   }
 
   /** 
-   * 
-   * @param user
-   * @deprecated NOT USED YET. REMOVE THE TAG IF IT I USED. BA-2012-FEB-23
+   * It adds the user to the list of users and return a pointer to the user in the list.
+   * The link can be used to retrieve the ID (the id is assigned by data store).
+   * @param systemUserDTO
+   * @return
    */
-  public void addUser(SystemUser user) {
-    if (users == null) {
-      users = new ArrayList<SystemUser>();
+  public void addUser(String userId) {
+    if (userIds == null) {
+      userIds = new ArrayList<String>();
     }
-    this.users.add(user);
+    this.userIds.add(userId);
   }
   
+  @Override //ParentEntity
+  public void addChildId(String childId) {
+    addUser(childId);
+  }
+  
+  @Override //ParentEntity
+  public List<String> getChildIds() {
+    return getUserIds();
+  }
+
 }

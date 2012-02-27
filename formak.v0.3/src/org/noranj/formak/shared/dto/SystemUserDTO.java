@@ -1,5 +1,6 @@
 package org.noranj.formak.shared.dto;
 
+
 import java.io.Serializable;
 
 import org.noranj.formak.server.domain.sa.UserProfile;
@@ -25,7 +26,9 @@ public class SystemUserDTO implements Serializable {
   
   private String emailAddress;
   
-  private PartyDTO parentClient;
+  //BA-2012-FEB-25 Using the Key to have an un-owned relationship.
+  //private PartyDTO parentClient;
+  private String parentClientId;
 
   private ActivityType activityType = ActivityType.Deactive; 
 
@@ -39,14 +42,14 @@ public class SystemUserDTO implements Serializable {
   }
 
   public SystemUserDTO(String id, String firstName, String lastName,
-                      String emailAddress, PartyDTO parentClient, ActivityType activityType,
+                      String emailAddress, String parentClientId, ActivityType activityType,
                       UserProfileDTO profile) {
     super();
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
-    this.parentClient = parentClient;
+    this.parentClientId = parentClientId;
     this.activityType = activityType;
     this.profile = profile;
   }
@@ -83,12 +86,12 @@ public class SystemUserDTO implements Serializable {
     this.emailAddress = emailAddress;
   }
 
-  public PartyDTO getParentClient() {
-    return parentClient;
+  public String getParentClientId() {
+    return parentClientId;
   }
 
-  public void setParentClient(PartyDTO parentClient) {
-    this.parentClient = parentClient;
+  public void setParentClient(String parentClientId) {
+    this.parentClientId = parentClientId;
   }
 
   public ActivityType getActivityType() {

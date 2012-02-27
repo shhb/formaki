@@ -28,6 +28,11 @@ public class ContactInfoDTO {
     this.address = address;
   }
   
+  public ContactInfoDTO() {
+    super();
+    // TODO Auto-generated constructor stub
+  }
+
   public String getId() {
     return id;
   }
