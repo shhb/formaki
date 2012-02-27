@@ -67,16 +67,43 @@ public class SystemAdminServiceImplTest {
 
   @Before
   public void setUp() throws Exception {
-    if (generateTestData) {
-      makeTestDataUserRetailerParty();
-      makeTestDataUserManufacturerParty();
-      generateTestData = false;
-    }
   }
 
   @After
   public void tearDown() throws Exception {
   }
+
+  @Test
+  public void testGetSystemUsers() throws Exception  {
+    
+    if (generateTestData) {
+      makeTestDataUserRetailerParty();
+      makeTestDataUserManufacturerParty();
+      generateTestData = false;
+    }
+
+    try {
+      System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+      
+      SystemAdminServiceImpl service = new SystemAdminServiceImpl();
+
+      List<SystemUserDTO> sysUserList = service.getSystemUsers(null);
+      if (sysUserList != null) {
+        for (SystemUserDTO dto : sysUserList) {
+          System.out.printf("*** System user [%s] found. email is [%s] and parentClient ID [%s]\r\n", dto.getFirstName(), dto.getFirstName(), dto.getId());
+        }
+      } 
+      else {
+        //fail(String.format("User not found", emailAddress));
+        fail("no user is found");
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      fail("AN exception happened " + ex.getMessage());
+    }
+    System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+  }
+
 
   @Test
   public void testGetSystemUser() {
@@ -89,7 +116,7 @@ public class SystemAdminServiceImplTest {
 
       SystemUserDTO sysUser = service.getSystemUser(emailAddress);
       if (sysUser != null) {
-        System.out.printf("System user [%s] found. parentClient ID [%d]\r\n", emailAddress, sysUser.getParentClient().getId());
+        System.out.printf("System user [%s] found. parentClient ID [%s]\r\n", emailAddress, sysUser.getParentClientId());
       } 
       else {
         fail(String.format("User not found [%s]", emailAddress));
@@ -122,24 +149,32 @@ public class SystemAdminServiceImplTest {
    */
   private void makeTestDataUserRetailerParty() throws Exception {
     
+    String id = null;
     SystemAdminServiceImpl service = new SystemAdminServiceImpl();
     
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Buyer);
+    
     SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    parentClient.setId(service.addSystemClientParty(parentClient));
+    
+    id = service.addSystemClientParty(parentClient);
+    parentClient.setId(id);
+    
+    System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
 
     // Adding two users
     SystemUserDTO user = null;
     
-    user = new SystemUserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
-    service.addSystemUser(user);
-    System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
+    user = new SystemUserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
+    id = service.addSystemUser(user);
+    user.setId(id);
+    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
 
-    user = new SystemUserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
-    service.addSystemUser(user);
-    System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
+    user = new SystemUserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
+    id = service.addSystemUser(user);
+    user.setId(id);
+    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
     
   }
   
@@ -149,22 +184,28 @@ public class SystemAdminServiceImplTest {
   private void makeTestDataUserManufacturerParty() throws Exception {
     
     SystemAdminServiceImpl service = new SystemAdminServiceImpl();
+    String id = null;
     
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Seller);
     SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    parentClient.setId(service.addSystemClientParty(parentClient));
+    id = service.addSystemClientParty(parentClient);
+    parentClient.setId(id);
+
+    System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
 
     SystemUserDTO user = null;
     
-    user = new SystemUserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
-    service.addSystemUser(user);
-    System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
+    user = new SystemUserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
+    id = service.addSystemUser(user);
+    user.setId(id);
+    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
 
-    user = new SystemUserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient, ActivityType.Active, new UserProfileDTO());
-    service.addSystemUser(user);
-    System.out.printf("User [%s] is created and its id is [%d]\r\n", user.getFirstName(), user.getId());
+    user = new SystemUserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
+    id = service.addSystemUser(user);
+    user.setId(id);
+    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
     
   }
   
