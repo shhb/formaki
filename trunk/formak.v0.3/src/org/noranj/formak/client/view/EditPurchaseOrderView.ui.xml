@@ -8,15 +8,15 @@
 	<ui:with field='RESOURCE' type='org.noranj.formak.client.resources.en.GlobalResources'/>
 	<g:HTMLPanel width="100%" height="100%">
 		<g:DecoratorPanel>
-			<g:VerticalPanel>
+			<g:VerticalPanel >
 				<g:HorizontalPanel>
 					<g:Anchor href="#savedoc" text="Save"
 						styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
 					<g:Anchor href="#cancel" text="Cancel"
 						styleName="{style.button} {style.left}" ui:field="cancelButton"></g:Anchor>
-						<g:TextBox ui:field="id"></g:TextBox>
+						<g:TextBox ui:field="id" readOnly="true" visibleLength="1"></g:TextBox>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel>
+				<g:HorizontalPanel width="529px">
 					<g:VerticalPanel>
 						<g:Grid>
 							<g:row>
@@ -46,33 +46,52 @@
 
 						</g:Grid>
 					</g:VerticalPanel>
-					<g:VerticalPanel>
-					<g:Grid><!-- Second Column -->
+					<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" width="274px">
+					<g:Grid width="204px"><!-- Second Column -->
 							<g:row>
 								<g:customCell>
-									<g:SimplePanel/>
+									<g:SimplePanel>
+										<g:Label text="buyer"></g:Label>
+									</g:SimplePanel>
 								</g:customCell>
 								<g:customCell>
-									<g:SimplePanel/>
+									<g:SimplePanel width="190px">
+										<g:ListBox ui:field="buyer" width="234px"></g:ListBox>
+									</g:SimplePanel>
 								</g:customCell>
 							</g:row>
 
 						</g:Grid>
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel width="100%" height="100%" horizontalAlignment="ALIGN_CENTER">
+				<g:HorizontalPanel width="529">
+					<g:VerticalPanel width="529">
+						<g:Grid width="529">
+							<g:row>
+								<g:customCell>
+									<g:Label text="Note" width="61px"/>
+									
+								</g:customCell>
+								<g:customCell>
+									<g:TextArea ui:field="note" width="450px" />
+								</g:customCell>
+							</g:row>
+						</g:Grid>
+					</g:VerticalPanel>
+				</g:HorizontalPanel>
+				<g:HorizontalPanel width="100%" height="100%" >
 					<g:Grid>
 						<g:row>
 							<g:customCell>
 								<g:VerticalPanel>
 									<g:Label text="shipTo"></g:Label>
-									<g:TextBox ui:field="shipTo" ></g:TextBox>
+									<g:TextArea ui:field="shipTo" width="250px" height="100px"></g:TextArea>
 								</g:VerticalPanel>
 							</g:customCell>
 							<g:customCell>
 								<g:VerticalPanel>
 									<g:Label text="billTo"></g:Label>
-									<g:TextBox ui:field="billTo"></g:TextBox>
+									<g:TextArea ui:field="billTo" width="250px" height="100px"></g:TextArea>
 								</g:VerticalPanel>
 							</g:customCell>
 						</g:row>
@@ -80,10 +99,10 @@
 				</g:HorizontalPanel>
 
 				<g:HorizontalPanel>
-					<g:FlexTable ui:field="editpurchaseOrderItemsTable" addStyleNames="{style.businessDocumentViewflexTable}" />
+					<g:FlexTable ui:field="editPurchaseOrderItemsTable" addStyleNames="{style.businessDocumentViewflexTable}" />
 				</g:HorizontalPanel>
 				<g:HorizontalPanel>
-					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="100%">
+					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="796px">
 						<g:Grid>
 						<g:row>
 								<g:customCell>

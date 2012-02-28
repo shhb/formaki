@@ -20,6 +20,7 @@ import org.noranj.formak.client.view.BusinessDocumentViewImpl;
 import org.noranj.formak.client.view.EditBusinessDocumentView;
 import org.noranj.formak.client.view.EditPurchaseOrderViewImpl;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
+import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.type.DocumentType;
@@ -39,7 +40,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
   private HasWidgets container;
 
   private BusinessDocumentViewImpl<BusinessDocumentDTO, DocumentType> businessDocumentView = null;
-  private EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO> editPurchaseOrderView = null;
+  private EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO> editPurchaseOrderView = null;
   private DocumentTypeListViewImpl<DocumentType> businessDocumentListView = null;
 
 
@@ -135,7 +136,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         }
 
         else if (token.equals("editpo")) {
-        	editPurchaseOrderView = new EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO>();
+        	editPurchaseOrderView = new EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO>();
         	 if (purchaseOrderItemColumnDefinition==null){
         		 purchaseOrderItemColumnDefinition = BusinessDocumentsColumnDefinitionsFactory.getPurchaseOrderItemColumnDefinitions();
         	 }

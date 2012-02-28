@@ -55,9 +55,7 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
 	private void fetchBusinessDocumentDetails(DocumentType documentType) {
 		this.documentType  = documentType ;
 		if(!documentType.equals(null)) {	// FXIME documentType, State???
-		  rpcService.getBusinessDocuments(documentType,
-				DocumentStateType.Draft,
-				new AsyncCallback<List<BusinessDocumentDTO>>() {
+		  rpcService.getBusinessDocuments(documentType,	DocumentStateType.Draft,new AsyncCallback<List<BusinessDocumentDTO>>() {
 					public void onSuccess(
 							List<BusinessDocumentDTO> result) {
 						businessDocumentDetails = result;
@@ -94,12 +92,7 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
 				// if
 				// (businessDocumentDetails.get(j).getDisplayName().compareToIgnoreCase(businessDocumentDetails.get(j
 				// + 1).getDisplayName()) >= 0) {
-				if (businessDocumentDetails
-						.get(j)
-						.getBizDocumentNumber()
-						.compareToIgnoreCase(
-								businessDocumentDetails.get(j + 1)
-										.getBizDocumentNumber()) >= 0) {
+				if (businessDocumentDetails.get(j).getBizDocumentNumber().compareToIgnoreCase(businessDocumentDetails.get(j + 1).getBizDocumentNumber()) >= 0) {
 					BusinessDocumentDTO tmp = businessDocumentDetails
 							.get(j);
 					businessDocumentDetails.set(j,

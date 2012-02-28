@@ -22,10 +22,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EditPurchaseOrderViewImpl<T,K> extends Composite implements EditPurchaseOrderView<T,K>{
+public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditPurchaseOrderView<T,K,L>{
 
 	
 	@UiTemplate("EditPurchaseOrderView.ui.xml")
@@ -39,6 +41,7 @@ public class EditPurchaseOrderViewImpl<T,K> extends Composite implements EditPur
 	private List<ColumnDefinition<K>> columnDefinitions;
 	
 	private List<K> rowData;
+	private List<L> rowBuyerData;
 	
 	public EditPurchaseOrderViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -55,12 +58,18 @@ public class EditPurchaseOrderViewImpl<T,K> extends Composite implements EditPur
 	@UiField
 	TextBox totalTaxAmount;
 	@UiField
-	TextBox shipTo;
+	TextArea shipTo;
 	@UiField
-	TextBox billTo;
+	TextArea billTo;
+	@UiField
+	TextArea note;
+	@UiField
+	ListBox buyer;
 
+
+	
 	@UiField 
-	FlexTable editpurchaseOrderItemsTable;
+	FlexTable editPurchaseOrderItemsTable;
 	@UiField 
 	Anchor saveButton;
 	@UiField 
@@ -77,24 +86,31 @@ public class EditPurchaseOrderViewImpl<T,K> extends Composite implements EditPur
 	}
 
 	public void setRowData(List<K> rowData) {
-		editpurchaseOrderItemsTable.removeAllRows();
+		editPurchaseOrderItemsTable.removeAllRows();
 		this.rowData = rowData;
-		editpurchaseOrderItemsTable.setWidget(0, 0,	new Label("Col1"));
-		editpurchaseOrderItemsTable.setWidget(0, 1,	new Label("Col2"));
-		editpurchaseOrderItemsTable.setWidget(0, 2,	new Label("Col3"));
-		editpurchaseOrderItemsTable.setWidget(0, 3,	new Label("Col4"));
-		editpurchaseOrderItemsTable.setWidget(0, 4,	new Label("Col5"));
-		editpurchaseOrderItemsTable.setWidget(0, 5,	new Label("Col6"));
+		editPurchaseOrderItemsTable.setWidget(0, 0,	new Label("Col1"));
+		editPurchaseOrderItemsTable.setWidget(0, 1,	new Label("Col2"));
+		editPurchaseOrderItemsTable.setWidget(0, 2,	new Label("Col3"));
+		editPurchaseOrderItemsTable.setWidget(0, 3,	new Label("Col4"));
+		editPurchaseOrderItemsTable.setWidget(0, 4,	new Label("Col5"));
+		editPurchaseOrderItemsTable.setWidget(0, 5,	new Label("Col6"));
 		//cancelButton.sinkEvents(Event.ONCLICK);
 		for (int i = 0; i < rowData.size(); ++i) {
 			K k = rowData.get(i);
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
 				ColumnDefinition<K> columnDefinition = columnDefinitions.get(j);
-				editpurchaseOrderItemsTable.setWidget(i+1, j,columnDefinition.render(k));
+				editPurchaseOrderItemsTable.setWidget(i+1, j,columnDefinition.render(k));
 			}
 		}
 	}
 
+	public void setBuyerData(List<L> rowBuyerData){
+		this.rowBuyerData = rowBuyerData;
+		for (int i = 0; i < rowBuyerData.size(); ++i) {
+			buyer.addItem("","");
+		}
+	}
+	
 	@UiHandler("saveButton")
 	void onSaveButtonClicked(ClickEvent event) {
 	    if (presenter != null) {
@@ -129,6 +145,14 @@ public class EditPurchaseOrderViewImpl<T,K> extends Composite implements EditPur
 	
 	public HasValue<String> getBillTo(){
 		return billTo;
+	}
+
+	public HasValue<String> getNote(){
+		return note;
+	}
+	
+	public HasValue<String> getBuyer(){
+		return null ; //buyer.getItemText(buyer.getSelectedIndex());
 	}
 	
 	@Override //FIXME: 2012-2-15 ; SA:it does not work properly.
