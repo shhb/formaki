@@ -1,5 +1,7 @@
 package org.noranj.formak.shared.dto;
 
+import java.io.Serializable;
+
 /**
  * This is a generic bean to store and transfer any id and name data to UI to be displayed in list boxes.
  * 
@@ -8,7 +10,7 @@ package org.noranj.formak.shared.dto;
  *
  * @author
  */
-public class IDNameDTO {
+public class IDNameDTO implements Serializable {
 
   private String id;
   
