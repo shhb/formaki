@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.noranj.formak.client.common.ColumnDefinition;
 import org.noranj.formak.client.view.BusinessDocumentView.Presenter;
+import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 
 import com.google.gwt.core.client.GWT;
@@ -107,9 +108,12 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	public void setBuyerData(List<L> rowBuyerData){
 		this.rowBuyerData = rowBuyerData;
 		for (int i = 0; i < rowBuyerData.size(); ++i) {
-			buyer.addItem("","");
+			IDNameDTO row = (IDNameDTO) rowBuyerData.get(i);
+			buyer.addItem(row.getName().toString(),row.getId().toString());
+				
+			}
 		}
-	}
+	
 	
 	@UiHandler("saveButton")
 	void onSaveButtonClicked(ClickEvent event) {
