@@ -18,7 +18,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author
  * @version 0.3-2012FEB20
  */
-@RemoteServiceRelativePath("systemAdmin")
+@RemoteServiceRelativePath("partyService")
 public interface PartyService extends RemoteService {
 
   /**

@@ -3,9 +3,12 @@ package org.noranj.formak.server.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.noranj.formak.client.service.PartyService;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PartyDTO;
 import org.noranj.formak.shared.type.PartyRoleType;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * 
@@ -16,9 +19,11 @@ import org.noranj.formak.shared.type.PartyRoleType;
  * @author
  * @version 0.3.2012FEB21
  */
-public class PartyServiceImpl {
+public class PartyServiceImpl  extends RemoteServiceServlet implements PartyService {
 
-  //FIXME PRO2
+  	private static final long serialVersionUID = 1L;
+
+//FIXME PRO2
   /**
    * It returns the list of trading parties (ID and Name only) for the current user with the specified party role.
    * For example, list of buyers or sellers, ...
