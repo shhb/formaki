@@ -1,8 +1,12 @@
 package org.noranj.formak.client.view;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.noranj.formak.client.common.ColumnDefinition;
+import org.noranj.formak.client.common.HasSelectedValue;
+import org.noranj.formak.client.common.SelectOneListBox;
+import org.noranj.formak.client.common.SelectOneListBox.OptionFormatter;
 import org.noranj.formak.client.view.BusinessDocumentView.Presenter;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
@@ -10,6 +14,8 @@ import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -21,6 +27,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -64,11 +71,25 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	TextArea billTo;
 	@UiField
 	TextArea note;
-	@UiField
-	ListBox buyer;
-
-
 	
+	@UiField()
+	SelectOneListBox<L> buyer;
+	
+	@UiFactory SelectOneListBox<IDNameDTO> initSelect(){
+		return new SelectOneListBox(new OptionFormatter<IDNameDTO>(){
+
+			@Override
+			public String getLabel(IDNameDTO option) {
+				return option.getName();
+			}
+
+			@Override
+			public String getValue(IDNameDTO option) {
+				return option.getId();
+			}});
+		
+	}
+
 	@UiField 
 	FlexTable editPurchaseOrderItemsTable;
 	@UiField 
@@ -110,7 +131,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		for (int i = 0; i < rowBuyerData.size(); ++i) {
 			IDNameDTO row = (IDNameDTO) rowBuyerData.get(i);
 			buyer.addItem(row.getName().toString(),row.getId().toString());
-				
+			
 			}
 		}
 	
@@ -155,9 +176,15 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		return note;
 	}
 	
-	public HasValue<String> getBuyer(){
-		return null ; //buyer.getItemText(buyer.getSelectedIndex());
+	public HasSelectedValue<L> getBuyer(){
+		return buyer;
 	}
+	
+//	public HasSelectedValue<L> getBuyer(){
+//		
+//		return  buyer;
+//	}
+	
 	
 	@Override //FIXME: 2012-2-15 ; SA:it does not work properly.
 	public void onBrowserEvent(Event event) {
