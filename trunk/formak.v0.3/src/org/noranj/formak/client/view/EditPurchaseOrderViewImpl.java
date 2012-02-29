@@ -180,11 +180,6 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		return buyer;
 	}
 	
-//	public HasSelectedValue<L> getBuyer(){
-//		
-//		return  buyer;
-//	}
-	
 	
 	@Override //FIXME: 2012-2-15 ; SA:it does not work properly.
 	public void onBrowserEvent(Event event) {
