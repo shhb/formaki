@@ -57,9 +57,6 @@
 								</g:customCell>
 								<g:customCell>
 									<g:SimplePanel width="190px">
-										 <!-- <g:ListBox ui:field="buyer" width="234px">
-										 	<g:item value="-1">Default text</g:item>
-										 </g:ListBox> -->
 										<w:SelectOneListBox ui:field="buyer" width="234px">
 											<g:item value="-1">Default text</g:item>
 										</w:SelectOneListBox>
