@@ -58,16 +58,12 @@ public class EditPurchaseOrderPresenter implements Presenter, EditPurchaseOrderV
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log(caught.getMessage());
-				
 			}
 
 			@Override
 			public void onSuccess(List<IDNameDTO> result) {
 				view.setBuyerData(result);
-				
 			}
-
-		
 		});
 		
 	  //FIXME the id is hard coded and it may not be correct value.
@@ -93,6 +89,13 @@ public class EditPurchaseOrderPresenter implements Presenter, EditPurchaseOrderV
 						+ result.getBillTo().getStateOrProvince() 
 						+ result.getBillTo().getPostalCode());
 				view.getNote().setValue(result.getNote());
+				IDNameDTO row = new IDNameDTO();
+				
+				row.setId("1");//result.getReceiverParty().getId());
+				row.setName("TP1-Dummy");
+				//row.setName(result.getReceiverParty().getName());
+				view.getBuyer().setSelectedValue(row);
+				//view.getBuyer().setValue()
 				//view.getBuyer().setValue(result.getReceiverParty().getId());
 				view.getTaxRatePercent().setValue(Byte.toString(result.getTaxRatePercent()));
 				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));

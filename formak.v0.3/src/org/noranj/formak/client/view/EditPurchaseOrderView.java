@@ -3,9 +3,10 @@ package org.noranj.formak.client.view;
 import java.util.List;
 
 import org.noranj.formak.client.common.ColumnDefinition;
-import org.noranj.formak.client.view.BusinessDocumentView.Presenter;
+import org.noranj.formak.client.common.HasSelectedValue;
 import org.noranj.formak.shared.dto.IDNameDTO;
 
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -35,7 +36,7 @@ public interface EditPurchaseOrderView<T,K,L> {
 	
 	HasValue<String> getTotalTaxAmount();
 	
-	HasValue<String> getBuyer();
+	HasSelectedValue<L> getBuyer();
 	
 	HasValue<String> getNote();
 	
