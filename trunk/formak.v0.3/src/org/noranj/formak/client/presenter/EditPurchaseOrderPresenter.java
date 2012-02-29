@@ -90,13 +90,10 @@ public class EditPurchaseOrderPresenter implements Presenter, EditPurchaseOrderV
 						+ result.getBillTo().getPostalCode());
 				view.getNote().setValue(result.getNote());
 				IDNameDTO row = new IDNameDTO();
-				
+				 //FIXME: shhb>2012-02-29>It should come from Result but the dummy data is not correct.
 				row.setId("1");//result.getReceiverParty().getId());
-				row.setName("TP1-Dummy");
-				//row.setName(result.getReceiverParty().getName());
+				row.setName("TP1-Dummy");//row.setName(result.getReceiverParty().getName());
 				view.getBuyer().setSelectedValue(row);
-				//view.getBuyer().setValue()
-				//view.getBuyer().setValue(result.getReceiverParty().getId());
 				view.getTaxRatePercent().setValue(Byte.toString(result.getTaxRatePercent()));
 				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
 				view.setRowData(result.getPurchaseOrderItems());
