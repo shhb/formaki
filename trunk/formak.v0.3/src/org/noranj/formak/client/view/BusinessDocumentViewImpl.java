@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -82,14 +83,23 @@ public class BusinessDocumentViewImpl<T, K> extends Composite implements  Busine
 	public void setRowData(List<T> rowData) {
 		businessDocumentViewTable.removeAllRows();
 		this.rowData = rowData;
+		StringBuilder sb = new StringBuilder();
 		businessDocumentViewTable.setWidget(0,0,new CheckBox());
-		businessDocumentViewTable.setWidget(0,1,new Label("col1"));
-		businessDocumentViewTable.setWidget(0,2,new Label("col2"));
-		businessDocumentViewTable.setWidget(0,3,new Label("col3"));
-		businessDocumentViewTable.setWidget(0,4,new Label("col4"));
-		businessDocumentViewTable.setWidget(0,5,new Label("col5"));
-		businessDocumentViewTable.setWidget(0,6,new Label("col6"));
-		businessDocumentViewTable.setStyleName(GlobalResources.RESOURCE.globalStyles().flexTable());
+		businessDocumentViewTable.setWidget(0,1,new HTML("<div width='80px' style='border-bottom: 1px solid #E5E5E5'>#</div>"));
+	  	sb.append("<table width='100%'>");
+    	sb.append("<tr>");
+		sb.append("<td width='80px'>ReceiverParty</td>");
+		sb.append("<td width='80px'>DocumentNumber</td>");
+		sb.append("<td width='80px'>Monetory</td>");
+		sb.append("<td width='80px'>ImportantDate</td>");
+		sb.append("<td width='200px'>Note</td>");
+		sb.append("</tr>");
+		sb.append("<tr>");
+		sb.append("<td colspan='5' style='border-top: 1px solid #E5E5E5'></td>");
+		sb.append("</tr>");
+		sb.append("</table>");
+		businessDocumentViewTable.setWidget(0,2,new HTML(sb.toString()));
+		//businessDocumentViewTable.setStyleName(GlobalResources.RESOURCE.globalStyles().flexTable());
 		for (int i = 0; i < rowData.size(); ++i) {
 			T t = rowData.get(i);
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
