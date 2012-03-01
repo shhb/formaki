@@ -26,6 +26,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/formak/systemAdmin</url-pattern>
   </servlet-mapping>
 
+ <servlet>
+    <servlet-name>partyService</servlet-name>
+    <servlet-class>org.noranj.formak.server.service.PartyServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>partyService</servlet-name>
+    <url-pattern>/formak/partyService</url-pattern>
+  </servlet-mapping>
+  
  <!-- BA-2012-FEB-28 Added Login -->
   <!-- ===================== Login Google Servlet ===================== -->
 
