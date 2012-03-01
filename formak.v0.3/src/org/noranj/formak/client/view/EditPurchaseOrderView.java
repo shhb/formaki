@@ -32,7 +32,7 @@ public interface EditPurchaseOrderView<T,K,L> {
 	
 	HasValue<String> getBillTo();
 	
-	HasValue<String> getTaxRatePercent();
+	HasText getTaxRatePercent();
 	
 	HasValue<String> getTotalTaxAmount();
 	
