@@ -58,7 +58,7 @@
 								<g:customCell>
 									<g:SimplePanel width="190px">
 										<w:SelectOneListBox ui:field="buyer" width="234px">
-											<g:item value="-1">Default text</g:item>
+											<g:item value="-1">...</g:item>
 										</w:SelectOneListBox>
 									</g:SimplePanel>
 								</g:customCell>
@@ -122,19 +122,7 @@
 							<g:row>
 								<g:customCell>
 									<g:SimplePanel>
-										<g:Label text="taxRatePercent"></g:Label>
-									</g:SimplePanel>
-								</g:customCell>
-								<g:customCell>
-									<g:SimplePanel>
-										<g:TextBox ui:field="taxRatePercent"></g:TextBox>
-									</g:SimplePanel>
-								</g:customCell>
-							</g:row>
-							<g:row>
-								<g:customCell>
-									<g:SimplePanel>
-										<g:Label text="totalTaxAmount"></g:Label>
+										<g:Label text="totalTaxAmount"  ui:field="taxRatePercent"></g:Label>
 									</g:SimplePanel>
 								</g:customCell>
 								<g:customCell>

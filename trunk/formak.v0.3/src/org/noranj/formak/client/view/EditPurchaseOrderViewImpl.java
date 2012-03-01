@@ -63,7 +63,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	@UiField
 	TextBox poDate;
 	@UiField
-	TextBox taxRatePercent;
+	Label taxRatePercent;
 	@UiField
 	TextBox totalTaxAmount;
 	@UiField
@@ -117,9 +117,11 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
     	sb.append("<tr>");
 		sb.append("<td width='20px'>Seq</td>");
 		sb.append("<td width='80px'>ItemID</td>");
+		sb.append("<td width='200px'>Description</td>");
+		sb.append("<td width='80px'>Unit</td>");
 		sb.append("<td width='80px'>Quantity</td>");
 		sb.append("<td width='80px'>Price</td>");
-		sb.append("<td width='200px'>Description</td>");
+		sb.append("<td width='80px'>Total</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td colspan='5' style='border-top: 1px solid #E5E5E5'></td>");
@@ -174,7 +176,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		return poDate;
 	}
 	
-	public HasValue<String> getTaxRatePercent(){
+	public HasText getTaxRatePercent(){
 		return taxRatePercent;
 	}
 	

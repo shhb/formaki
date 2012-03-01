@@ -94,7 +94,7 @@ public class EditPurchaseOrderPresenter implements Presenter, EditPurchaseOrderV
 				row.setId("1");//result.getReceiverParty().getId());
 				row.setName("TP1-Dummy");//row.setName(result.getReceiverParty().getName());
 				view.getBuyer().setSelectedValue(row);
-				view.getTaxRatePercent().setValue(Byte.toString(result.getTaxRatePercent()));
+				view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
 				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
 				view.setRowData(result.getPurchaseOrderItems());
 			}
