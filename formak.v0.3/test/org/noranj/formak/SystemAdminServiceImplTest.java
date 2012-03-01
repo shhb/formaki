@@ -21,6 +21,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.noranj.formak.server.Startup;
 import org.noranj.formak.server.domain.biz.PurchaseOrder;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
@@ -77,8 +78,8 @@ public class SystemAdminServiceImplTest {
   public void testGetSystemUsers() throws Exception  {
     
     if (generateTestData) {
-      makeTestDataUserRetailerParty();
-      makeTestDataUserManufacturerParty();
+      Startup.makeTestDataUserRetailerParty();
+      Startup.makeTestDataUserManufacturerParty();
       generateTestData = false;
     }
 
@@ -134,8 +135,8 @@ public class SystemAdminServiceImplTest {
     
     try {
       
-      makeTestDataUserRetailerParty();
-      makeTestDataUserManufacturerParty();
+      Startup.makeTestDataUserRetailerParty();
+      Startup.makeTestDataUserManufacturerParty();
 
     } catch (Exception ex) {
       ex.printStackTrace();
@@ -144,70 +145,6 @@ public class SystemAdminServiceImplTest {
     System.out.println("=====================================================================");
   }
 
-  /**
-   * 
-   */
-  private void makeTestDataUserRetailerParty() throws Exception {
-    
-    String id = null;
-    SystemAdminServiceImpl service = new SystemAdminServiceImpl();
-    
-    //Adding Retailer Party
-    HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
-    roles.add(PartyRoleType.Buyer);
-    
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    
-    id = service.addSystemClientParty(parentClient);
-    parentClient.setId(id);
-    
-    System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
-
-    // Adding two users
-    SystemUserDTO user = null;
-    
-    user = new SystemUserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
-    id = service.addSystemUser(user);
-    user.setId(id);
-    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
-
-    user = new SystemUserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
-    id = service.addSystemUser(user);
-    user.setId(id);
-    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
-    
-  }
-  
-  /**
-   * 
-   */
-  private void makeTestDataUserManufacturerParty() throws Exception {
-    
-    SystemAdminServiceImpl service = new SystemAdminServiceImpl();
-    String id = null;
-    
-    //Adding Retailer Party
-    HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
-    roles.add(PartyRoleType.Seller);
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    id = service.addSystemClientParty(parentClient);
-    parentClient.setId(id);
-
-    System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
-
-    SystemUserDTO user = null;
-    
-    user = new SystemUserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
-    id = service.addSystemUser(user);
-    user.setId(id);
-    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
-
-    user = new SystemUserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient.getId(), ActivityType.Active, new UserProfileDTO());
-    id = service.addSystemUser(user);
-    user.setId(id);
-    System.out.printf("User [%s] is created and its id is [%s]\r\n", user.getFirstName(), user.getId());
-    
-  }
   
   
   //@ Test

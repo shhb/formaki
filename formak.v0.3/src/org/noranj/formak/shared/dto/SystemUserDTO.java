@@ -13,6 +13,10 @@ import org.noranj.formak.shared.type.ActivityType;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @since
+ * @version 0.3.2012FEB28
+ * @change
+ *  BA-2012-FEB-28 Added two new attributes lastActive, lastLoginOn.
  */
 public class SystemUserDTO implements Serializable {
 
@@ -32,6 +36,15 @@ public class SystemUserDTO implements Serializable {
 
   private ActivityType activityType = ActivityType.Deactive; 
 
+  /** last time user logged in. */
+  private long lastLoginOn;
+  
+  /** 
+   * last time user was active. 
+   * @deprecated not sure if we need this one when we have lastLoginOn. BA-2012-FEB-28
+   */
+  private long lastActive;
+  
   private UserProfileDTO profile;
 
   
@@ -43,6 +56,8 @@ public class SystemUserDTO implements Serializable {
 
   public SystemUserDTO(String id, String firstName, String lastName,
                       String emailAddress, String parentClientId, ActivityType activityType,
+                      long lastLoginOn,
+                      long lastActive,
                       UserProfileDTO profile) {
     super();
     this.id = id;
@@ -51,6 +66,8 @@ public class SystemUserDTO implements Serializable {
     this.emailAddress = emailAddress;
     this.parentClientId = parentClientId;
     this.activityType = activityType;
+    this.lastLoginOn = lastLoginOn;
+    this.lastActive = lastActive;
     this.profile = profile;
   }
 
@@ -102,12 +119,28 @@ public class SystemUserDTO implements Serializable {
     this.activityType = activityType;
   }
 
+  public long getLastLoginOn() {
+    return lastLoginOn;
+  }
+
+  public void setLastLoginOn(long lastLoginOn) {
+    this.lastLoginOn = lastLoginOn;
+  }
+
   public UserProfileDTO getProfile() {
     return profile;
   }
 
   public void setProfile(UserProfileDTO profile) {
     this.profile = profile;
+  }
+
+  public long getLastActive() {
+    return lastActive;
+  }
+
+  public void setLastActive(long lastActive) {
+    this.lastActive = lastActive;
   }
   
   

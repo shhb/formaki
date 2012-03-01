@@ -27,7 +27,9 @@ import com.google.appengine.api.datastore.KeyFactory;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.3.2012FEB21
+ * @version 0.3.2012FEB28
+ * @change
+ *  BA-2012-FEB-28 Added two new attributes lastActive, lastLoginOn.
  */
 @PersistenceCapable(detachable="true")
 @Index(name="EMAIL", unique="true",  members={SystemUser.C_EMAIL_ADDRESS}) //BA-2012-FEB-23 Added to be able to search by emailAddress
@@ -67,6 +69,12 @@ public class SystemUser implements Serializable, ChildEntity {
   @Persistent
   private ActivityType activityType = ActivityType.Deactive; 
 
+  @Persistent
+  private long lastActive;
+  
+  @Persistent
+  private long lastLoginOn;
+  
   @Persistent
   private UserProfile profile;
   
@@ -169,6 +177,22 @@ public class SystemUser implements Serializable, ChildEntity {
     this.activityType = activityType;
   }
 
+  public long getLastActive() {
+    return lastActive;
+  }
+
+  public void setLastActive(long lastActive) {
+    this.lastActive = lastActive;
+  }
+
+  public long getLastLoginOn() {
+    return lastLoginOn;
+  }
+
+  public void setLastLoginOn(long lastLoginOn) {
+    this.lastLoginOn = lastLoginOn;
+  }
+
   public Profile getProfile() {
     return profile;
   }
@@ -185,18 +209,26 @@ public class SystemUser implements Serializable, ChildEntity {
     this.version = version;
   }
   
+  /**
+   * 
+   * @return
+   */
   public SystemUserDTO getSystemUserDTO () {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
     SystemUserDTO suDTO = new SystemUserDTO(getId(), firstName, lastName, emailAddress, 
                                             getParentClientId(), 
                                             activityType, 
-                                            null // can not use Profile because it is not fetched
-                                            /*(profile!=null?profile.getUserProfileDTO():null)*/); //FIXME
+                                            lastActive,
+                                            lastLoginOn,
+                                            null // can not use Profile because it is not fetched 
+                                            /*(profile!=null?profile.getUserProfileDTO():null)*/ //FIXME
+                                            );
     
     return(suDTO);
   }
 
+  /** This is implemented so we can use DAL1ToNHelper. */
   @Override  //ChildEntity
   public String getParentId() {
     return getParentClientId();

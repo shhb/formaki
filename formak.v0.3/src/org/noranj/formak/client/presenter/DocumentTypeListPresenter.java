@@ -17,9 +17,10 @@ public class DocumentTypeListPresenter implements Presenter,DocumentTypeListView
 	private final BusinessDocumentServiceAsync rpcService;
 	private final DocumentTypeListView<DocumentType> view;
 	private final HandlerManager eventBus;
+	
 	public DocumentTypeListPresenter(BusinessDocumentServiceAsync rpcService,
-			DocumentTypeListView<DocumentType> view,
-			HandlerManager eventBus){
+                              			DocumentTypeListView<DocumentType> view,
+                              			HandlerManager eventBus) {
 		this.rpcService = rpcService;
 		this.view = view;
 		this.eventBus = eventBus;
@@ -28,7 +29,7 @@ public class DocumentTypeListPresenter implements Presenter,DocumentTypeListView
 	}
 			
 	@Override
-	public void go(HasWidgets container) {
+	public void go (HasWidgets container) {
 		container.clear();
 		container.add(view.asWidget());
 	}
@@ -41,7 +42,13 @@ public class DocumentTypeListPresenter implements Presenter,DocumentTypeListView
 				new AsyncCallback<DocumentType[]>() {
 
 					public void onFailure(Throwable caught) {
-						Window.alert("Error fetching DocumentRoleType details");
+					  caught.printStackTrace();
+					  if (caught.getMessage()!=null && caught.getMessage().contains("Not logged in")) { //FIXME the message is actually the login HTML page!!!
+					    // do nothing!!
+					  }
+					  else {
+					    //Window.alert("Error fetching DocumentRoleType details - [" + caught.getMessage() +"]");
+					  }
 					}
 
 					public void onSuccess(DocumentType[] result) {

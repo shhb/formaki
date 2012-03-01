@@ -1,16 +1,23 @@
 package org.noranj.formak.server.service;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.noranj.formak.client.service.SystemAdminService;
 import org.noranj.formak.server.DAL1ToNHelper;
 import org.noranj.formak.server.DALHelper;
+import org.noranj.formak.server.LoginHelper;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
-import org.noranj.formak.shared.exception.NotFoundException;
+import org.noranj.formak.shared.exception.NotLoggedInException;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * 
@@ -20,9 +27,13 @@ import org.noranj.formak.shared.exception.NotFoundException;
  *
  * @author
  */
-public class SystemAdminServiceImpl {
+public class SystemAdminServiceImpl extends RemoteServiceServlet implements SystemAdminService {
   
-  // XXX TEST
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2326021829857086171L;
+
   /**
    * It uses the users email address to find its detail information.
    * The email address is used as the user ID to sign in to the system.
@@ -33,14 +44,7 @@ public class SystemAdminServiceImpl {
   public SystemUserDTO getSystemUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
-    
-    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
-    
-    SystemUser sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, emailAddress), /*filter*/ 
-                                                            null /*ordering*/, null /*parameter*/, null /*value*/,
-                                                            null,  /* PArentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
-                                                            1); /* max fetch depth */
-    
+    SystemUser sysUser = LoginHelper.getSystemUser(emailAddress);
     if (sysUser!=null)
       return(sysUser.getSystemUserDTO());
     else 
@@ -99,8 +103,9 @@ public class SystemAdminServiceImpl {
    * 
    * @param systemUserDTO holds the data for the new user.
    * @return the new ID assigned to the SystemUserDTO
+   * 
    */
-  public String addSystemUser(SystemUserDTO systemUserDTO) throws NotFoundException {
+  public String addSystemUser(SystemUserDTO systemUserDTO) { //FIXME what will happen if it fails to add the user!!!
 
     DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
     SystemUser sysUser = new SystemUser(systemUserDTO);
@@ -109,5 +114,18 @@ public class SystemAdminServiceImpl {
     
   }
   
+  @Override
+  public SystemUserDTO getLoggedInUserDTO() {
+    HttpSession session = getThreadLocalRequest().getSession();
+    SystemUserDTO userDTO = LoginHelper.getLoggedInUser(session);
+    return userDTO;
+  }
+
+  @Override
+  public void logout() throws NotLoggedInException {
+    getThreadLocalRequest().getSession().invalidate();
+    throw new NotLoggedInException("Logged out");
+  }
+
  
 }

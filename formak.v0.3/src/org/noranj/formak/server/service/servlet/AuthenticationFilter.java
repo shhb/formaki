@@ -38,8 +38,10 @@ public class AuthenticationFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request,ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	  
 		HttpServletRequest rq = (HttpServletRequest)request;
 		HttpServletResponse rs = (HttpServletResponse)response;
+		
 	    //session check
 	    UserService userService = UserServiceFactory.getUserService();
 	    User user = userService.getCurrentUser();
