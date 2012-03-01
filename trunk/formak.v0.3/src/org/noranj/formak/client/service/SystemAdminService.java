@@ -1,8 +1,10 @@
 package org.noranj.formak.client.service;
 
 
+
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.exception.NotFoundException;
+import org.noranj.formak.shared.exception.NotLoggedInException;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -33,6 +35,10 @@ public interface SystemAdminService extends RemoteService {
    * 
    * @param systemUser holds the data for the new user.
    */
-  public void addSystemUser(SystemUserDTO systemUser); // the implementation throws NotFoundException;
+  public String addSystemUser(SystemUserDTO systemUser); // the implementation throws NotFoundException;
 
+  SystemUserDTO getLoggedInUserDTO();
+  
+  void logout() throws NotLoggedInException;
+  
 }

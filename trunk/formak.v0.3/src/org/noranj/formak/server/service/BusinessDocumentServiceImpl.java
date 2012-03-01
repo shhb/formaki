@@ -279,6 +279,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
   @Override
   public List<BusinessDocumentDTO> getBusinessDocuments(DocumentType documentType,
                                                             DocumentStateType documentStateType) {
+    
+    if (documentType.equals(DocumentType.Unknown)) {
+        System.out.println("*** ERROR: getBusinessDocuments can not accept an unknown DocumentType as input parameter.") ;
+        return(new ArrayList<BusinessDocumentDTO>()); //FIXME it should be handled better
+    }
+    
     boolean done = false;
     List<BusinessDocumentDTO> bizDocDetailsList = null;
     Collection<BusinessDocument> bizDocCollection = null;
