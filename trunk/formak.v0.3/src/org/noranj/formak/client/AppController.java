@@ -124,8 +124,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         }
         else if (token.equals("list")){
         	
-             	menuPresenter = new DocumentTypeListPresenter(rpcService,new DocumentTypeListViewImpl<DocumentType>(),eventBus);
-             	menuPresenter.go(Formak.get().getFolders());
+         	menuPresenter = new DocumentTypeListPresenter(rpcService,new DocumentTypeListViewImpl<DocumentType>(),eventBus);
+         	menuPresenter.go(Formak.get().getFolders());
          
         }
         else if (token.equals("add")) {
@@ -134,17 +134,15 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         else if (token.equals("edit")) {
           presenter = new EditBusinessDocumentPresenter(rpcService, eventBus, new EditBusinessDocumentView(), event.getValue() /*assuming this is the id*/);
         }
-
         else if (token.equals("editpo")) {
         	editPurchaseOrderView = new EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO>();
-        	 if (purchaseOrderItemColumnDefinition==null){
-        		 purchaseOrderItemColumnDefinition = BusinessDocumentsColumnDefinitionsFactory.getPurchaseOrderItemColumnDefinitions();
-        	 }
+        	if (purchaseOrderItemColumnDefinition==null){
+        	  purchaseOrderItemColumnDefinition = BusinessDocumentsColumnDefinitionsFactory.getPurchaseOrderItemColumnDefinitions();
+        	}
         	editPurchaseOrderView.setColumnDefinitions(purchaseOrderItemColumnDefinition); 
         	
-        	
-            presenter = new EditPurchaseOrderPresenter(rpcService, editPurchaseOrderView,businessDocumentId);
-          }
+          presenter = new EditPurchaseOrderPresenter(rpcService, editPurchaseOrderView,businessDocumentId);
+        }
 
         if (presenter != null) {
           presenter.go(container);
