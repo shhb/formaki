@@ -44,36 +44,27 @@ public class PurchaseOrderColumnDefinitionImpl extends ArrayList<ColumnDefinitio
 		    	  // users usually use UPC as itemID or they have their own ID.
 		    	  // we can show GTIN here (which is the identifier of the item/product in user's system. 
 		    	  //sb.append(c.getItemID());
-            
-            FlexTable flextable = new FlexTable();
-			 
-			 //////////////////////////////////////
-			 int row = 1;
-			 flextable.getRowFormatter().setStyleName(row, "");   
-			 flextable.getCellFormatter().setHorizontalAlignment(row, 0, HasHorizontalAlignment.ALIGN_LEFT);   
-			 flextable.getCellFormatter().setWordWrap(row, 0, false);   
-			 flextable.setText(row, 0, Integer.toString(c.getSequenceHolder()));  
-			 flextable.getCellFormatter().setHorizontalAlignment(row, 1, HasHorizontalAlignment.ALIGN_LEFT);   
-			 flextable.getCellFormatter().setWordWrap(row, 1, false);   
-			 flextable.setText(row, 1, Integer.toString(c.getSequenceHolder()));   
-			 flextable.setText(row, 2, Long.toString(c.getItemID())) ;
-			 flextable.setText(row, 3, Integer.toString(c.getQuantity())) ;
-			 flextable.getCellFormatter().setHorizontalAlignment(row, 3, HasHorizontalAlignment.ALIGN_LEFT);   
-			 flextable.getCellFormatter().setWordWrap(row, 3, false);
-			 Button submitButton= new Button("Submit");  
-			 flextable.setWidget(row, 4,submitButton );
-			// DOM.sinkEvents(self.getElement(), Event.ONCLICK);
-			 flextable.sinkEvents(Event.ONCLICK);
-			 //submitWorklow(submitButton,row, workflowMessageEvent);   
-			 flextable.getRowFormatter().setVisible(row, true);   
-			 submitButton.addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					// do something
-				}
-			});
-	    	  return flextable;    
+		         StringBuilder sb = new StringBuilder();
+		    	  sb.append("<table width='100%'>");
+		    	  sb.append("<tr>");
+		    	  sb.append("<td width='20px'><I>");
+		       	  sb.append(Integer.toString(c.getSequenceHolder()));
+		       	  sb.append("</I></td>");
+		    	  sb.append("<td width='80px'>");
+		    	  sb.append(Long.toString(c.getItemID()));
+		    	  sb.append("</td>");
+		    	  sb.append("<td width='80px'>");
+		    	  sb.append(Integer.toString(c.getQuantity()));
+		    	  sb.append("</td>");
+		    	  sb.append("<td width='80px'>");
+		    	  sb.append(c.getPrice());
+		    	  sb.append("</td>");
+		    	  sb.append("<td width='200px'>");
+		    	  sb.append(c.getDescription());
+		    	  sb.append("</td>");
+		    	  sb.append("</tr>");
+		    	  sb.append("</table>");
+		          return new HTML(sb.toString());			
 		}
 		public boolean isSelectable(){
 			return true;
