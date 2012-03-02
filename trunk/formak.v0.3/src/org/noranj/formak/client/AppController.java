@@ -9,6 +9,8 @@ import org.noranj.formak.client.event.DocumentTypeListChangedEvent;
 import org.noranj.formak.client.event.DocumentTypeListChangedEventHandler;
 import org.noranj.formak.client.event.EditBusinessDocumentEvent;
 import org.noranj.formak.client.event.EditBusinessDocumentEventHandler;
+import org.noranj.formak.client.event.LogoutEvent;
+import org.noranj.formak.client.event.LogoutEventHandler;
 import org.noranj.formak.client.presenter.DocumentTypeListPresenter;
 import org.noranj.formak.client.presenter.BusinessDocumentViewPresenter;
 import org.noranj.formak.client.presenter.EditBusinessDocumentPresenter;
@@ -24,6 +26,8 @@ import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.type.DocumentType;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -59,19 +63,27 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
     History.addValueChangeHandler(this);
     
     eventBus.addHandler(DocumentTypeListChangedEvent.TYPE, new DocumentTypeListChangedEventHandler() {
-    		@Override
-			public void BusinessDocumentTypeListChanged(DocumentTypeListChangedEvent event) {
-    			doChangeDocumentTypeList(event.getDocumentTypeCode());
-			}
-            }); 
+  		@Override
+  		public void BusinessDocumentTypeListChanged(DocumentTypeListChangedEvent event) {
+  			doChangeDocumentTypeList(event.getDocumentTypeCode());
+  		}
+    }); 
     
     eventBus.addHandler(EditBusinessDocumentEvent.TYPE, new EditBusinessDocumentEventHandler() {
-		@Override
-		public void onEditBusinessDocument(EditBusinessDocumentEvent event) {
-			doEditBusinessDocument(event.getId());
-			
-		}
-	});
+  		@Override
+  		public void onEditBusinessDocument(EditBusinessDocumentEvent event) {
+  			doEditBusinessDocument(event.getId());
+  		}
+    });
+    
+    //TODO SA - review this event that I just added. BA:12-MAR-01
+    eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
+      @Override public void onLogout(LogoutEvent event) {
+        GWT.log("AppController: Logout event received");
+        doLogout();
+      }
+    });
+    
   }
   
   private void doEditBusinessDocument(String id) {
@@ -84,7 +96,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	  
 	    History.newItem("listbytree" + id);
 	  }
- 
+
+  //TODO SA review this one that I added. BA:12-MAR-01
+  private void doLogout() {
+    History.newItem("login");
+  }
+  
   public void go(final HasWidgets container) {
     this.container = container;
     
@@ -142,6 +159,9 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         	editPurchaseOrderView.setColumnDefinitions(purchaseOrderItemColumnDefinition); 
         	
           presenter = new EditPurchaseOrderPresenter(rpcService, editPurchaseOrderView,businessDocumentId);
+        } else if (token.equals("login")) { //TODO SA Added this. BA:12-MAR-01
+          Formak.get().showLoginView();
+          return;
         }
 
         if (presenter != null) {
@@ -151,7 +171,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
       } // if (token != null)
       
     } /// onValueChange 
-    
     
     
 } //AppController

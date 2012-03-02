@@ -1,5 +1,7 @@
 package org.noranj.formak.shared.dto;
 
+import java.io.Serializable;
+
 /**
  * It HAS NOT BEEN IMPLEMENTED YET
  * 
@@ -9,7 +11,7 @@ package org.noranj.formak.shared.dto;
  * @author
  * @deprecated HAS NOT BEEN IMPLEMENTED YET
  */
-public class UserProfileDTO {
+public class UserProfileDTO implements Serializable {
 
   public UserProfileDTO() {
     // TODO Auto-generated constructor stub
