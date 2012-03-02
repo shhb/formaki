@@ -49,6 +49,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	
 	private List<ColumnDefinition<K>> columnDefinitions;
 	
+	private T masterRowData;
 	private List<K> rowData;
 	private List<L> rowBuyerData;
 	
@@ -77,7 +78,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	SelectOneListBox<L> buyer;
 	
 	@UiFactory SelectOneListBox<IDNameDTO> initSelect(){
-		return new SelectOneListBox(new OptionFormatter<IDNameDTO>(){
+		return new SelectOneListBox<IDNameDTO>(new OptionFormatter<IDNameDTO>(){
 
 			@Override
 			public String getLabel(IDNameDTO option) {
@@ -134,7 +135,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 			K k = rowData.get(i);
 			for (int j = 0; j < columnDefinitions.size(); ++j) {
 				ColumnDefinition<K> columnDefinition = columnDefinitions.get(j);
-				editPurchaseOrderItemsTable.setWidget(i+1, j,columnDefinition.render(k));
+				editPurchaseOrderItemsTable.setWidget(i+1, j, columnDefinition.render(k));
 			}
 		}
 		sb.delete(0, sb.length());
@@ -158,8 +159,9 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	
 	@UiHandler("saveButton")
 	void onSaveButtonClicked(ClickEvent event) {
+		
 	    if (presenter != null) {
-	      presenter.onSaveButtonClicked();
+	      presenter.onSaveMasterButtonClicked(masterRowData);
 	    }
 	  }
 	
@@ -200,6 +202,9 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		return buyer;
 	}
 	
+	public void setMasterRowData(T masterRowData ){
+		this.masterRowData = masterRowData;
+	}
 	
 	@Override //FIXME: 2012-2-15 ; SA:it does not work properly.
 	public void onBrowserEvent(Event event) {
