@@ -159,11 +159,11 @@ public class BusinessDocumentViewImpl<T, K> extends Composite implements  Busine
 
 			if (cell != null) {
 				if (shouldFireClickEvent(cell)) {
-					presenter.onItemClicked(rowData.get(cell.getRowIndex()));
+					presenter.onItemClicked(rowData.get(cell.getRowIndex()-1));
 				}
 
 				if (shouldFireSelectEvent(cell)) {
-					presenter.onItemSelected(rowData.get(cell.getRowIndex()));
+					presenter.onItemSelected(rowData.get(cell.getRowIndex()-1));
 
 				}
 			}
@@ -174,8 +174,7 @@ public class BusinessDocumentViewImpl<T, K> extends Composite implements  Busine
 		boolean shouldFireClickEvent = false;
 
 		if (cell != null) {
-			ColumnDefinition<T> columnDefinition = columnDefinitions.get(cell
-					.getCellIndex());
+			ColumnDefinition<T> columnDefinition = columnDefinitions.get(cell.getCellIndex());
 
 			if (columnDefinition != null) {
 				shouldFireClickEvent = columnDefinition.isClickable();
@@ -190,8 +189,7 @@ public class BusinessDocumentViewImpl<T, K> extends Composite implements  Busine
 		boolean shouldFireSelectEvent = false;
 
 		if (cell != null) {
-			ColumnDefinition<T> columnDefinition = columnDefinitions.get(cell
-					.getCellIndex());
+			ColumnDefinition<T> columnDefinition = columnDefinitions.get(cell.getCellIndex());
 
 			if (columnDefinition != null) {
 				shouldFireSelectEvent = columnDefinition.isSelectable();
