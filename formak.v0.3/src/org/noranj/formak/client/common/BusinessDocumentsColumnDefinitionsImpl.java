@@ -45,9 +45,9 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
     		 return propertyButton;
 	      }
     	
-    	public boolean isSelectable() {
-         return true;
-       }
+    	 public boolean isClickable() {
+    	        return true;
+    	 }
     }); 
     
     this.add(new ColumnDefinition<BusinessDocumentDTO>() {
@@ -76,9 +76,7 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
     	          
       }
 
-      public boolean isClickable() {
-        return true;
-      }
+     
     });
     
  
