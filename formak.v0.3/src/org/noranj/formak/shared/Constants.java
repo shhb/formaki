@@ -14,4 +14,8 @@ public class Constants {
   public static final String C_USER_ID_PROPERTY_NAME = "userId";
   /** this is stored in session so we know the user logged in. */
   public static final String C_LOGGED_IN_FLAG_PROPERTY_NAME = "loggedin";
+  
+  /** */
+  public static final String C_LOGGED_OUT = "logged out";
+
 }

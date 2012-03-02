@@ -18,6 +18,13 @@
  */
 package org.noranj.formak.client.helper;
 
+import org.noranj.formak.client.Formak;
+import org.noranj.formak.client.event.LogoutEvent;
+import org.noranj.formak.client.event.RPCInEvent;
+import org.noranj.formak.client.event.RPCOutEvent;
+import org.noranj.formak.shared.Constants;
+import org.noranj.formak.shared.exception.NotLoggedInException;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestTimeoutException;
 import com.google.gwt.user.client.Window;
@@ -26,7 +33,14 @@ import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.SerializationException;
 
-
+/**
+ * 
+ * @version 0.3.2012MAR01
+ * @since 0.3.2012MAR01
+ * @param <T>
+ * @change
+ *  
+ */
 public abstract class RPCCall<T> implements AsyncCallback<T> {
 
   protected abstract void callService(AsyncCallback<T> cb);
@@ -41,10 +55,12 @@ public abstract class RPCCall<T> implements AsyncCallback<T> {
         try {
           throw caught;
         } catch (InvocationException invocationException) {
-//          if(caught.getMessage().equals(SharedConstants.LOGGED_OUT)){
-//                ConnectrApp.get().getEventBus().fireEvent(new LogoutEvent());
-//                return;
-//          }
+          if(caught.getMessage().equals(Constants.C_LOGGED_OUT)){
+                //BA:12-MAR-01
+                //ConnectrApp.get().getEventBus().fireEvent(new LogoutEvent());
+                Formak.get().getEventBus().fireEvent(new LogoutEvent());
+                return;
+          }
           
           if (retriesLeft <= 0) {
             RPCCall.this.onFailure(invocationException);
@@ -55,8 +71,10 @@ public abstract class RPCCall<T> implements AsyncCallback<T> {
           Window.alert("The app maybe out of date. Reload this page in your browser.");
         } catch (SerializationException serializationException) {
           Window.alert("A serialization error occurred. Try again.");
-//        } catch (NotLoggedInException e) {
-//          ConnectrApp.get().getEventBus().fireEvent(new LogoutEvent());
+        } catch (NotLoggedInException e) {
+          //BA:2012-MAR-01
+          //ConnectrApp.get().getEventBus().fireEvent(new LogoutEvent());
+          Formak.get().getEventBus().fireEvent(new LogoutEvent());
         } catch (RequestTimeoutException e) {
           Window.alert("This is taking too long, try again");
         } catch (Throwable e) {// application exception
@@ -72,11 +90,11 @@ public abstract class RPCCall<T> implements AsyncCallback<T> {
   }
 
   private void onRPCIn() {
-   // ConnectrApp.get().getEventBus().fireEvent(new RPCInEvent());
+    Formak.get().getEventBus().fireEvent(new RPCInEvent());
   }
 
   private void onRPCOut() {
-    //ConnectrApp.get().getEventBus().fireEvent(new RPCOutEvent());
+    Formak.get().getEventBus().fireEvent(new RPCOutEvent());
   }
 
   public void retry(int retryCount) {
