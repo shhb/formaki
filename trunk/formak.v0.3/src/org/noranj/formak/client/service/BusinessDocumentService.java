@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.dto.XBusinessDocumentDTOX;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
@@ -37,7 +38,7 @@ public interface BusinessDocumentService extends RemoteService {
     //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
     //Long createDocument(DocumentType documentType); // throws ServiceCallFailed;
     String createDocument(DocumentType documentType); // throws ServiceCallFailed;
-	  
+    String insertDocument(DocumentType documentType,PurchaseOrderDTO purchaseOrderDTO,List<PurchaseOrderItemDTO> purchaseOrderItemDTO) ; 
     //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
     void deleteDocument(DocumentType documentType, String id/*long id*/) throws NotFoundException; //, ServiceCallFailed;
 

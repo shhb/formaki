@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.dto.XBusinessDocumentDTOX;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.type.DocumentStateType;
@@ -35,7 +36,7 @@ public interface BusinessDocumentServiceAsync {
   //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
   //public void createDocument(DocumentType documentType,AsyncCallback<Long> callback); // throws ServiceCallFailed;
   public void createDocument(DocumentType documentType,AsyncCallback<String> callback); // throws ServiceCallFailed;
-  
+  public void insertDocument(DocumentType documentType,PurchaseOrderDTO purchaseOrderDTO,List<PurchaseOrderItemDTO> purchaseOrderItemDTO,AsyncCallback<String> callback);
   //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
   //public void deleteDocument(DocumentType documentType, long id, AsyncCallback<Void> callback); // throws ServiceCallFailed;
   public void deleteDocument(DocumentType documentType, String id, AsyncCallback<Void> callback); // throws ServiceCallFailed;

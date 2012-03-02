@@ -21,6 +21,7 @@ import org.noranj.formak.server.domain.biz.RequestForQuotation;
 import org.noranj.formak.server.domain.core.Address;
 import org.noranj.formak.server.domain.core.BusinessDocument;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.dto.XBusinessDocumentDTOX;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PartyDTO;
@@ -106,6 +107,36 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
     return(partyRoleDocument.getAllDocuments(userPartyRole));
   }
 
+  //FIXME  SA:2012-Mar-01 Check it please as logical matter . 
+  public String insertDocument(DocumentType documentType,PurchaseOrderDTO purchaseOrderDTO,List<PurchaseOrderItemDTO> purchaseOrderItemDTO) {
+
+	assert (documentType!=null) : "documentType can not be null.";
+	switch (documentType) {
+		  case PurchaseOrder: 
+		    {
+			  PurchaseOrder po = new PurchaseOrder();
+		      po.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
+		      po.setName("Added New PO at " + System.currentTimeMillis());
+		      po.setBizDocumentNumber(purchaseOrderDTO.getBizDocumentNumber());
+		      po.setState(DocumentStateType.Draft);
+		      po.setImportantDate(System.currentTimeMillis());
+		      po.setImportantDateDescription("Created At");
+		      po.setMonetory(Long.parseLong(purchaseOrderDTO.getMonetory()));
+		      po.setNote(purchaseOrderDTO.getNote());
+		      //
+		      po.setBillTo(new Address(purchaseOrderDTO.getBillTo().getStreetAddress(),purchaseOrderDTO.getBillTo().getCity(),purchaseOrderDTO.getBillTo().getStateOrProvince(),purchaseOrderDTO.getBillTo().getPostalCode()));
+		      po.setShipTo(new Address(purchaseOrderDTO.getShipTo().getStreetAddress(),purchaseOrderDTO.getShipTo().getCity(),purchaseOrderDTO.getShipTo().getStateOrProvince(),purchaseOrderDTO.getShipTo().getPostalCode()));
+		      for( PurchaseOrderItemDTO row : purchaseOrderItemDTO){
+		    	  po.addPurchaseOrderItem(new PurchaseOrderItem(0,row.getItemID(),row.getGTIN(),row.getBuyerItemID(),row.getDescription(),row.getUom(),row.getQuantity(),row.getPrice()));
+		      }
+		
+		      BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
+		      businessDocumentHelper.storeEntity(po);
+		      return(po.getId());
+		    }
+	}
+	return "";
+  }
   
   /**
    * 

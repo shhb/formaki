@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 public interface EditPurchaseOrderView<T,K,L> {
 
 	public interface Presenter<T> {
-		 public void onSaveButtonClicked();
+		 public void onSaveMasterButtonClicked(T masterRowData);
 		 public void onAddButtonClicked();
 		
 	}
@@ -41,6 +41,8 @@ public interface EditPurchaseOrderView<T,K,L> {
 	HasValue<String> getNote();
 	
 	void setRowData(List<K> rowData);
+	
+	void setMasterRowData(T masterRowData);
 	
 	void setBuyerData(List<L> rowData);
 	
