@@ -19,6 +19,8 @@ import org.noranj.formak.shared.dto.PurchaseOrderDTO;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @change
+ *  BA:12-MAR-01 added a new constructor that gets a DTO.
  */
 @PersistenceCapable(detachable="true")
 @EmbeddedOnly
@@ -50,6 +52,16 @@ public class Address implements Serializable{
       this.city = city;
       this.stateOrProvince = stateOrProvince;
       this.postalCode = postalCode;
+    }
+
+    //TODO SA review this code. I added to make insert more readable.
+    // adding this constructor makes the code more reusable. BA:12-MAR-01 
+    public Address(AddressDTO address) {
+      super();
+      setStreetAddress(address.getStreetAddress());
+      setCity(address.getCity());
+      setStateOrProvince(address.getStateOrProvince());
+      setPostalCode(address.getPostalCode());
     }
 
     public String getStreetAddress() {

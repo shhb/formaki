@@ -38,7 +38,9 @@ public interface BusinessDocumentService extends RemoteService {
     //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
     //Long createDocument(DocumentType documentType); // throws ServiceCallFailed;
     String createDocument(DocumentType documentType); // throws ServiceCallFailed;
-    String insertDocument(DocumentType documentType,PurchaseOrderDTO purchaseOrderDTO,List<PurchaseOrderItemDTO> purchaseOrderItemDTO) ; 
+    
+    String insertDocument(PurchaseOrderDTO purchaseOrderDTO) ;
+    
     //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
     void deleteDocument(DocumentType documentType, String id/*long id*/) throws NotFoundException; //, ServiceCallFailed;
 

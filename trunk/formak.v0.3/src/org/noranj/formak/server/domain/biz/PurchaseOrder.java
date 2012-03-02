@@ -18,6 +18,9 @@ import org.noranj.formak.server.domain.core.Address;
 import org.noranj.formak.server.domain.core.BusinessDocument;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
+import org.noranj.formak.shared.type.DocumentStateType;
+import org.noranj.formak.shared.type.LevelOfImportanceType;
 
 //FIXME updating BusinessDocument fields. BA-2012-FEB-09
 /**
@@ -103,6 +106,28 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
   
   public PurchaseOrder() {
     super();
+  }
+  
+  public PurchaseOrder(PurchaseOrderDTO po) {
+    super();
+    setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
+    setName("Added New PO at " + System.currentTimeMillis());
+    setBizDocumentNumber(po.getBizDocumentNumber());
+    setState(DocumentStateType.Draft);
+    setImportantDate(System.currentTimeMillis());
+    setImportantDateDescription("Created At");
+    setMonetory(Long.parseLong(po.getMonetory()));
+    setNote(po.getNote());
+    //
+    setBillTo(new Address(po.getBillTo())); // see my notes in Address
+    setShipTo(new Address(po.getShipTo()));
+    
+    
+    for( PurchaseOrderItemDTO row : po.getPurchaseOrderItems()){
+     //FIXME SA adding a new constructor to PurchaseOrderItem will make the code more reusable and readable. BA:12-MAR-01
+      addPurchaseOrderItem(new PurchaseOrderItem(0,row.getItemID(),row.getGTIN(),row.getBuyerItemID(),row.getDescription(),row.getUom(),row.getQuantity(),row.getPrice()));
+    }
+    
   }
   public String getMessage() {
     return message;
