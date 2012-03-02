@@ -156,7 +156,9 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			purchaseorderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));
 			purchaseorderDTO.setTotalTaxAmount(2);
 
-			rpcService.insertDocument(DocumentType.PurchaseOrder,masterRowData, purchaseOrderItems,new AsyncCallback<String>() {
+			//TODO SA review
+      //rpcService.insertDocument(DocumentType.PurchaseOrder,masterRowData, purchaseOrderItems,new AsyncCallback<String>() {
+			rpcService.insertDocument(masterRowData, new AsyncCallback<String>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
