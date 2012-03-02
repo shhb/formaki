@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.noranj.formak.client.resources.en.GlobalResources;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
@@ -42,6 +46,24 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
 
     	public Widget render(BusinessDocumentDTO c) {
     		 final Image propertyButton = new Image(GlobalResources.RESOURCE.propertyButton());
+    		 propertyButton.setTitle("ClickMe!");
+    		 propertyButton.addMouseOverHandler(new MouseOverHandler(){
+
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					propertyButton.setResource(GlobalResources.RESOURCE.propertyButtonOn());
+				}
+    			 
+    		 });
+    		 propertyButton.addMouseOutHandler(new MouseOutHandler(){
+
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					propertyButton.setResource(GlobalResources.RESOURCE.propertyButton());
+					
+				}
+    			 
+    		 });
     		 return propertyButton;
 	      }
     	
