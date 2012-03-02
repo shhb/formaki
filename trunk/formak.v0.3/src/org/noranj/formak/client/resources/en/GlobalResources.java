@@ -16,6 +16,9 @@ public interface GlobalResources extends ClientBundle {
 	  
 	  @Source("org/noranj/formak/client/resources/en/propertyButton.png")
 	  ImageResource propertyButton();
+	  
+	  @Source("org/noranj/formak/client/resources/en/propertyButtonOn.png")
+	  ImageResource propertyButtonOn();
 
 	  @Source("org/noranj/formak/client/resources/en/GlobalStylesEn.css")
 	  GlobalStylesheet globalStyles();
