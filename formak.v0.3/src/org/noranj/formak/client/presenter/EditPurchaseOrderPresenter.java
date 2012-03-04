@@ -155,9 +155,6 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			purchaseorderDTO.setShipTo(addressDTO);
 			purchaseorderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));
 			purchaseorderDTO.setTotalTaxAmount(2);
-
-			//TODO SA review
-      //rpcService.insertDocument(DocumentType.PurchaseOrder,masterRowData, purchaseOrderItems,new AsyncCallback<String>() {
 			rpcService.insertDocument(masterRowData, new AsyncCallback<String>() {
 
 						@Override

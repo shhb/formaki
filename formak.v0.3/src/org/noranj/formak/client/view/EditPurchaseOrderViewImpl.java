@@ -10,8 +10,12 @@ import org.noranj.formak.client.common.SelectOneListBox.OptionFormatter;
 import org.noranj.formak.client.view.BusinessDocumentView.Presenter;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 
+import com.google.gwt.cell.client.EditTextCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
@@ -20,6 +24,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
+import com.google.gwt.user.cellview.client.TextHeader;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
@@ -35,6 +42,8 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.ListDataProvider;
 
 public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditPurchaseOrderView<T,K,L>{
 
@@ -110,41 +119,107 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	}
 
 	public void setRowData(List<K> rowData) {
-		editPurchaseOrderItemsTable.removeAllRows();
-		this.rowData = rowData;
-		StringBuilder sb = new StringBuilder();
-		//editPurchaseOrderItemsTable.setWidget(0,1,new HTML("<div width='80px' style='border-bottom: 1px solid #E5E5E5'>#</div>"));
-	  	sb.append("<table width='100%'>");
-    	sb.append("<tr>");
-		sb.append("<td width='20px'>Seq</td>");
-		sb.append("<td width='80px'>ItemID</td>");
-		sb.append("<td width='200px'>Description</td>");
-		sb.append("<td width='80px'>Unit</td>");
-		sb.append("<td width='80px'>Quantity</td>");
-		sb.append("<td width='80px'>Price</td>");
-		sb.append("<td width='80px'>Total</td>");
-		sb.append("</tr>");
-		sb.append("<tr>");
-		sb.append("<td colspan='5' style='border-top: 1px solid #E5E5E5'></td>");
-		sb.append("</tr>");
-		sb.append("</table>");
-		editPurchaseOrderItemsTable.setWidget(0,1,new HTML(sb.toString()));
-		//cancelButton.sinkEvents(Event.ONCLICK);
-		int i ;
-		for (i = 0; i < rowData.size(); ++i) {
-			K k = rowData.get(i);
-			for (int j = 0; j < columnDefinitions.size(); ++j) {
-				ColumnDefinition<K> columnDefinition = columnDefinitions.get(j);
-				editPurchaseOrderItemsTable.setWidget(i+1, j, columnDefinition.render(k));
+		
+        CellTable<PurchaseOrderItemDTO> cellTable = new CellTable<PurchaseOrderItemDTO>();
+        
+        Column<PurchaseOrderItemDTO,String> sequenceHolder = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return Integer.toString(object.getSequenceHolder());
 			}
-		}
-		sb.delete(0, sb.length());
-		sb.append("<table width='100%'>");
-    	sb.append("<tr>");
-    	sb.append("<td colspan='5' style='border-top: 1px solid #E5E5E5'></td>");
-		sb.append("</tr>");
-		sb.append("</table>");
-		editPurchaseOrderItemsTable.setWidget(i+1,1,new HTML(sb.toString()));
+
+		};
+		
+		Column<PurchaseOrderItemDTO,String> gtnID = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+		
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return object.getGTIN();
+			}
+		  };
+		
+		Column<PurchaseOrderItemDTO,String> description = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return object.getDescription();
+			}
+		};
+		
+		Column<PurchaseOrderItemDTO,String> uom = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+		
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return object.getUom();
+			}
+		  };
+		
+		Column<PurchaseOrderItemDTO,String> quantity = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+		
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return Integer.toString(object.getQuantity());
+			}
+		  };
+		  
+		Column<PurchaseOrderItemDTO,String> price = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+		
+			@Override
+			public String getValue(PurchaseOrderItemDTO object) {
+				return Long.toString(object.getPrice());
+			}
+		  };
+		  
+		Column<PurchaseOrderItemDTO,String> total = new Column<PurchaseOrderItemDTO, String>(new EditTextCell()) {
+
+	@Override
+	public String getValue(PurchaseOrderItemDTO object) {
+		return Long.toString(object.getQuantity()*object.getPrice());
+	}
+  };
+  
+  		description.setFieldUpdater(new FieldUpdater<PurchaseOrderItemDTO,String>(){
+	@Override
+	public void update(int index, PurchaseOrderItemDTO object,String value) {
+		object.setDescription(value);	
+	}
+  });
+
+		sequenceHolder.setSortable(true);
+  		cellTable.addColumn(sequenceHolder,new TextHeader("Seq"));
+		cellTable.setColumnWidth(sequenceHolder, 1, Unit.PCT);
+		
+		gtnID.setSortable(true);
+		cellTable.addColumn(gtnID,new TextHeader("GTN"));
+		cellTable.setColumnWidth(gtnID, 1, Unit.PCT);
+		
+		description.setSortable(true);
+		cellTable.addColumn(description,new TextHeader("description"));
+		cellTable.setColumnWidth(description, 200, Unit.PX);
+		
+		uom.setSortable(true); 
+		cellTable.addColumn(uom,new TextHeader("uom"));
+		cellTable.setColumnWidth(uom, 1, Unit.PCT);
+		
+		quantity.setSortable(true);
+		cellTable.addColumn(quantity,new TextHeader("quantity"));
+		cellTable.setColumnWidth(quantity, 1, Unit.PCT);
+		
+		price.setSortable(true);
+		cellTable.addColumn(price,new TextHeader("price"));
+		cellTable.setColumnWidth(price, 1, Unit.PCT);
+		
+		
+		cellTable.addColumn(total,new TextHeader("total"));
+		cellTable.setColumnWidth(total, 1, Unit.PCT);
+			        	
+		ListDataProvider<PurchaseOrderItemDTO> lda = new ListDataProvider<PurchaseOrderItemDTO>();
+		ListHandler<PurchaseOrderItemDTO> sortHandler = new ListHandler<PurchaseOrderItemDTO>(lda.getList());
+		cellTable.addColumnSortHandler(sortHandler);
+		lda.setList((List<PurchaseOrderItemDTO>) rowData);
+		lda.addDataDisplay(cellTable);
+		editPurchaseOrderItemsTable.setWidget(0,0,cellTable);
+		
 	}
 
 	public void setBuyerData(List<L> rowBuyerData){
