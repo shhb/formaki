@@ -89,25 +89,6 @@ public class Formak implements EntryPoint {
     return eventBus;
   }
 
-  // BA:12-MAR-01 Commented out your original method. It is actually copied to goAfterLogin()
-  /*
-	public void onModuleLoad() {
-	  
-		singleton = this;
-		
-		DockLayoutPanel outer = binder.createAndBindUi(this);
-		root = RootLayoutPanel.get();
-		root.clear();
-		root.add(outer);
-		
-		BusinessDocumentServiceAsync rpcService = GWT
-				.create(BusinessDocumentService.class);
-		HandlerManager eventBus = new HandlerManager(null);
-		AppController appViewer = new AppController(rpcService, eventBus);
-		appViewer.go(getMainPanel());
-		//appViewer.go(getFolders());
-	}*/
-	
   public void onModuleLoad() {
     //pushServiceStreamFactory = (SerializationStreamFactory) PushService.App.getInstance();
     singleton = this;

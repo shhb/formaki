@@ -7,14 +7,8 @@
       since   0.3.2012MAR01
       change 
    -->
-
-
-	<ui:image field='logo' src='../resources/en/logo.png' /> <!-- FIXME "en" path must be based on user's locale.  -->
-  <ui:image field='google' src='../resources/googlelogo.gif' />
-  
-	<!-- ui : image field='twitter' src='../resources/twitterlogo.gif' -->
-	<!-- ui : image field='facebook' src='../resources/facebooklogo.jpeg' -->
-	
+<ui:image field='logo' src='../resources/en/images/flogo.png' /> <!-- FIXME "en" path must be based on user's locale.  -->
+<ui:image field='google' src='../resources/googlelogo.gif' />
 	<ui:style>
 		.outer {
 			padding: 100px 0;
@@ -29,7 +23,7 @@
       width: 80%;
       padding: 40px;
       text-align: left;
-      background-color: #e8effa;
+      background-color: white;
       border: 3px solid #ccc;
     }
     
@@ -43,13 +37,12 @@
     
 		@sprite .logo {
 			gwt-image: 'logo';
-			position: absolute;
+			
 			clear: both;
 		}
 		
 		.what-to-do {
-			margin-top: 80px;
-			font-size: 1.8em;
+			fornt-face:tahome;
 		}
 		
 		.providers {
@@ -66,9 +59,9 @@
 			background-color: #444;
 			font-size: 1.3em;
 			color: #eee;
-			width: 222px;
+			width: 322px;
 			margin-left: 20px;
-			padding: 20px;
+			padding: 30px;
 		}
 		
 		.pushbutton {
@@ -85,17 +78,17 @@
 	</ui:style>
 
 	<g:HTMLPanel styleName='{style.outer}'>
-		<center>
+	<center>
 			<div class='{style.container}'>
 				<div class='{style.content}'>
-					<div class='{style.logo}' />
+					<div class='{style.logo}' />				
 					<div class='{style.sidebox}'>
-						Connectr is built with Google Web Toolkit and App
+						Formak is built with Google Web Toolkit and App
 						Engine
 						in Java. 
 		    </div>
-					<div class='{style.what-to-do}'>To use Connectr, login with one of the following
-						providers.</div>
+					<div class='{style.what-to-do}'>To use Formak, login with one of the following providers.</div>
+						<div class='{style.what-to-do}'>برای  استفاده از فرمک یا یکی از سرویس دهندگان زیر به سامانه وارد شوید</div>
 					<div class='{style.providers}'>
             <div class='{style.provider-button}'>
               <g:PushButton ui:field='googleButton' width='120px'
