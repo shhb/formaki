@@ -102,7 +102,7 @@
 				</g:HorizontalPanel>
 
 				<g:HorizontalPanel>
-					<g:FlexTable ui:field="editPurchaseOrderItemsTable" addStyleNames="{style.businessDocumentViewflexTable}" />
+					<c:CellTable ui:field="purchaseOrderItemsCellTable" addStyleNames="{style.businessDocumentViewflexTable}" />
 				</g:HorizontalPanel>
 				<g:HorizontalPanel>
 					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="796px">

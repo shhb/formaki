@@ -18,6 +18,8 @@ import org.noranj.formak.shared.type.LevelOfImportanceType;
 import org.noranj.formak.shared.type.PartyRoleType;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -41,6 +43,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 	private PartyServiceAsync rpcPartyService;
 	private final String id;
 	private PartyDTO partyDTO;
+	private PurchaseOrderDTO purchaseOrderDTO;
 
 	public EditPurchaseOrderPresenter(BusinessDocumentServiceAsync rpcService,EditPurchaseOrderView<PurchaseOrderDTO, PurchaseOrderItemDTO, IDNameDTO> view,
 			String id) {
@@ -78,6 +81,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 
 			@Override
 			public void onSuccess(PurchaseOrderDTO result) {
+				purchaseOrderDTO = result;
 				view.setMasterRowData(result);
 				view.getId().setValue(result.getId());
 
@@ -105,9 +109,18 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			}
 
 		});
-		// this.view = view;
 		this.view.setPresenter(this);
-	}
+		this.view.getSaveButton().addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				doSave(purchaseOrderDTO);
+			}
+			
+		});
+			
+		}
+	
 
 	@Override
 	public void go(HasWidgets container) {
@@ -115,47 +128,41 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 		container.add(view.asWidget());
 	}
 
-	@Override
-	public void onSaveMasterButtonClicked(PurchaseOrderDTO masterRowData) {
-		if (!view.getId().equals(null)) {
-			PurchaseOrderDTO purchaseorderDTO = masterRowData;
+
+	public void doSave(PurchaseOrderDTO masterRowData) {
+		
+			PurchaseOrderDTO purchaseOrderDTO = masterRowData;
 			AddressDTO addressDTO = new AddressDTO();
 			addressDTO.setCity("Vancouver");
 			addressDTO.setPostalCode("V6R2B8");
 			addressDTO.setStateOrProvince("BC");
 			addressDTO.setStreetAddress("Jervis ST");
-			purchaseorderDTO.setBillTo(addressDTO);
-			purchaseorderDTO.setBizDocumentNumber(view.getPONumber().getValue());
-			purchaseorderDTO.setDocumentState(DocumentStateType.Draft);
-			purchaseorderDTO.setImportantDate(System.currentTimeMillis());
-			purchaseorderDTO.setLevelOfImportance(LevelOfImportanceType.NotImportant);
-			purchaseorderDTO.setMonetory(0);
-			purchaseorderDTO.setNote(view.getNote().getValue());
+			purchaseOrderDTO.setBillTo(addressDTO);
+			purchaseOrderDTO.setBizDocumentNumber(view.getPONumber().getValue());
+			purchaseOrderDTO.setDocumentState(DocumentStateType.Draft);
+			purchaseOrderDTO.setImportantDate(System.currentTimeMillis());
+			purchaseOrderDTO.setLevelOfImportance(LevelOfImportanceType.NotImportant);
+			purchaseOrderDTO.setMonetory(0);
+			purchaseOrderDTO.setNote(view.getNote().getValue());
+			purchaseOrderDTO.setId(view.getId().toString());
 			PartyDTO partyDTO = new PartyDTO();
-			partyDTO.setId("1"); // FIXME
-			partyDTO.setName("TP1-Dummy");// FIXME
-			purchaseorderDTO.setOriginatorParty(partyDTO);
-
+			partyDTO.setId("2"); // FIXME
+			partyDTO.setName("TP2-Dummy");// FIXME
+			purchaseOrderDTO.setOriginatorParty(partyDTO);
 			List<PurchaseOrderItemDTO> purchaseOrderItems = new ArrayList<PurchaseOrderItemDTO>();
-			for (int i = 0; i == 2; i++) {
-				PurchaseOrderItemDTO purchaseOrderItemDTO = new PurchaseOrderItemDTO();
-				purchaseOrderItemDTO.setBuyerItemID("1");
-				purchaseOrderItemDTO.setDescription("test");
-				purchaseOrderItemDTO.setGTIN("2");
-				purchaseOrderItemDTO.setItemID(3);
-				purchaseOrderItemDTO.setPrice(4);
-				purchaseOrderItemDTO.setQtyOrdered("5");
-				purchaseOrderItemDTO.setQuantity(6);
-				purchaseOrderItemDTO.setUOM("K");
-				purchaseOrderItems.set(i, purchaseOrderItemDTO);
+			//Window.alert(Integer.toString(this.view.getPurchaseOrderItemsCellTable().getRowCount()));
+			
+			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
+				PurchaseOrderItemDTO purchaseOrderItemDTO = this.view.getPurchaseOrderItemsCellTable().getVisibleItem(i);
+				purchaseOrderItems.add(purchaseOrderItemDTO);
 			}
 
-			purchaseorderDTO.setPurchaseOrderItems(purchaseOrderItems);
-			purchaseorderDTO.setReceiverParty(partyDTO);
-			purchaseorderDTO.setShipTo(addressDTO);
-			purchaseorderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));
-			purchaseorderDTO.setTotalTaxAmount(2);
-			rpcService.insertDocument(masterRowData, new AsyncCallback<String>() {
+			purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItems);
+			purchaseOrderDTO.setReceiverParty(partyDTO);
+			purchaseOrderDTO.setShipTo(addressDTO);
+			purchaseOrderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));
+			purchaseOrderDTO.setTotalTaxAmount(2);
+			rpcService.saveDocument(purchaseOrderDTO, new AsyncCallback<String>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -170,9 +177,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 						}
 
 					});
-		} else {
-			// rpcService.updateDocument
-		}
+		
 	}
 
 	@Override
