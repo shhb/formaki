@@ -108,51 +108,9 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
     return(partyRoleDocument.getAllDocuments(userPartyRole));
   }
 
-  //FIXME  SA:2012-Mar-01 Check it please as logical matter . 
-  
-  
-   /* 1- PurchaseOrderDTO tells you the type of document is PurchaseOrder so what is the point of passing documentType parameter!!!
-    * 2- PurchaseOrdeDTO has a list of POItems. The items must be added to that object (PO). SO there is no need to pass them as a separate parameters.
-  public String insertDocument(DocumentType documentType,PurchaseOrderDTO purchaseOrderDTO,List<PurchaseOrderItemDTO> purchaseOrderItemDTO) {
-  so the method should be 
-
-  public String insertDocument(PurchaseOrderDTO purchaseOrderDTO) {
-  
-  Body of the method:
-  1- The only document that the method can process is PurchaseOrder so there is no need to have a switch!!!
-
-  assert (documentType!=null) : "documentType can not be null.";
-  switch (documentType) {
-      case PurchaseOrder: 
-        {
-        PurchaseOrder po = new PurchaseOrder();
-          po.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
-          po.setName("Added New PO at " + System.currentTimeMillis());
-          po.setBizDocumentNumber(purchaseOrderDTO.getBizDocumentNumber());
-          po.setState(DocumentStateType.Draft);
-          po.setImportantDate(System.currentTimeMillis());
-          po.setImportantDateDescription("Created At");
-          po.setMonetory(Long.parseLong(purchaseOrderDTO.getMonetory()));
-          po.setNote(purchaseOrderDTO.getNote());
-          //
-          po.setBillTo(new Address(purchaseOrderDTO.getBillTo().getStreetAddress(),purchaseOrderDTO.getBillTo().getCity(),purchaseOrderDTO.getBillTo().getStateOrProvince(),purchaseOrderDTO.getBillTo().getPostalCode()));
-          po.setShipTo(new Address(purchaseOrderDTO.getShipTo().getStreetAddress(),purchaseOrderDTO.getShipTo().getCity(),purchaseOrderDTO.getShipTo().getStateOrProvince(),purchaseOrderDTO.getShipTo().getPostalCode()));
-          for( PurchaseOrderItemDTO row : purchaseOrderItemDTO){
-            po.addPurchaseOrderItem(new PurchaseOrderItem(0,row.getItemID(),row.getGTIN(),row.getBuyerItemID(),row.getDescription(),row.getUom(),row.getQuantity(),row.getPrice()));
-          }
-    
-          BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
-          businessDocumentHelper.storeEntity(po);
-          return(po.getId());
-        }
-  }
-  return "";
-  }
-  * must be something like this.
-  */
   //TODO SA take a look at this codes
   ///XXX TEST it has not been tested.
-  public String insertDocument(PurchaseOrderDTO purchaseOrderDTO) {
+  public String saveDocument(PurchaseOrderDTO purchaseOrderDTO) {
     assert (purchaseOrderDTO!=null) : "purchaseOrderDTO can not be null.";
 
     PurchaseOrder po = new PurchaseOrder(purchaseOrderDTO);
