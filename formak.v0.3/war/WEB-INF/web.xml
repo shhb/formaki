@@ -71,6 +71,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/formak/businessDocument</url-pattern>
   </filter-mapping>
 
+  <!-- Configure the namespace filter. -->
+  <filter>
+    <filter-name>NamespaceFilter</filter-name>
+    <filter-class>org.noranj.formak.server.service.servlet.NamespaceFilter</filter-class>
+    <init-param>
+      <param-name>namespace-strategy</param-name>
+      <!-- Change this to the desired strategy, see NamespaceFilter.NamespaceStrategy -->
+      <!-- CLIENT_ID is the one that is used for all users of the system. -->
+      <param-value>CLIENT_ID</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>NamespaceFilter</filter-name>
+      <url-pattern>/formak/*</url-pattern>
+  </filter-mapping>
+
   <welcome-file-list>
     <welcome-file>Formak.html</welcome-file>
   </welcome-file-list>

@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.noranj.formak.SystemAdminServiceImplTest;
+import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.server.utils.ServletHelper;
@@ -39,12 +40,14 @@ import org.noranj.formak.server.utils.ServletUtils;
 import org.noranj.formak.shared.Constants;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * 
- * @modified
- *   
+ * @change
+ *  
+ * BA-12-MAR-02 Added getSignupURL
  */
 public class LoginHelper extends RemoteServiceServlet {
   
@@ -70,6 +73,25 @@ public class LoginHelper extends RemoteServiceServlet {
 
   }
 
+  //TODO SA 
+  /**
+   * This method returns the URL to sign up page where we let users sign up if they are not in Formak.
+   * @param request
+   * @return URL of the sign up page
+   */
+  static public String getSignupURL(HttpServletRequest request) {
+
+    //FIXME the following code just copied from getApplicationURL and MUST BE FIXED.
+    if (ServletHelper.isDevelopment(request)) {
+      if (System.getProperty("applition.url")!=null) //FIXME add this to documentation
+        return System.getProperty("applition.url");
+      return("http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997");
+    } else {
+      return ServletUtils.getBaseUrl(request);
+    }
+
+  }
+  
   /**
    * 
    * @param session
@@ -84,23 +106,33 @@ public class LoginHelper extends RemoteServiceServlet {
     if (userId == null)
       return null; // user not logged in
 
-    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
-    
-    SystemUser sysUser = systemUserHelper.getEntityById (userId, null /*Fetch group*/, 1); 
-    
-    if (sysUser!=null) {
-      
-      //TODO do we need to do this? think about how to do it and the impact on performance! BA-2012-FEB-29
-      // the original code used the attached domain object to update it attribute and it does both fetch and update in one trabnsaction.
-      /**
-        sysUser.setLastActive(System.currentTimeMillis());
-        systemUserHelper.storeEntity(sysUser);
-      */
+    //BA:12-MAR-06 Added namespace
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
 
-      return(sysUser.getSystemUserDTO());
+    try {
+      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+      
+      SystemUser sysUser = systemUserHelper.getEntityById (userId, null /*Fetch group*/, 1); 
+      
+      if (sysUser!=null) {
+        
+        //TODO do we need to do this? think about how to do it and the impact on performance! BA-2012-FEB-29
+        // the original code used the attached domain object to update it attribute and it does both fetch and update in one trabnsaction.
+        /**
+          sysUser.setLastActive(System.currentTimeMillis());
+          systemUserHelper.storeEntity(sysUser);
+        */
+  
+        return(sysUser.getSystemUserDTO());
+      }
+      else 
+        return(null);
+      
+    } finally {
+      //BA:12-MAR-06 Added namespace
+      NamespaceManager.set(currentNameSpace); 
     }
-    else 
-      return(null);
     
   }
 
@@ -114,28 +146,71 @@ public class LoginHelper extends RemoteServiceServlet {
 
     if (req == null)
       return false;
+    
+    HttpSession session = req.getSession();
+    if (session == null) {
+      logger.info("Session is null...");
+      return false;
+    } 
     else {
-      HttpSession session = req.getSession();
-      if (session == null) {
-        logger.info("Session is null...");
-        return false;
-      } else {
-        Boolean isLoggedIn = (Boolean) session.getAttribute(Constants.C_LOGGED_IN_FLAG_PROPERTY_NAME);
-        if(isLoggedIn == null){
-          logger.info("Session found, but did not find loggedin attribute in it: user not logged in");
-          return false;
-        } else if (isLoggedIn){
-          logger.info("User is logged in...");
-          return true;
-        } else {
-          logger.info("User not logged in");
-          return false;
-        }
-      }
+      return(isLoggedIn(session));
     }
     
   }
 
+  /**
+   * 
+   * @param session
+   * @return
+   */
+  static private boolean isLoggedIn(HttpSession session) {
+    
+    Boolean isLoggedIn = (Boolean) session.getAttribute(Constants.C_LOGGED_IN_FLAG_PROPERTY_NAME);
+    if(isLoggedIn == null){
+      logger.info("Session found, but did not find loggedin attribute in it: user not logged in");
+      return false;
+    } else if (isLoggedIn){
+      logger.info("User is logged in...");
+      return true;
+    } else {
+      logger.info("User not logged in");
+      return false;
+    }
+    
+  }
+  
+  /** 
+   * 
+   * @param req
+   * @return
+   */
+  static public String getClientIdOfLoggedInUser(HttpServletRequest req) {
+
+    if (req == null) {
+      logger.info("Request is null..."); //TODO it must be logger.error
+      return null;
+    }
+    else {
+      HttpSession session = req.getSession();
+      if (session == null) {
+        logger.info("Session is null..."); //TODO it must be logger.error
+        return null;
+      } 
+      else {
+        if (isLoggedIn(session)) {
+          String clientId = (String) session.getAttribute(Constants.C_CLIENT_ID_PROPERTY_NAME);
+          if (clientId==null) {
+            logger.info("clientId is not found for loggedin user ["+ session.getAttribute(Constants.C_USER_ID_PROPERTY_NAME) +"] and it should not happen.");
+            return null;
+          }
+          return clientId;
+        }
+      }
+      return null;
+    }
+    
+  }
+  
   /**
    * 
    * @param userEmailAddress
@@ -145,34 +220,49 @@ public class LoginHelper extends RemoteServiceServlet {
     
     assert(userEmailAddress!=null && userEmailAddress.length()>0);
     
-    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+    //BA:12-MAR-06 Added namespace
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
     
-    SystemUser sysUser = null;
-    int retry = 1; 
-    do {
-      sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
-                                                            null /*ordering*/, null /*parameter*/, null /*value*/,
-                                                            null,  /* ParentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
-                                                            1); /* max fetch depth */
-      
-      --retry;
-
-      if (sysUser == null && (userEmailAddress.equals("buyer@noranj.com") || userEmailAddress.equals("seller@noranj.com"))) {
-        logger.info("LoginHelper - Try to create sample data.");
-        try {
-          Startup.makeTestDataUserRetailerParty(); //Buyer
-          Startup.makeTestDataUserManufacturerParty(); // Seller
-        } catch (Exception ex) {
-          ex.printStackTrace();
-          logger.warning("LoginHelper - Failed to create sample data. Abort the process.");
-          retry = -1;// do not try any more 
+    try {
+      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+    
+      SystemUser sysUser = null;
+      int retry = 1; 
+      do {
+        sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
+                                                              null /*ordering*/, null /*parameter*/, null /*value*/,
+                                                              null,  /* ParentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
+                                                              1); /* max fetch depth */
+        
+        --retry;
+  
+        if (sysUser == null && (userEmailAddress.equals("buyer@noranj.com") || userEmailAddress.equals("seller@noranj.com"))) {
+          logger.info("LoginHelper - Try to create sample data.");
+          try {
+            Startup.makeTestDataUserRetailerParty(); //Buyer
+            Startup.makeTestDataUserManufacturerParty(); // Seller
+          } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.warning("LoginHelper - Failed to create sample data. Abort the process.");
+            retry = -1;// do not try any more 
+          }
+          
+        }
+        else {
+          //found the user, end the loop
+          retry = -1;
         }
         
-      }
+      }while (retry>=0);
       
-    }while (retry>=0);
+      return(sysUser);
     
-    return(sysUser);
+    } finally {
+      //BA:12-MAR-06 Added namespace
+      NamespaceManager.set(currentNameSpace); 
+    }
+
   }
 
   /**
@@ -190,6 +280,7 @@ public class LoginHelper extends RemoteServiceServlet {
     if (sysUser!=null) {
       // update session if login was successful
       session.setAttribute(Constants.C_USER_ID_PROPERTY_NAME, String.valueOf(sysUser.getId()));
+      session.setAttribute(Constants.C_CLIENT_ID_PROPERTY_NAME, String.valueOf(sysUser.getParentClientId()));
       session.setAttribute(Constants.C_LOGGED_IN_FLAG_PROPERTY_NAME, true);
     }
     

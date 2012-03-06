@@ -9,6 +9,10 @@ import java.util.Date;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @version 0.3.20120305
+ * @since 0.3
+ * @change
+ *  BA-12-MAR-05 Corrected formatDateTime and formatAmount formats
  */
 public class Formatter {
 
@@ -17,17 +21,53 @@ public class Formatter {
    */
   final static int C_NUMBER_OF_DIGITS_AFTER_DECIMAL_IN_AMOUNTS = 3;
   
-  
-  public static String formatDateTime(long milliseconds, String format) {
+  //FIXME BA:12-MAR-05 Locale has not being used here.
+  /**
+   * 
+   * @param milliseconds
+   * @param format - NOT USED YET.
+   * @param locale - NOT USED YET (GWT nOT SUPPORTED)
+   * @return a formatted string that represents the date equivalent to the input parameter 'milliseconds'. 
+   * 
+   */
+  public static String formatDate(long milliseconds, String fromat /*, Locale locale*/) {
     
     assert(milliseconds != 0) : "input date time can not be 0.";
     
     try {
+      
       Date date = new Date(milliseconds);
+      String month = "ERR";
+      
+      switch (date.getMonth()+1) {
+        case 1: month = "JAN";break;
+        
+        case 2: month = "FEB";break;
+        case 3: month = "MAR";break; 
+        case 4: month = "APR";break; 
+        case 5: month = "MAY";break; 
+        case 6: month = "JUN";break; 
+        case 7: month = "JUL";break; 
+        case 8: month = "AUG";break; 
+        case 9: month = "SEP";break; 
+        case 10: month = "OCT";break; 
+        case 11: month = "NOV";break; 
+        case 12: month = "DEC";break; 
+      }
+      
+      return((date.getYear() + 1900)+ "-" + month + "-" + date.getDate());
+      
+      /*
+      Calendar cal = Calendar.getInstance();
+      cal.setTimeInMillis(milliseconds);
+      return(cal.get(Calendar.YEAR) + "-" + cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, locale) + "-" + cal.get(Calendar.DATE));
+      */
+      
       //SimpleDateFormat formatter = new SimpleDateFormat(format);
       //formatter.setLenient(false);
       //return(formatter.format(new Date(milliseconds)));
-      return(date.getYear() + "-" + date.getMonth() + "-" + date.getDay());
+
+      
     }catch(Exception ex) {
       ex.printStackTrace();
     }
@@ -40,11 +80,12 @@ public class Formatter {
     assert(amount >= 0) : "input amount can not be less than 0.";
     
     try {
+      /** NumberFormat is not supported by GWT. */
       //NumberFormat formatter = NumberFormat.getCurrencyInstance(GlobalSettings.getLocale());
       //formatter.setGroupingUsed(true);
       //formatter.setMinimumFractionDigits(2);
       //return(formatter.format(amount));
-      return(String.valueOf(amount / 1000)); /// there are three digits after decimal.
+      return(String.valueOf((double)(Math.round((double)amount /10))/ 100)); /// there are three digits after decimal.
     }catch(Exception ex) {
       ex.printStackTrace(); ////FIXME
     }

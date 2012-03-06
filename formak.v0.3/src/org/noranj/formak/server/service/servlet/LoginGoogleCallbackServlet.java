@@ -42,13 +42,14 @@ public class LoginGoogleCallbackServlet extends HttpServlet {
     Principal googleUser = request.getUserPrincipal();
     
     if (googleUser != null) {
-      // update or create user
-      //UserAccount u = new UserAccount(googleUser.getName());
-      //u.setName(googleUser.getName());
+      
       SystemUser sysUser = LoginHelper.loginStarts(request.getSession(), googleUser.getName());
-      if (sysUser == null) {
+      
+      if (sysUser == null) { // user is not in Formak
         log.warning("user is not in the system - " + googleUser.getName());
-        throw new IOException("user is not in the system - " + googleUser.getName());
+        // user is not in the system, so we redirect them to the sign up page. //TODO SA review 
+        response.sendRedirect(LoginHelper.getSignupURL(request));
+        return;
       }
       else {
         log.info("User id:" + sysUser.getId() + " email: " + sysUser.getEmailAddress() + " " + request.getUserPrincipal().getName());

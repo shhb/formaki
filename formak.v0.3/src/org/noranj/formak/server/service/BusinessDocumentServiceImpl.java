@@ -31,6 +31,7 @@ import org.noranj.formak.shared.type.DocumentType;
 import org.noranj.formak.shared.type.LevelOfImportanceType;
 import org.noranj.formak.shared.type.PartyRoleType;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -179,12 +180,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
         PurchaseOrder po = new PurchaseOrder();
         po.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
         po.setName("Added New PO at " + System.currentTimeMillis());
-        po.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+        po.setBizDocumentNumber("PO#"+String.valueOf(System.currentTimeMillis()%100000));
         po.setState(DocumentStateType.Draft);
         po.setImportantDate(System.currentTimeMillis());
         po.setImportantDateDescription("Created At");
         po.setMonetory(System.currentTimeMillis()%100);
-        po.setNote("There is no where to run.");
+        po.setNote("NS["+NamespaceManager.get()+"]");
         //BA-2012-FEB-10 Added ONLY PO attributes
         po.setBillTo(new Address(System.currentTimeMillis()%1000 + " Strt", "Ctyi", "AZ", String.valueOf(System.currentTimeMillis()%100000)));
         po.setShipTo(new Address((System.currentTimeMillis()*3%1000) + " Strt", "Ctyi", "AZ", String.valueOf(System.currentTimeMillis()*3%100000)));
@@ -206,12 +207,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
         Item product = new Item();
         product.setName("Added New Item at " + System.currentTimeMillis());
         product.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.Less:LevelOfImportanceType.JustFYI);
-        product.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+        product.setBizDocumentNumber("ITM#"+String.valueOf(System.currentTimeMillis()%100000));
         product.setState(DocumentStateType.Draft);
         product.setImportantDate(System.currentTimeMillis());
         product.setImportantDateDescription("Created At");
         product.setMonetory(System.currentTimeMillis()%100);
-        product.setNote("There is no where to run.");
+        product.setNote("NS["+NamespaceManager.get()+"]");
         //BusinessDocumentHelper<Product> businessDocumentHelper = new BusinessDocumentHelper<Product>(JDOPMFactory.getTxOptional(), Product.class);
         BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
         businessDocumentHelper.storeEntity(product);
@@ -223,12 +224,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       RequestForQuotation requestForQuotation = new RequestForQuotation();
       requestForQuotation.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       requestForQuotation.setName("Added New RequestForQuotation at " + System.currentTimeMillis());
-      requestForQuotation.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      requestForQuotation.setBizDocumentNumber("RQT#"+String.valueOf(System.currentTimeMillis()%100000));
       requestForQuotation.setState(DocumentStateType.Draft);
       requestForQuotation.setImportantDate(System.currentTimeMillis());
       requestForQuotation.setImportantDateDescription("Created At");
       requestForQuotation.setMonetory(System.currentTimeMillis()%100);
-      requestForQuotation.setNote("There is no where to run.");
+      requestForQuotation.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
@@ -241,12 +242,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       Quotation quotation = new Quotation();
       quotation.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       quotation.setName("Added New Quotation at " + System.currentTimeMillis());
-      quotation.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      quotation.setBizDocumentNumber("QT#"+String.valueOf(System.currentTimeMillis()%100000));
       quotation.setState(DocumentStateType.Draft);
       quotation.setImportantDate(System.currentTimeMillis());
       quotation.setImportantDateDescription("Created At");
       quotation.setMonetory(System.currentTimeMillis()%100);
-      quotation.setNote("There is no where to run.");
+      quotation.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
@@ -259,12 +260,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       PurchaseOrderResponse purchaseOrderResponse = new PurchaseOrderResponse ();
       purchaseOrderResponse.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       purchaseOrderResponse.setName("Added New POResponse at " + System.currentTimeMillis());
-      purchaseOrderResponse.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      purchaseOrderResponse.setBizDocumentNumber("POR#"+String.valueOf(System.currentTimeMillis()%100000));
       purchaseOrderResponse.setState(DocumentStateType.Draft);
       purchaseOrderResponse.setImportantDate(System.currentTimeMillis());
       purchaseOrderResponse.setImportantDateDescription("Created At");
       purchaseOrderResponse.setMonetory(System.currentTimeMillis()%100);
-      purchaseOrderResponse.setNote("There is no where to run.");
+      purchaseOrderResponse.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
@@ -277,12 +278,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       Catalog catalog = new Catalog();
       catalog.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       catalog.setName("Added New Catalog at " + System.currentTimeMillis());
-      catalog.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      catalog.setBizDocumentNumber("CTLG#"+String.valueOf(System.currentTimeMillis()%100000));
       catalog.setState(DocumentStateType.Draft);
       catalog.setImportantDate(System.currentTimeMillis());
       catalog.setImportantDateDescription("Created At");
       catalog.setMonetory(System.currentTimeMillis()%100);
-      catalog.setNote("There is no where to run.");
+      catalog.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
@@ -295,12 +296,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       DispatchAdvice dispatchAdvice = new DispatchAdvice();
       dispatchAdvice.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       dispatchAdvice.setName("Added New DispatchAdvice at " + System.currentTimeMillis());
-      dispatchAdvice.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      dispatchAdvice.setBizDocumentNumber("DSA#"+String.valueOf(System.currentTimeMillis()%100000));
       dispatchAdvice.setState(DocumentStateType.Draft);
       dispatchAdvice.setImportantDate(System.currentTimeMillis());
       dispatchAdvice.setImportantDateDescription("Created At");
       dispatchAdvice.setMonetory(System.currentTimeMillis()%100);
-      dispatchAdvice.setNote("There is no where to run.");
+      dispatchAdvice.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);
@@ -313,12 +314,12 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       Invoice invoice = new Invoice();
       invoice.setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
       invoice.setName("Added New Invoice at " + System.currentTimeMillis());
-      invoice.setBizDocumentNumber(String.valueOf(System.currentTimeMillis()%100000));
+      invoice.setBizDocumentNumber("INV#"+String.valueOf(System.currentTimeMillis()%100000));
       invoice.setState(DocumentStateType.Draft);
       invoice.setImportantDate(System.currentTimeMillis());
       invoice.setImportantDateDescription("Created At");
       invoice.setMonetory(System.currentTimeMillis()%100);
-      invoice.setNote("There is no where to run.");
+      invoice.setNote("NS["+NamespaceManager.get()+"]");
       //BA-2012-JAN-29
       //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = new BusinessDocumentHelper<PurchaseOrder>(JDOPMFactory.getTxOptional(), PurchaseOrder.class);
       BusinessDocumentHelper businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(documentType);

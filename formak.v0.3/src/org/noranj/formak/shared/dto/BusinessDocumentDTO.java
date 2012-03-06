@@ -165,7 +165,7 @@ public class BusinessDocumentDTO implements Serializable {
   }
 
   public String getImportantDate() {
-    return Formatter.formatDateTime(importantDate, GlobalSettings.getDateFormat());
+    return Formatter.formatDate(importantDate, GlobalSettings.getDateFormat() /*, GlobalSettings.getLocale()*/);
   }
 
   public void setImportantDate(long importantDate) {

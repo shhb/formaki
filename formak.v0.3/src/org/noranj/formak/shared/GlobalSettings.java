@@ -1,5 +1,6 @@
 package org.noranj.formak.shared;
 
+
 /**
  * This class returns all global settings such date format or number of  
  * 
@@ -28,6 +29,12 @@ public class GlobalSettings {
     return(dateFormat);
   }
 
+  /** GWT - NOT SUPPORTED 
+  public  static Locale getLocale () {
+    return(Locale.US);
+  }
+  */
+  
   public static String getDateTimeFormat () {
     return(dateTimeFormat);
   }
