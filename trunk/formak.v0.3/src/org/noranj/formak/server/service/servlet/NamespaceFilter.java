@@ -7,6 +7,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +15,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
+import org.noranj.formak.server.LoginHelper;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 
 
@@ -28,6 +31,8 @@ import org.noranj.formak.server.domain.sa.SystemClientParty;
  * @deprecated NOT USED YET/
  */
 public class NamespaceFilter implements Filter {
+
+  private static Logger logger = Logger.getLogger(LoginFilter.class.getName());
   
   /**
    * Enumeration of namespace strategies.
@@ -112,10 +117,6 @@ public class NamespaceFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     
-    if (request.getParameter(SystemClientParty.C_SYSTEM_CLIENT_PARTY_ID_PARAMETER_NAME)==null) {
-      throw new ServletException("It looks like there is something wrong with authentication. Client Id is missing.");
-    }
-    
     /*
     System.out.println(System.currentTimeMillis());
     System.out.println("Server Name : " + request.getServerName());
@@ -129,7 +130,16 @@ public class NamespaceFilter implements Filter {
     if (NamespaceManager.get() == null) {
       switch (strategy) {
         case CLIENT_ID : {
-          NamespaceManager.set(request.getParameter(SystemClientParty.C_SYSTEM_CLIENT_PARTY_ID_PARAMETER_NAME));
+          System.out.println("Namespace is CLIENT_ID");
+          String clientId = LoginHelper.getClientIdOfLoggedInUser((HttpServletRequest)request);
+          if (clientId!=null) {
+            NamespaceManager.set(clientId);
+            System.out.println("Namespace is SET TO CLIENT_ID ["+clientId+"]");
+          }
+          else {
+            //throw new IOException("Failed to set Namesapce.");
+            System.out.println("Namespace is NOT SET because can not find required information. Probably user is not logged in.");
+          }
           break;
         }
         

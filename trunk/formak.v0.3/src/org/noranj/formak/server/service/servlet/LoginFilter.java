@@ -31,14 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.noranj.formak.server.LoginHelper;
-import org.noranj.formak.shared.Constants;
 
 public final class LoginFilter implements Filter {
 
   private static Logger logger = Logger.getLogger(LoginFilter.class.getName());
 
-  @Override public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-      ServletException {
+  @Override public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
     logger.info("in LoginFilter.doFilter");
     
@@ -46,18 +44,11 @@ public final class LoginFilter implements Filter {
       
       HttpServletRequest req = (HttpServletRequest) request;
 
-      
       if (LoginHelper.isLoggedIn(req)) {
         logger.info("User is logged in...");
         chain.doFilter(request, response);
       } else {
         logger.warning("User is not logged in...");
-        
-        // BA:2012-FEB-29 it was working but with error!! not automatically forwards the user. must manually copy and paste URL
-        //HttpServletResponse resp = (HttpServletResponse) response;
-        //resp.sendRedirect("/logingoogle");
-        
-        //** TODO Original code was like this : BA:2012-FEB-29 
         if (request.getContentType().contains("x-gwt-rpc")){
           // GWT requests
           HttpServletResponse resp = (HttpServletResponse) response;
@@ -81,7 +72,6 @@ public final class LoginFilter implements Filter {
 
   @Override public void init(FilterConfig arg0) throws ServletException {
     //  Auto-generated method stub
-
   }
 
 } // end class
