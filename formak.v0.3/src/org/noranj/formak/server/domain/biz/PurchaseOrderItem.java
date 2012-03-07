@@ -100,7 +100,22 @@ public class PurchaseOrderItem {
     this.quantity = quantity;
 
   }
+//TODO: SA:2012-03-06 / The new constructor is provided for copy the purchase items but it needs to review. 
+  public PurchaseOrderItem(/*PurchaseOrder purchaseOrder,*/String id, int sequenceHolder, long itemID, String gtin, String buyerItemID, String description, String uom, int quantity, long price) {
+	    
+	    super();
+	    //this.purchaseOrder = purchaseOrder;
+	    setId(id);
+	    this.sequenceHolder = sequenceHolder;
+	    this.itemID = itemID;
+	    this.gtin = gtin;
+	    this.buyerItemID = buyerItemID;
+	    this.description = description;
+	    this.uom = uom;
+	    this.price = price;
+	    this.quantity = quantity;
 
+	  }
   
   public PurchaseOrder getPurchaseOrder() {
     return purchaseOrder;
