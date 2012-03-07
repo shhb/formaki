@@ -21,6 +21,7 @@ public class PurchaseOrderItemDTO implements Serializable {
   private int sequenceHolder; // it is used only to store order of the line items and not necessary increments by one. 
   
   /** this is the identifier (or PK) of the item in this system. this is not displayed on the screen. */
+  private String id;
   private long itemID; 
   private String gtin; //optional
   private String buyerItemID; //optional
@@ -45,9 +46,19 @@ public class PurchaseOrderItemDTO implements Serializable {
   /////
   /////////////////////////////////////////
   
+  
+  
   public int getSequenceHolder() {
     return sequenceHolder;
   }
+
+  public String getId() {
+	return id;
+}
+
+  public void setId(String id) {
+	this.id = id;
+}
 
   public String getQtyOrdered() {
     return qtyOrdered;
@@ -120,7 +131,9 @@ public class PurchaseOrderItemDTO implements Serializable {
   public String toString() {
     
     StringBuilder strb = new StringBuilder();
-    strb.append("sequence[");
+    strb.append("ID[");
+    strb.append(id);
+    strb.append("] sequence[");
     strb.append(sequenceHolder);
     strb.append("] GITN[");
     strb.append(gtin);

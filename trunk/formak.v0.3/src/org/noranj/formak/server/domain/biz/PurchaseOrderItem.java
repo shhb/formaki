@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 /**
  * 
@@ -25,12 +26,12 @@ public class PurchaseOrderItem {
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key id;
 
-  public Key getId() {
-    return id;
+  public String getId() {
+	  return KeyFactory.keyToString(id);
   }
 
-  public void setId(Key id) {
-    this.id = id;
+  public void setId(String id) {
+	  this.id = KeyFactory.stringToKey(id);
   }
 
   @Persistent
@@ -203,7 +204,7 @@ public class PurchaseOrderItem {
   public PurchaseOrderItemDTO getPurchaseOrderItemDTO () {
 
     PurchaseOrderItemDTO poItem = new PurchaseOrderItemDTO();
-    
+    poItem.setId(getId());
     poItem.setSequenceHolder(this.sequenceHolder);
     poItem.setGTIN(this.gtin);
     poItem.setItemID(this.itemID);

@@ -110,13 +110,14 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
   
   public PurchaseOrder(PurchaseOrderDTO po) {
     super();
+    setId(po.getId());
     setLevelOfImportance((System.currentTimeMillis()/3==0)?LevelOfImportanceType.High:LevelOfImportanceType.Junk);
     setName("Added New PO at " + System.currentTimeMillis());
     setBizDocumentNumber(po.getBizDocumentNumber());
     setState(DocumentStateType.Draft);
     setImportantDate(System.currentTimeMillis());
     setImportantDateDescription("Created At");
-    setMonetory(Long.parseLong(po.getMonetory()));
+    setMonetory(Long.parseLong("0"));//FIXME SA:2012-03-06 Here needs to change - Long.parseLong(po.getMonetory())  
     setNote(po.getNote());
     //
     setBillTo(new Address(po.getBillTo())); // see my notes in Address
