@@ -15,7 +15,7 @@
 						styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
 					<g:Anchor href="#cancel" text="Cancel"
 						styleName="{style.button} {style.left}" ui:field="cancelButton"></g:Anchor>
-						<g:TextBox ui:field="id" readOnly="true" visibleLength="1"></g:TextBox>
+						<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
 				</g:HorizontalPanel>
 				<g:HorizontalPanel width="529px">
 					<g:VerticalPanel>

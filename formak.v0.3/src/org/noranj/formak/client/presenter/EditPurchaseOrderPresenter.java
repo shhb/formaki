@@ -132,6 +132,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 	public void doSave(PurchaseOrderDTO masterRowData) {
 		
 			PurchaseOrderDTO purchaseOrderDTO = masterRowData;
+			purchaseOrderDTO.setId(view.getId().getValue());
 			AddressDTO addressDTO = new AddressDTO();
 			addressDTO.setCity("Vancouver");
 			addressDTO.setPostalCode("V6R2B8");
@@ -139,25 +140,21 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			addressDTO.setStreetAddress("Jervis ST");
 			purchaseOrderDTO.setBillTo(addressDTO);
 			purchaseOrderDTO.setBizDocumentNumber(view.getPONumber().getValue());
-			purchaseOrderDTO.setDocumentState(DocumentStateType.Draft);
-			purchaseOrderDTO.setImportantDate(System.currentTimeMillis());
-			purchaseOrderDTO.setLevelOfImportance(LevelOfImportanceType.NotImportant);
-			purchaseOrderDTO.setMonetory(0);
+			//purchaseOrderDTO.setDocumentState(DocumentStateType.Draft);
+			//purchaseOrderDTO.setImportantDate(System.currentTimeMillis());
+			//purchaseOrderDTO.setLevelOfImportance(LevelOfImportanceType.NotImportant);
 			purchaseOrderDTO.setNote(view.getNote().getValue());
-			purchaseOrderDTO.setId(view.getId().toString());
 			PartyDTO partyDTO = new PartyDTO();
 			partyDTO.setId("2"); // FIXME
 			partyDTO.setName("TP2-Dummy");// FIXME
 			purchaseOrderDTO.setOriginatorParty(partyDTO);
-			List<PurchaseOrderItemDTO> purchaseOrderItems = new ArrayList<PurchaseOrderItemDTO>();
-			//Window.alert(Integer.toString(this.view.getPurchaseOrderItemsCellTable().getRowCount()));
-			
+			List<PurchaseOrderItemDTO> purchaseOrderItems = purchaseOrderDTO.getPurchaseOrderItems();
 			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
 				PurchaseOrderItemDTO purchaseOrderItemDTO = this.view.getPurchaseOrderItemsCellTable().getVisibleItem(i);
-				purchaseOrderItems.add(purchaseOrderItemDTO);
+				//purchaseOrderItems.add(purchaseOrderItemDTO);
+				purchaseOrderItems.set(i, purchaseOrderItemDTO);
 			}
-
-			purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItems);
+			//purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItems);
 			purchaseOrderDTO.setReceiverParty(partyDTO);
 			purchaseOrderDTO.setShipTo(addressDTO);
 			purchaseOrderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));

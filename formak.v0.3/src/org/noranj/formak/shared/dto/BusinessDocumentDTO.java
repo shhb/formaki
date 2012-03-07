@@ -157,6 +157,7 @@ public class BusinessDocumentDTO implements Serializable {
   }
 
   public String getMonetory() {
+	  //SA:2012-03-06
     return Formatter.formatAmount(monetory);
   }
 
