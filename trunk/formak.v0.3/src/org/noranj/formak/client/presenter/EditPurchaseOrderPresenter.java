@@ -148,12 +148,12 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			partyDTO.setId("2"); // FIXME
 			partyDTO.setName("TP2-Dummy");// FIXME
 			purchaseOrderDTO.setOriginatorParty(partyDTO);
-			List<PurchaseOrderItemDTO> purchaseOrderItems = purchaseOrderDTO.getPurchaseOrderItems();
-			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
-				PurchaseOrderItemDTO purchaseOrderItemDTO = this.view.getPurchaseOrderItemsCellTable().getVisibleItem(i);
-				//purchaseOrderItems.add(purchaseOrderItemDTO);
-				purchaseOrderItems.set(i, purchaseOrderItemDTO);
-			}
+			//List<PurchaseOrderItemDTO> purchaseOrderItems = purchaseOrderDTO.getPurchaseOrderItems();
+//			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
+//				PurchaseOrderItemDTO purchaseOrderItemDTO = this.view.getPurchaseOrderItemsCellTable().getVisibleItem(i);
+//				//purchaseOrderItems.add(purchaseOrderItemDTO);
+//				//purchaseOrderItems.set(i, purchaseOrderItemDTO);
+//			}
 			//purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItems);
 			purchaseOrderDTO.setReceiverParty(partyDTO);
 			purchaseOrderDTO.setShipTo(addressDTO);
