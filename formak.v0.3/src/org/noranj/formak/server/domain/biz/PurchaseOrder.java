@@ -126,7 +126,7 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     
     for( PurchaseOrderItemDTO row : po.getPurchaseOrderItems()){
      //FIXME SA adding a new constructor to PurchaseOrderItem will make the code more reusable and readable. BA:12-MAR-01
-      addPurchaseOrderItem(new PurchaseOrderItem(0,row.getItemID(),row.getGTIN(),row.getBuyerItemID(),row.getDescription(),row.getUom(),row.getQuantity(),row.getPrice()));
+      addPurchaseOrderItem(new PurchaseOrderItem(po.getId(),0,row.getItemID(),row.getGTIN(),row.getBuyerItemID(),row.getDescription(),row.getUom(),row.getQuantity(),row.getPrice()));
     }
     
   }
