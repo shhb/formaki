@@ -192,7 +192,9 @@ public class PurchaseOrderItem {
   public String toString() {
     // see this link http://groups.google.com/group/google-web-toolkit/browse_thread/thread/d18118d7fd4e8c26?pli=1
     StringBuilder strb = new StringBuilder();
-    strb.append("sequence[");
+    strb.append("id[");
+    strb.append(id);
+    strb.append("] sequence[");
     strb.append(sequenceHolder);
     strb.append("] GTIN[");
     strb.append(gtin);
