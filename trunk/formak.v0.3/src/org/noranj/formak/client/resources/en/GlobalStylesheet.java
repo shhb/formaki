@@ -72,4 +72,6 @@ public interface GlobalStylesheet extends CssResource {
   String linkSpecial();
   
   String flexTable();
+  
+  String treePanel();
 }
