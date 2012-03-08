@@ -5,5 +5,14 @@
 	</ui:style>
 	<g:VerticalPanel >
 	<g:Label>Main label</g:Label>
+	<g:LayoutPanel width="250px" height="150px"/>
+	<g:DecoratedTabPanel>
+				<g:Tab text="New tab">
+					<g:TabBar width="5cm" height="3cm"/>
+				</g:Tab>
+				<g:Tab text="New tab">
+					<g:TabBar width="5cm" height="3cm"/>
+				</g:Tab>
+			</g:DecoratedTabPanel>
 	</g:VerticalPanel>
 </ui:UiBinder> 

@@ -8,7 +8,6 @@
 	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
 	<ui:with field='RESOURCE' type='org.noranj.formak.client.resources.en.GlobalResources'/>
 	<g:HTMLPanel width="100%" height="100%">
-		<g:DecoratorPanel>
 			<g:VerticalPanel >
 				<g:HorizontalPanel>
 					<g:Anchor href="#savedoc" text="Save"
@@ -147,6 +146,5 @@
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
-		</g:DecoratorPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

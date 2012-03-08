@@ -7,10 +7,10 @@
 
 	<ui:style src="resources/en/GlobalStylesEn.css" />
 	<g:DockLayoutPanel unit='EM' styleName='{style.outer}'>
-		<g:north size='3.5'>
+		<g:north size='4.5'>
 			<app:HeaderPanel ui:field='headerPanel' />
 		</g:north>
-		<g:west size='15'>
+		<g:west size='17'>
             <g:HTMLPanel styleName='{style.boxPadding}'>
             	<div class="{style.titleBar}">Business Folders</div>
             	<g:ScrollPanel ui:field='folders' styleName='{style.mainPanel}' >
