@@ -19,7 +19,31 @@ public interface GlobalResources extends ClientBundle {
 	  
 	  @Source("org/noranj/formak/client/resources/en/propertyButtonOn.png")
 	  ImageResource propertyButtonOn();
+	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/po.png")
+	  ImageResource po();
+	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/inv.png")
+	  ImageResource inv();
 
+	  @Source("org/noranj/formak/client/resources/en/icons/black/layout.png")
+	  ImageResource layout();
+	
+	  @Source("org/noranj/formak/client/resources/en/icons/black/setting.png")
+	  ImageResource setting();
+	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/edit.png")
+	  ImageResource edit();
+
+	  @Source("org/noranj/formak/client/resources/en/icons/black/home0.png")
+	  ImageResource home0();
+
+	  @Source("org/noranj/formak/client/resources/en/icons/black/home.png")
+	  ImageResource home();
+	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/message.png")
+	  ImageResource message();
+	  
 	  @Source("org/noranj/formak/client/resources/en/GlobalStylesEn.css")
 	  GlobalStylesheet globalStyles();
 	  //FIXME SA 2012-02-10 
