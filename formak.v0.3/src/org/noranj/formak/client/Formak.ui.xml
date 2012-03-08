@@ -27,11 +27,11 @@
 		<g:south size="3">
 			<g:HTMLPanel styleName='{style.footerPanel}'>
 				<div>
-					<a href="#">Contact us</a>
+					<g:Anchor href="#Contact" styleName='{style.link}'>Contact us</g:Anchor>
 					|
-					<a href="#">Privacy</a>
+					<g:Anchor href="#Privacy" styleName='{style.link}'>Privacy</g:Anchor>
 					|
-					<a href="#">About</a>
+					<g:Anchor href="#Contact" styleName='{style.link}'>About</g:Anchor>
 				</div>
 			</g:HTMLPanel>
 		</g:south>
