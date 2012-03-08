@@ -54,12 +54,7 @@
 			height: 20px;
 		}
 		
-		.div-button-atl {
-			background-color: #4D90FE;
-			background-image: -moz-linear-gradient(center top, #4D90FE, #4787ED);
-			border: 1px solid #3079ED;
-			color: #FFFFFF;
-		}
+		
 		
 		 .div-button {
 			border-bottom-left-radius: 2px;
@@ -83,27 +78,16 @@
 			min-height: 25px;
 			margin-left: 20px;
 			margin-top: 1px;
-
+			border: 1px solid #FB8F3D;
+			background-color: #FDA352;
 		}
 		
-		.div-button-blue {
-			border-radius: 2px 2px 2px 2px;
-			cursor: default;
-			font-size: 11px;
-			font-weight: bold;
-			height: 27px;
-			line-height: 27px;
-			margin-right: 16px;
-			min-width: 54px;
-			outline: 0 none;
-			padding: 0 8px;
-			text-align: center;
-		}
+
 		
 		.div-button:HOVER {
-			background-color: #357AE8;
-			background-image: -moz-linear-gradient(center top, #4D90FE, #357AE8);
-			border: 1px solid #2F5BB7;
+			background-color: #FD934D;
+			background-image: -moz-linear-gradient(center top,#FDA352, #FB8F3D);
+			border: 1px solid #F9765B;
 			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 		}
 		
@@ -125,8 +109,7 @@
 					</td>
 					<td>
 						<div
-							class='{style.div-button} {style.div-button-blue} {style.div-button-atl}'
-							role="button">
+							class='{style.div-button}'	role="button">
 							<g:Anchor href="#" styleName='{style.link-button}'>Search</g:Anchor>
 						</div>
 					</td>
