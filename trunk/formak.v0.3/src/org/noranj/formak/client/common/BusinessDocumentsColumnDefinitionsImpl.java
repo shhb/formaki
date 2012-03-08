@@ -45,13 +45,13 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
     this.add(new ColumnDefinition<BusinessDocumentDTO>(){
 
     	public Widget render(BusinessDocumentDTO c) {
-    		 final Image propertyButton = new Image(GlobalResources.RESOURCE.propertyButton());
+    		 final Image propertyButton = new Image(GlobalResources.RESOURCE.layout());
     		 propertyButton.setTitle("ClickMe!");
     		 propertyButton.addMouseOverHandler(new MouseOverHandler(){
 
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					propertyButton.setResource(GlobalResources.RESOURCE.propertyButtonOn());
+					propertyButton.setResource(GlobalResources.RESOURCE.edit());
 				}
     			 
     		 });
@@ -59,7 +59,7 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
 
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
-					propertyButton.setResource(GlobalResources.RESOURCE.propertyButton());
+					propertyButton.setResource(GlobalResources.RESOURCE.layout());
 					
 				}
     			 
@@ -75,7 +75,7 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
     this.add(new ColumnDefinition<BusinessDocumentDTO>() {
       public Widget render(BusinessDocumentDTO c) {        
          StringBuilder sb = new StringBuilder();
-    	  sb.append("<table width='100%'>");
+    	  sb.append("<table width='800px' style='border-bottom: 1px solid #E5E5E5'>");
     	  sb.append("<tr>");
     	  sb.append("<td width='80px'><I>");
        	  sb.append(c.getReceiverParty().getName());

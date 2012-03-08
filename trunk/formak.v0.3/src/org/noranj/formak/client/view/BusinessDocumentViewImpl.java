@@ -82,17 +82,18 @@ public class BusinessDocumentViewImpl<T, K> extends Composite implements  Busine
 
 	public void setRowData(List<T> rowData) {
 		businessDocumentViewTable.removeAllRows();
+		businessDocumentViewTable.clear();
 		this.rowData = rowData;
 		StringBuilder sb = new StringBuilder();
 		businessDocumentViewTable.setWidget(0,0,new CheckBox());
-		businessDocumentViewTable.setWidget(0,1,new HTML("<div width='80px' style='border-bottom: 1px solid #E5E5E5'>#</div>"));
-	  	sb.append("<table width='100%'>");
+		businessDocumentViewTable.setWidget(0,1,new HTML("<div width='80px'  align='center' style='border-bottom: 1px solid #E5E5E5'>#</div>"));
+	  	sb.append("<table width='800px' >");
     	sb.append("<tr>");
-		sb.append("<td width='80px'>ReceiverParty</td>");
-		sb.append("<td width='80px'>DocumentNumber</td>");
-		sb.append("<td width='80px'>Monetory</td>");
-		sb.append("<td width='80px'>ImportantDate</td>");
-		sb.append("<td width='200px'>Note</td>");
+		sb.append("<td width='45px' align='left'>Rec Party</td>");
+		sb.append("<td width='45px' align='left'>Doc Number</td>");
+		sb.append("<td width='30px' align='left'>Monetory</td>");
+		sb.append("<td width='45px' align='left'>Date</td>");
+		sb.append("<td width='230px' align='center'>Note</td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
 		sb.append("<td colspan='5' style='border-top: 1px solid #E5E5E5'></td>");
