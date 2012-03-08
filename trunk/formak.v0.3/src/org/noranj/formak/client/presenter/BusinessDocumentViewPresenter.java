@@ -125,8 +125,7 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
    * BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
 	 */
 	private void deleteSelectedBusinessDocuments() {
-		List<BusinessDocumentDTO> selectedContacts = selectionModel
-				.getSelectedItems();
+		List<BusinessDocumentDTO> selectedContacts = selectionModel.getSelectedItems();
 		
 		/* BA-2012-FEB-12 
 		List<Long> ids = new ArrayList<Long>();
@@ -138,9 +137,12 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
     List<String> ids = new ArrayList<String>();
 
     for (int i = 0; i < selectedContacts.size(); ++i) {
-      ids.add(selectedContacts.get(i).getId());
+    	ids.add(selectedContacts.get(i).getId());
     }
-		
+    
+    for (int i = 0; i < selectedContacts.size(); ++i) { //SA 2012-03-07 : It should clear the selectionModel for next use.
+    	selectionModel.removeSelection(selectedContacts.get(i));
+    }
 		rpcService.deleteBusinessDocuments(DocumentType.PurchaseOrder, ids,
 				new AsyncCallback<List<BusinessDocumentDTO>>() {
 					public void onSuccess(
@@ -155,6 +157,7 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
 						 * .get(i).getDisplayName()); } display.setData(data);
 						 */
 						view.setRowData(businessDocumentDetails);
+						
 					}
 
 					public void onFailure(Throwable caught) {
