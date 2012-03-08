@@ -5,9 +5,9 @@
 	<ui:image field='logo_small' src='../resources/en/images/logo_small.png' />
 	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
 <g:HTMLPanel>
-	<g:DecoratorPanel >
+	
       <g:VerticalPanel >
-      <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
+      <g:HorizontalPanel >
 			<g:Anchor href="#" text="Add" styleName="{style.button} {style.left}" ui:field="addButton"></g:Anchor>
 			<g:Anchor href="#" text="Delete" styleName="{style.button} {style.left}" ui:field="deleteButton"></g:Anchor>		
 	    </g:HorizontalPanel>
@@ -18,6 +18,6 @@
       		<g:FlexTable ui:field="businessDocumentViewTable" addStyleNames="{style.businessDocumentViewflexTable}"/>
       	</g:HorizontalPanel>
       </g:VerticalPanel>
-	</g:DecoratorPanel>
+	
 </g:HTMLPanel>
 </ui:UiBinder> 

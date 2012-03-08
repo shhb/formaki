@@ -47,7 +47,7 @@ public class DocumentTypeListViewImpl<T> extends Composite implements
 
 		businessDocumentTypeTree.clear();
 		this.setData = setData;
-		
+		businessDocumentTypeTree.setStyleName("margin: 20px 0px 0px 0px");
 		
 		for (int i = 0; i < setData.length; ++i) {
 			StringBuilder sb = new StringBuilder();
@@ -72,7 +72,7 @@ public class DocumentTypeListViewImpl<T> extends Composite implements
 				image = new Image(GlobalResources.RESOURCE.message());
 			}
 			sb.append("<span >" + image.toString());
-			sb.append("</span><span style='padding-left:10px;vertical-align:top'>" + setData[i].toString()+"</span>");
+			sb.append("</span><span style='margin:5px 0px 0px 0px;padding-left:10px;vertical-align:top'>" + setData[i].toString()+"</span>");
 			TreeItem treeItem = new TreeItem(sb.toString());
 			 //treeItem.addItem(blinkListLogo);
 			 //treeItem.addItem(sb.toString());
