@@ -13,7 +13,7 @@
 		<g:west size='17'>
             <g:HTMLPanel styleName='{style.boxPadding}'>
             	<div class="{style.titleBar}">Business Folders</div>
-            	<g:ScrollPanel ui:field='folders' styleName='{style.mainPanel}' >
+            	<g:ScrollPanel ui:field='folders' styleName='{style.treePanel}' >
 				</g:ScrollPanel>
             </g:HTMLPanel>
 		</g:west>
