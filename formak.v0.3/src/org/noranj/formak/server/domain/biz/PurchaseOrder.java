@@ -117,12 +117,13 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     setState(DocumentStateType.Draft);
     setImportantDate(System.currentTimeMillis());
     setImportantDateDescription("Created At");
-    setMonetory(Long.parseLong("0"));//FIXME SA:2012-03-06 Here needs to change - Long.parseLong(po.getMonetory())  
+    //TODO:DA:ReportedBySA:2012-03-09: It should be fix please check it. - Long.parseLong(po.getMonetory()) 
+    setMonetory(Long.parseLong("0"));  
     setNote(po.getNote());
     //
     setBillTo(new Address(po.getBillTo())); // see my notes in Address
     setShipTo(new Address(po.getShipTo()));
-    
+    setReceiverPartyID(po.getReceiverParty().getId());//FIXME:REVIEW:SA:2012-03-9:The buyer should set to ReceiverPartyId but the constructor does not have this code. 
     
     for( PurchaseOrderItemDTO row : po.getPurchaseOrderItems()){
      //FIXME SA adding a new constructor to PurchaseOrderItem will make the code more reusable and readable. BA:12-MAR-01
