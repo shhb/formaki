@@ -82,7 +82,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			@Override
 			public void onSuccess(PurchaseOrderDTO result) {
 				purchaseOrderDTO = result;
-				view.setMasterRowData(result);
+				view.setMasterData(result);
 				view.getId().setValue(result.getId());
 
 				view.getPONumber().setValue(result.getPONumber());
@@ -100,7 +100,6 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 				row.setId(result.getReceiverParty().getId()); 
 				row.setName(result.getReceiverParty().getName());
 				view.getBuyer().setSelectedValue(row);
-				view.getBuyer().setValue(row);
 				view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
 				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
 				view.setRowData(result.getPurchaseOrderItems());
@@ -135,21 +134,13 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			addressDTO.setStateOrProvince("BC");
 			addressDTO.setStreetAddress("Jervis ST");
 			purchaseOrderDTO.setBillTo(addressDTO);
+			purchaseOrderDTO.setShipTo(addressDTO);
 			purchaseOrderDTO.setBizDocumentNumber(view.getPONumber().getValue());
 			purchaseOrderDTO.setNote(view.getNote().getValue());
 			PartyDTO partyDTO = new PartyDTO();
-			partyDTO.setId(view.getBuyer().getValue().getId()); // FIXME
-			partyDTO.setName(view.getBuyer().getValue().getName());// FIXME
-			purchaseOrderDTO.setOriginatorParty(partyDTO);
-			//List<PurchaseOrderItemDTO> purchaseOrderItems = purchaseOrderDTO.getPurchaseOrderItems();
-//			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
-//				PurchaseOrderItemDTO purchaseOrderItemDTO = this.view.getPurchaseOrderItemsCellTable().getVisibleItem(i);
-//				//purchaseOrderItems.add(purchaseOrderItemDTO);
-//				//purchaseOrderItems.set(i, purchaseOrderItemDTO);
-//			}
-			//purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItems);
+			partyDTO.setId(view.getBuyer().getSelectedValue().getId()); 
+			partyDTO.setName(view.getBuyer().getSelectedValue().getName());
 			purchaseOrderDTO.setReceiverParty(partyDTO);
-			purchaseOrderDTO.setShipTo(addressDTO);
 			purchaseOrderDTO.setTaxRatePercent(Byte.parseByte(view.getTaxRatePercent().getText()));
 			purchaseOrderDTO.setTotalTaxAmount(2);
 			rpcService.saveDocument(purchaseOrderDTO, new AsyncCallback<String>() {
@@ -163,7 +154,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 						@Override
 						public void onSuccess(String result) {
 							view.getId().setValue((result.toString()));
-							Window.alert("The Save operation is completed.");
+							Window.alert("The Save operation is completed."+ result.toString());
 						}
 
 					});
