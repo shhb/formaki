@@ -5,8 +5,16 @@
 	<ui:image field='logo' src='resources/en/images/logo_small.png' />
 
 	<ui:style>
-		.link-button {
+		
+		.link-button:ACTIVE {
 			text-decoration: none;
+			
+			color: #FFFFFF;
+		}
+		
+		.link-button:VISITED {
+			text-decoration: none;
+			
 			color: #FFFFFF;
 		}
 		
@@ -86,9 +94,9 @@
 		
 		.div-button:HOVER {
 			background-color: #FD934D;
-			background-image: -moz-linear-gradient(center top,#FDA352, #FB8F3D);
+			background-image: -moz-linear-gradient(center top,#FD934D, #F9765B);
 			border: 1px solid #F9765B;
-			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 		}
 		
 		.table {
@@ -108,8 +116,7 @@
 						<g:TextBox styleName='{style.textSearch}' />
 					</td>
 					<td>
-						<div
-							class='{style.div-button}'	role="button">
+						<div class='{style.div-button}'	role="button">
 							<g:Anchor href="#" styleName='{style.link-button}'>Search</g:Anchor>
 						</div>
 					</td>
