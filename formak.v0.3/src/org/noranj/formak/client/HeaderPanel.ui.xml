@@ -24,7 +24,7 @@
 		}
 		
 		@sprite .logo_small {
-			margin: 0px 0 0 50px;
+			margin: 0px 0 0 30px;
 			gwt-image: 'logo';
 			position: absolute;
 		}
