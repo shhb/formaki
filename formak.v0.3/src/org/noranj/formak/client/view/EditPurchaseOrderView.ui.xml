@@ -8,14 +8,15 @@
 	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
 	<ui:with field='RESOURCE' type='org.noranj.formak.client.resources.en.GlobalResources'/>
 	<g:HTMLPanel width="100%" height="100%">
-			<g:VerticalPanel >
-				<g:HorizontalPanel>
-					<g:Anchor href="#savedoc" text="Save"
-						styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
-					<g:Anchor href="#cancel" text="Cancel"
-						styleName="{style.button} {style.left}" ui:field="cancelButton"></g:Anchor>
+			<g:HorizontalPanel styleName='{style.toolPanel}'>
+				<g:HorizontalPanel >
+					<g:Anchor href="#savedoc" text="Save" styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
+					<g:Anchor href="#cancel" text="Cancel" styleName="{style.right} {style.button}" ui:field="cancelButton"></g:Anchor>
 						<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
 				</g:HorizontalPanel>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+			<g:VerticalPanel styleName='{style.bodyPanel}' width="529px">
 				<g:HorizontalPanel width="529px">
 					<g:VerticalPanel>
 						<g:Grid>
@@ -66,9 +67,9 @@
 						</g:Grid>
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel width="529">
-					<g:VerticalPanel width="529">
-						<g:Grid width="529">
+				<g:HorizontalPanel>
+					<g:VerticalPanel >
+						<g:Grid >
 							<g:row>
 								<g:customCell>
 									<g:Label text="Note" width="61px"/>
@@ -81,29 +82,28 @@
 						</g:Grid>
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel width="100%" height="100%" >
+				<g:HorizontalPanel>
 					<g:Grid>
 						<g:row>
 							<g:customCell>
 								<g:VerticalPanel>
 									<g:Label text="shipTo"></g:Label>
-									<g:TextArea ui:field="shipTo" width="250px" height="100px"></g:TextArea>
+									<g:TextArea ui:field="shipTo" width="250px" height="50px"></g:TextArea>
 								</g:VerticalPanel>
 							</g:customCell>
 							<g:customCell>
 								<g:VerticalPanel>
 									<g:Label text="billTo"></g:Label>
-									<g:TextArea ui:field="billTo" width="250px" height="100px"></g:TextArea>
+									<g:TextArea ui:field="billTo" width="250px" height="50px"></g:TextArea>
 								</g:VerticalPanel>
 							</g:customCell>
 						</g:row>
 					</g:Grid>
 				</g:HorizontalPanel>
-
-				<g:HorizontalPanel>
-					<c:CellTable ui:field="purchaseOrderItemsCellTable" addStyleNames="{style.businessDocumentViewflexTable}" />
+				<g:HorizontalPanel styleName='{style.bodyPanel}'>
+					<c:CellTable ui:field="purchaseOrderItemsCellTable" styleName='{style.businessDocumentViewflexTable}'/>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel>
+				<g:HorizontalPanel styleName='{style.footerPanel}'>
 					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="796px">
 						<g:Grid>
 						<g:row>
@@ -146,5 +146,6 @@
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
+			</g:HorizontalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
