@@ -7,9 +7,11 @@
 <g:HTMLPanel>
 	
       <g:VerticalPanel >
-      <g:HorizontalPanel >
+      <g:HorizontalPanel styleName='{style.toolPanel}'>
+      	<g:HorizontalPanel>
 			<g:Anchor href="#" text="Add" styleName="{style.button} {style.left}" ui:field="addButton"></g:Anchor>
-			<g:Anchor href="#" text="Delete" styleName="{style.button} {style.left}" ui:field="deleteButton"></g:Anchor>		
+			<g:Anchor href="#" text="Delete" styleName="{style.button} {style.left}" ui:field="deleteButton"></g:Anchor>
+			</g:HorizontalPanel>		
 	    </g:HorizontalPanel>
         <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
 	     	<g:ListBox ui:field="businessDocumentTypeList"></g:ListBox>
