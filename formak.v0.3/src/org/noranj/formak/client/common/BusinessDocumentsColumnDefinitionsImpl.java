@@ -45,7 +45,7 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
     this.add(new ColumnDefinition<BusinessDocumentDTO>(){
 
     	public Widget render(BusinessDocumentDTO c) {
-    		 final Image propertyButton = new Image(GlobalResources.RESOURCE.layout());
+    		 final Image propertyButton = new Image(GlobalResources.RESOURCE.star4());
     		 propertyButton.setTitle("ClickMe!");
     		 propertyButton.addMouseOverHandler(new MouseOverHandler(){
 
@@ -59,7 +59,7 @@ public class BusinessDocumentsColumnDefinitionsImpl extends ArrayList<ColumnDefi
 
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
-					propertyButton.setResource(GlobalResources.RESOURCE.layout());
+					propertyButton.setResource(GlobalResources.RESOURCE.star4());
 					
 				}
     			 
