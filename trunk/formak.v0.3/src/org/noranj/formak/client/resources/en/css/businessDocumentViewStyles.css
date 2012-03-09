@@ -2,6 +2,7 @@
 .businessDocumentViewButtonHPanel {
       margin: 5px 0px 0x 5px;
     }
+
 .businessDocumentViewflexTable {
 		width: 100%;
 		border-top-color: #E5E5E5;
@@ -22,10 +23,23 @@
 
 .toolPanel {
 	border-bottom: 1px solid #CCCCCC;
+	padding: 10px 10px 10px 0;
+	margine: 5px 0 5px 0;
 	color: #CCCCCC;
 	height: 38px;
+	width:100%;
 }
-
+.bodyPanel {
+	padding: 10px 10px 10px 0;
+	margine: 10px 0 5px 0;
+	width:100%;
+}
+.footerPanel{
+	border-top: 1px solid #CCCCCC;
+	padding: 10px 10px 10px 0;
+	margine: 5px 0 5px 0;
+	width:100%;
+}
 .buttons {
     float: left;
     padding-bottom: 20px;
@@ -74,6 +88,17 @@ a.left {
     border-bottom-right-radius: 0;
     margin: 0;
 }
+a.right {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topleft: 0;
+    border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    border-left: solid 1px #f3f3f3;
+    border-left: solid 1px rgba(255, 255, 255, 0);
+    margin: 0;
+}
 a.middle {
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -84,16 +109,7 @@ a.middle {
 }
 a.middle:hover,
 a.right:hover { border-left: solid 1px #999 }
-a.right {
-    -webkit-border-top-left-radius: 0;
-    -moz-border-radius-topleft: 0;
-    border-top-left-radius: 0;
-    -webkit-border-bottom-left-radius: 0;
-    -moz-border-radius-bottomleft: 0;
-    border-bottom-left-radius: 0;
-    border-left: solid 1px #f3f3f3;
-    border-left: solid 1px rgba(255, 255, 255, 0);
-}
+
 a.big {
     font-size: 16px;
     padding: 10px 15px;
