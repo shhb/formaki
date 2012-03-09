@@ -13,7 +13,7 @@
 			<g:Anchor href="#" text="Delete" styleName="{style.button} {style.left}" ui:field="deleteButton"></g:Anchor>
 			</g:HorizontalPanel>		
 	    </g:HorizontalPanel>
-        <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
+        <g:HorizontalPanel addStyleNames="{style.bodyPanel}">
 	     	<g:ListBox ui:field="businessDocumentTypeList"></g:ListBox>
 	    </g:HorizontalPanel>
 	    <g:HorizontalPanel addStyleNames="{style.businessDocumentViewButtonHPanel}">
