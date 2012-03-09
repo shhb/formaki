@@ -144,6 +144,7 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
         po.setImportantDateDescription("Created At");
         po.setMonetory(System.currentTimeMillis()%100);
         po.setNote("NS["+NamespaceManager.get()+"]");
+        po.setReceiverPartyID("1");
         //BA-2012-FEB-10 Added ONLY PO attributes
         po.setBillTo(new Address(System.currentTimeMillis()%1000 + " Strt", "Ctyi", "AZ", String.valueOf(System.currentTimeMillis()%100000)));
         po.setShipTo(new Address((System.currentTimeMillis()*3%1000) + " Strt", "Ctyi", "AZ", String.valueOf(System.currentTimeMillis()*3%100000)));

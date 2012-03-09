@@ -97,12 +97,10 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 								+ result.getBillTo().getPostalCode());
 				view.getNote().setValue(result.getNote());
 				IDNameDTO row = new IDNameDTO();
-				// FIXME: Shhb-2012-FEB-29 It should come from Result but the
-				// dummy data is not correct.
-				row.setId("1");// result.getReceiverParty().getId());
-				row.setName("TP1-Dummy");// row.setName(result.getReceiverParty().getName());
+				row.setId(result.getReceiverParty().getId()); 
+				row.setName(result.getReceiverParty().getName());
 				view.getBuyer().setSelectedValue(row);
-				//
+				view.getBuyer().setValue(row);
 				view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
 				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
 				view.setRowData(result.getPurchaseOrderItems());
@@ -129,9 +127,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 	}
 
 
-	public void doSave(PurchaseOrderDTO masterRowData) {
-		
-			PurchaseOrderDTO purchaseOrderDTO = masterRowData;
+	public void doSave(PurchaseOrderDTO purchaseOrderDTO) {
 			purchaseOrderDTO.setId(view.getId().getValue());
 			AddressDTO addressDTO = new AddressDTO();
 			addressDTO.setCity("Vancouver");
@@ -140,13 +136,10 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 			addressDTO.setStreetAddress("Jervis ST");
 			purchaseOrderDTO.setBillTo(addressDTO);
 			purchaseOrderDTO.setBizDocumentNumber(view.getPONumber().getValue());
-			//purchaseOrderDTO.setDocumentState(DocumentStateType.Draft);
-			//purchaseOrderDTO.setImportantDate(System.currentTimeMillis());
-			//purchaseOrderDTO.setLevelOfImportance(LevelOfImportanceType.NotImportant);
 			purchaseOrderDTO.setNote(view.getNote().getValue());
 			PartyDTO partyDTO = new PartyDTO();
-			partyDTO.setId("2"); // FIXME
-			partyDTO.setName("TP2-Dummy");// FIXME
+			partyDTO.setId(view.getBuyer().getValue().getId()); // FIXME
+			partyDTO.setName(view.getBuyer().getValue().getName());// FIXME
 			purchaseOrderDTO.setOriginatorParty(partyDTO);
 			//List<PurchaseOrderItemDTO> purchaseOrderItems = purchaseOrderDTO.getPurchaseOrderItems();
 //			for (int i = 0; i < this.view.getPurchaseOrderItemsCellTable().getRowCount(); i++) {
