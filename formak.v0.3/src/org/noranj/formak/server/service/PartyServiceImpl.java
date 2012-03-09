@@ -34,8 +34,8 @@ public class PartyServiceImpl  extends RemoteServiceServlet implements PartyServ
    */
   public List<IDNameDTO> getTradingPartiesIDName (PartyRoleType tradingPartyRole) {
     ArrayList<IDNameDTO> tps = new ArrayList<IDNameDTO>();
-    tps.add(new IDNameDTO("1", "TP1-Dummy"));
-    tps.add(new IDNameDTO("2", "TP2-Dummy"));
+    tps.add(new IDNameDTO("1", "RParty1"));
+    tps.add(new IDNameDTO("2", "RParty2"));
     return(tps);
   }
 

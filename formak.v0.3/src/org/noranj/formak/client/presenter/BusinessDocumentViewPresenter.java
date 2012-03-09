@@ -93,10 +93,8 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
 				// (businessDocumentDetails.get(j).getDisplayName().compareToIgnoreCase(businessDocumentDetails.get(j
 				// + 1).getDisplayName()) >= 0) {
 				if (businessDocumentDetails.get(j).getBizDocumentNumber().compareToIgnoreCase(businessDocumentDetails.get(j + 1).getBizDocumentNumber()) >= 0) {
-					BusinessDocumentDTO tmp = businessDocumentDetails
-							.get(j);
-					businessDocumentDetails.set(j,
-							businessDocumentDetails.get(j + 1));
+					BusinessDocumentDTO tmp = businessDocumentDetails.get(j);
+					businessDocumentDetails.set(j,businessDocumentDetails.get(j + 1));
 					businessDocumentDetails.set(j + 1, tmp);
 				}
 			}

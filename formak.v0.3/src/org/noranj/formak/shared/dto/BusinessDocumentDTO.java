@@ -94,7 +94,7 @@ public class BusinessDocumentDTO implements Serializable {
 	  this.levelOfImportance = levelOfImportance;
 	  this.documentState = documentState;
 	  this.originatorParty = originatorParty;
-    this.receiverParty = receiverParty ;
+      this.receiverParty = receiverParty ;
 	  this.bizDocumentNumber = (bizDocumentNumber!=null)?bizDocumentNumber:"null";
 	  this.monetory = monetory;
 	  this.importantDate = (importantDate!=0)?importantDate: System.currentTimeMillis(); //FIXME this is not right. It is only for test when the data is not consistent.

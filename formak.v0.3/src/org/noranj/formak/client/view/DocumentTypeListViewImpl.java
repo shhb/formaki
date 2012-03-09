@@ -60,7 +60,7 @@ public class DocumentTypeListViewImpl<T> extends Composite implements
 				image = new Image(GlobalResources.RESOURCE.po());
 			}
 			else if(setData[i].toString()=="Quotation"){
-				image = new Image(GlobalResources.RESOURCE.home());
+				image = new Image(GlobalResources.RESOURCE.layout());
 			}
 			else if(setData[i].toString()=="PurchaseOrderResponse"){
 				image = new Image(GlobalResources.RESOURCE.home());
