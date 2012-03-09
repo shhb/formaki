@@ -43,6 +43,9 @@ public interface GlobalResources extends ClientBundle {
 	  
 	  @Source("org/noranj/formak/client/resources/en/icons/black/message.png")
 	  ImageResource message();
+	
+	  @Source("org/noranj/formak/client/resources/en/icons/black/star4.png")
+	  ImageResource star4();
 	  
 	  @Source("org/noranj/formak/client/resources/en/GlobalStylesEn.css")
 	  GlobalStylesheet globalStyles();
