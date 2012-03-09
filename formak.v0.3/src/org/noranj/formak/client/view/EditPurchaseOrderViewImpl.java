@@ -51,7 +51,7 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	
 	private List<ColumnDefinition<K>> columnDefinitions;
 	
-	private T masterRowData;
+	private T masterData;
 	private List<K> rowData;
 	private List<L> rowBuyerData;
 	
@@ -216,12 +216,13 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 	}
 
 	public void setBuyerData(List<L> rowBuyerData){
-		this.rowBuyerData = rowBuyerData;
-		for (int i = 0; i < rowBuyerData.size(); ++i) {
-			IDNameDTO row = (IDNameDTO) rowBuyerData.get(i);
-			buyer.addItem(row.getName().toString(),row.getId().toString());
-			
-			}
+		buyer.setSelections(rowBuyerData);
+//		this.rowBuyerData = rowBuyerData;
+//		for (int i = 0; i < rowBuyerData.size(); ++i) {
+//			IDNameDTO row = (IDNameDTO) rowBuyerData.get(i);
+//			buyer.addItem(row.getName().toString(),row.getId().toString());
+//			
+//			}
 		}
 	
 //	//@UiHandler("saveButton")
@@ -278,8 +279,8 @@ public class EditPurchaseOrderViewImpl<T,K,L> extends Composite implements EditP
 		return saveButton;
 	}
 	
-	public void setMasterRowData(T masterRowData ){
-		this.masterRowData = masterRowData;
+	public void setMasterData(T masterData ){
+		this.masterData = masterData;
 	}
 	
 	@Override //FIXME: 2012-2-15 ; SA:it does not work properly.

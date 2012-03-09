@@ -49,7 +49,7 @@ public interface EditPurchaseOrderView<T,K,L> {
 	
 	void setRowData(List<K> rowData);
 	
-	void setMasterRowData(T masterRowData);
+	void setMasterData(T masterData);
 	
 	void setBuyerData(List<L> rowData);
 	
