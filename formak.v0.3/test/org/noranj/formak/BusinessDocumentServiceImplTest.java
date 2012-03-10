@@ -195,6 +195,17 @@ public class BusinessDocumentServiceImplTest {
   }
   
   @Test
+  public void testSaveDocumentPUrchaseOrder() {
+  	
+    BusinessDocumentServiceImpl service = new BusinessDocumentServiceImpl();
+
+    String id = getRandomBusinessDocumentId(DocumentType.PurchaseOrder);
+  	PurchaseOrderDTO purchaseOrderDTO =service.getPurchaseOrder(id); 
+  	purchaseOrderDTO.setNote(id);
+  	service.saveDocument(purchaseOrderDTO);
+  }
+
+  @Test
   public void testGetPurchaseOrder() {
     fail("has not been implemented!!");
   } 
@@ -204,10 +215,32 @@ public class BusinessDocumentServiceImplTest {
     fail("has not been implemented!!");
   } 
 
+  
   @Test
   public void testDeleteBusinessDocuments() {
     fail("has not been implemented!!");
     
     //List<BusinessDocumentDTO> deleteBusinessDocuments(DocumentType documentType, List<String> ids/*List<Long> ids*/); // throws ServiceCallFailed;
-  } 
+  }
+  
+  /**
+   * It finds a random document among the existing documents and return its Id.
+   * @param documentType
+   * @return the id of the selected document.
+   */
+  private String getRandomBusinessDocumentId(DocumentType documentType) {
+  	
+    BusinessDocumentServiceImpl service = new BusinessDocumentServiceImpl();
+    List<BusinessDocumentDTO> bizDocs = service.getBusinessDocuments(documentType, DocumentStateType.Draft); //FIXME the state is hard coded.
+    if (bizDocs.size()==0) {
+      fail("There is no "+documentType.codeToString()+" to delete!!!");
+    }
+    Random rnd = new Random(0);
+    int index = rnd.nextInt(bizDocs.size());
+    
+    BusinessDocumentDTO bizDocumentDTO = bizDocs.get(index);
+    return(bizDocumentDTO.getId());
+
+  }
+  
 }

@@ -116,7 +116,8 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
     PurchaseOrder po = new PurchaseOrder(purchaseOrderDTO);
 
     BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(DocumentType.PurchaseOrder);
-    businessDocumentHelper.storeEntity(po); //FIXME BA:12-MAR-01 what happens if there is an error.
+   //FIXME BA:12-MAR-01 what happens if there is an error.
+    businessDocumentHelper.storeEntity(po); 
     return(po.getId());
     
   }
