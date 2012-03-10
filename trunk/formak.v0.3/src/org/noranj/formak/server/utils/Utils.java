@@ -40,9 +40,16 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.appengine.api.labs.taskqueue.QueueFailureException;
+import com.google.appengine.api.taskqueue.QueueFailureException;
 
-
+/**  
+ * 
+ * @author
+ * @since 0.3.2012MAR06
+ * @version 0.3.2012MAR06
+ * @change
+ * @deprecated NOT USED YET.
+ */
 public class Utils {
         
     private static final Logger log = Logger.getLogger( Utils.class.getName() );
