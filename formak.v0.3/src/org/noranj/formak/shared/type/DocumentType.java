@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public enum DocumentType implements Serializable {
 
-  Unknown(0), // not sure if it is needed
+  Other(0), // not sure if we need both "unknown" and "other" or using only "other" should be fine. 
   RequestForQuotation(10), Quotation(20), PurchaseOrderResponse(30), 
   PurchaseOrder(40), Invoice(50), DispatchAdvice(60), Item(70), Catalog(80);
 
@@ -53,7 +53,7 @@ public enum DocumentType implements Serializable {
       case 80:
         return (DocumentType.Catalog);
       default:
-        return (DocumentType.Unknown);
+        return (DocumentType.Other);
     } // switch
 
   } // toString
@@ -77,7 +77,7 @@ public enum DocumentType implements Serializable {
 	    else if (stringDocumentType.equals("Catalog"))
 	      return (DocumentType.Catalog);
 	    else
-	    	return (DocumentType.Unknown);
+	    	return (DocumentType.Other);
 
 	  } // toString
   public String codeToString() {

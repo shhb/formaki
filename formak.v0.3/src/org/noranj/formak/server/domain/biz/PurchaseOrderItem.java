@@ -1,10 +1,13 @@
 package org.noranj.formak.server.domain.biz;
 
+import java.util.logging.Logger;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.noranj.formak.server.domain.association.PartyRoleDocument;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 
 import com.google.appengine.api.datastore.Key;
@@ -20,7 +23,9 @@ import com.google.appengine.api.datastore.KeyFactory;
  */
 @PersistenceCapable(detachable="true")
 public class PurchaseOrderItem {
-  
+
+  protected static Logger logger = Logger.getLogger(PurchaseOrderItem.class.getName());
+	
   //Apparently a child object can not have a PK
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)

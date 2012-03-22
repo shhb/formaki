@@ -3,6 +3,7 @@ package org.noranj.formak.server;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -10,6 +11,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.noranj.formak.server.domain.core.BusinessDocument;
+import org.noranj.formak.server.utils.ServletUtils;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
 
@@ -27,6 +29,9 @@ import org.noranj.formak.shared.type.DocumentStateType;
  */
 public class BusinessDocumentHelper<T> {
   
+	//TODO decide what kind of logger to use BA-2012-03-21 using static logger for BusinessDocumentHelper<T> or using persistentClass.logger??? 
+  private static Logger logger = Logger.getLogger(BusinessDocumentHelper.class.getName());
+
   PersistenceManagerFactory pmf;
 
   /* stores the CLASS of T */

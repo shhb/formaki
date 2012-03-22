@@ -1,6 +1,7 @@
 package org.noranj.formak.server;
 
 import java.util.HashSet;
+import java.util.logging.Logger;
 
 import org.noranj.formak.server.service.SystemAdminServiceImpl;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
@@ -19,6 +20,8 @@ import org.noranj.formak.shared.type.PartyRoleType;
  */
 public class Startup {
 
+  private static Logger logger = Logger.getLogger(Startup.class.getName());
+	
   //TODO it is static and public only for test purpose as it is used in LoginHelper to create some test data. BA-2012-FEB-29 
   /**
    * 

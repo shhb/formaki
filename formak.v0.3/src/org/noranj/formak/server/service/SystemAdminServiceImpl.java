@@ -4,6 +4,7 @@ package org.noranj.formak.server.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,14 +14,21 @@ import org.noranj.formak.server.DALHelper;
 import org.noranj.formak.server.LoginHelper;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
+import org.noranj.formak.shared.Constants;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.exception.NotLoggedInException;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
+ * This service is sued by Admin.
+ * Right now all the methods set the name space to Amdin before working with datastore
+ * It may not be needed as we will limit access to the signup pages to only Admin users and
+ * by default their name space is set to the proper namespace by filter.
  * 
+ * Another idea would be to use SERVLETs in backend to do the amdin jobs and limit the access their using web.xml.
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
@@ -29,11 +37,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class SystemAdminServiceImpl extends RemoteServiceServlet implements SystemAdminService {
   
-  /**
-   * 
-   */
   private static final long serialVersionUID = -2326021829857086171L;
 
+  protected static Logger logger = Logger.getLogger(SystemAdminServiceImpl.class.getName());
+  
   /**
    * It uses the users email address to find its detail information.
    * The email address is used as the user ID to sign in to the system.
@@ -62,19 +69,31 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    */
   public List<SystemUserDTO> getSystemUsers(SystemClientPartyDTO systemClientPartyDTO) {
     
-    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+  	//TODO it may not be needed
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
     
-    Collection<SystemUser> sysUsers = systemUserHelper.getEntities(); 
-                                                            //(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, emailAddress), /*filter*/ 
-                                                            //null /*ordering*/, null /*parameter*/, null /*value*/,
-                                                            //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
-                                                            //1); /* max fetch depth */
+    assert(NamespaceManager.get().equals(Constants.C_SYSTEM_ADMIN_NAMESPACE)); //keep this line
     
-    List<SystemUserDTO> sysUserList = new ArrayList<SystemUserDTO>();
-    for (SystemUser su : sysUsers) {
-      sysUserList.add(su.getSystemUserDTO());
+    try {
+    	
+	    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+	    
+	    Collection<SystemUser> sysUsers = systemUserHelper.getEntities(); 
+	                                                            //(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, emailAddress), /*filter*/ 
+	                                                            //null /*ordering*/, null /*parameter*/, null /*value*/,
+	                                                            //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
+	                                                            //1); /* max fetch depth */
+	    
+	    List<SystemUserDTO> sysUserList = new ArrayList<SystemUserDTO>();
+	    for (SystemUser su : sysUsers) {
+	      sysUserList.add(su.getSystemUserDTO());
+	    }
+	    return(sysUserList);
+
+    } finally {
+    	NamespaceManager.set(currentNameSpace);
     }
-    return(sysUserList);
     
   }
 
@@ -86,15 +105,26 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @return the id that is generated and assigned to the client party.
    */
   public String addSystemClientParty(SystemClientPartyDTO systemClientParty) {
-
-    DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+  	//TODO it may not be needed
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
     
-    SystemClientParty newSystemClientParty = new SystemClientParty(systemClientParty);
+    assert(NamespaceManager.get().equals(Constants.C_SYSTEM_ADMIN_NAMESPACE)); //keep this line
     
-    systemClientHelper.storeEntity(newSystemClientParty);
+    try {
+    	
     
-    return(newSystemClientParty.getId());
+	    DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+	    
+	    SystemClientParty newSystemClientParty = new SystemClientParty(systemClientParty);
+	    
+	    systemClientHelper.storeEntity(newSystemClientParty);
+	    
+	    return(newSystemClientParty.getId());
         
+    } finally {
+    	NamespaceManager.set(currentNameSpace);
+    }
   }
 
   //XXX TEST
@@ -107,11 +137,57 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    */
   public String addSystemUser(SystemUserDTO systemUserDTO) { //FIXME what will happen if it fails to add the user!!!
 
-    DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
-    SystemUser sysUser = new SystemUser(systemUserDTO);
-    systemUserDTO.setId(systemClientHelper.addChildEntity(sysUser));
-    return(systemUserDTO.getId());
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
+
+    try {
+    	
+	    DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
+	    SystemUser sysUser = new SystemUser(systemUserDTO);
+	    systemUserDTO.setId(systemClientHelper.addChildEntity(sysUser));
+	    return(systemUserDTO.getId());
+	    
+    } finally {
+    	NamespaceManager.set(currentNameSpace);
+    }
     
+  }
+  
+  /**
+   * it can be sign up by email and UI.
+   * @return
+   */
+  public String signup(SystemClientPartyDTO systemClientParty, SystemUserDTO systemUser) {
+
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
+
+    try {
+    	
+	  	DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+
+	  	SystemClientParty newSystemClientParty;
+	    
+	  	if(systemClientParty.getId()!=null) {
+	  		newSystemClientParty =systemClientHelper.getEntityById(systemClientParty.getId(), null, 1); 
+	  		if (newSystemClientParty == null) {
+	  			logger.severe("SystemClientparty["+systemClientParty.getId()+"] does not exist in the system.");
+	  			return null; //FIXME here
+	  		}
+	  	}
+	  	else {
+	  		newSystemClientParty = new SystemClientParty(systemClientParty);
+	  		systemClientHelper.storeEntity(newSystemClientParty);
+	  	}
+	  	
+	    DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper2 = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
+	    SystemUser sysUser = new SystemUser(systemUser);
+	    systemUser.setId(systemClientHelper2.addChildEntity(sysUser));
+	    return(systemUser.getId());
+	    //XXX here
+    } finally {
+    	NamespaceManager.set(currentNameSpace);
+    }
   }
   
   @Override

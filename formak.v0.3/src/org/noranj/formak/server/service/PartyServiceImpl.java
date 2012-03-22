@@ -2,6 +2,7 @@ package org.noranj.formak.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.noranj.formak.client.service.PartyService;
 import org.noranj.formak.shared.dto.IDNameDTO;
@@ -23,7 +24,9 @@ public class PartyServiceImpl  extends RemoteServiceServlet implements PartyServ
 
   	private static final long serialVersionUID = 1L;
 
-//FIXME PRO2
+    protected static Logger logger = Logger.getLogger(PartyServiceImpl.class.getName());
+
+  	//FIXME PRO2
   /**
    * It returns the list of trading parties (ID and Name only) for the current user with the specified party role.
    * For example, list of buyers or sellers, ...

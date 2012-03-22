@@ -31,6 +31,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -43,12 +44,11 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.appengine.api.taskqueue.QueueFailureException;
 
 /**  
- * 
+ *  
  * @author
  * @since 0.3.2012MAR06
  * @version 0.3.2012MAR06
  * @change
- * @deprecated NOT USED YET.
  */
 public class Utils {
         
@@ -124,6 +124,11 @@ public class Utils {
         }
     }
     
+    /**
+     * 
+     * @param e
+     * @return
+     */
     public static String stackTraceToString(Throwable e) {
       String retValue = null;
       StringWriter sw = null;
@@ -140,6 +145,27 @@ public class Utils {
        } catch (IOException ignore) {}
       }
       return retValue;
+    }
+    
+    /**
+     * It reads the whole content of an input stream and return it as byte[].
+     * @param in
+     * @return
+     * @throws IOException
+     */
+    public static byte[] readAll(InputStream in) throws IOException {
+    	
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] buf = new byte[2048];
+			int read=0;
+			do {
+				read = in.read(buf);
+				out.write(buf, 0, read);
+			} while(read>0);
+			out.flush();
+			out.close();
+    	return(out.toByteArray());
+    	
     }
     
 } // end class

@@ -1,6 +1,7 @@
 package org.noranj.formak.server.domain.biz;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.NotPersistent;
@@ -23,6 +24,8 @@ import org.noranj.formak.shared.type.DocumentType;
 @PersistenceCapable(detachable="true")
 public class PurchaseOrderResponse extends BusinessDocument implements Serializable {
 
+  protected static Logger logger = Logger.getLogger(PurchaseOrderResponse.class.getName());
+	
   @NotPersistent
   private static final long serialVersionUID = 6257544276859036943L;
   

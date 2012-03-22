@@ -23,9 +23,12 @@ package org.noranj.formak.server.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.logging.Logger;
 
 public class ServletUtils {
 
+  private static Logger logger = Logger.getLogger(ServletUtils.class.getName());
+	
   /**
    * NOT UNIT TESTED Returns the URL (including query parameters) minus the scheme, host, and context path. This method probably
    * be moved to a more general purpose class.

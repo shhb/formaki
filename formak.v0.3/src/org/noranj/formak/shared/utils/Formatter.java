@@ -1,6 +1,9 @@
 package org.noranj.formak.shared.utils;
 
 import java.util.Date;
+import java.util.logging.Logger;
+
+import org.noranj.formak.server.LoginHelper;
 
 /**
  * 
@@ -16,6 +19,8 @@ import java.util.Date;
  */
 public class Formatter {
 
+  private static Logger logger = Logger.getLogger(Formatter.class.getName());
+	
   /** All monetary values are stored in long with assumption of having 3 digits after decimal points.
    * For example 1.20 is stored as 1200.
    */

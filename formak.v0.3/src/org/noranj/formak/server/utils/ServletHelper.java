@@ -18,6 +18,8 @@
  */
 package org.noranj.formak.server.utils;
 
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,6 +37,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class ServletHelper extends RemoteServiceServlet {
 
   private static final long serialVersionUID = -6362867182441202099L;
+  private static Logger logger = Logger.getLogger(ServletHelper.class.getName());
 
   public HttpSession getSessionIfLoggedOrThrowException() throws NotLoggedInException {
     HttpSession session = null;

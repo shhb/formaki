@@ -4,6 +4,7 @@ package org.noranj.formak.server;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -64,7 +65,10 @@ import org.noranj.formak.shared.exception.NotFoundException;
  */
 public class DALHelper<T> {
   
-  PersistenceManagerFactory pmf;
+	//TODO decide what kind of logger to use BA-2012-03-21 using static logger for DALHelper<T> or using persistentClass.logger??? 
+  private static Logger logger = Logger.getLogger(DALHelper.class.getName());
+
+	PersistenceManagerFactory pmf;
 
   /* stores the CLASS of T */
   Class<T> persistentClass;
@@ -80,13 +84,20 @@ public class DALHelper<T> {
     return pmf.getPersistenceManager();
   }
 
-  // FIXME it is not complit3ed. it doesn't cover the not found cases.
+  // FIXME it is not completed. it doesn't cover the not found cases.
   /**
-   * @param is
-   *          is the primary key for order and is a long integer.
+   * It finds the entity that is identified by id.
+   * It then loads the entity and all items in fetch groups.
+   * If it can not find the entity, it returns null.
+   * 
+   * @param id is the primary key for entity.
+   * @param fetchGroups stores the list of all fetch groups that we would like to fetch in this fetch.
+   * If it is null, it means no fetch group.
+   * @param maxFetchDepth indicates the depth of fetch.
    * 
    */
   public T getEntityById(String id, String[] fetchGroups, int maxFetchDepth) {
+  	
     assert (id != null);
 
     T entity, detachedEntity= null;

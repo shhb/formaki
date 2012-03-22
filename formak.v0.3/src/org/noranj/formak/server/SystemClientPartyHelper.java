@@ -4,6 +4,7 @@ package org.noranj.formak.server;
 //import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -24,11 +25,15 @@ import org.noranj.formak.shared.type.PartyRoleType;
  *
  * @author
  * @param <T>
+ * @changes 
+ * 	BA-2012-03-21 Added the logger despite deprecation status.
  * @deprecated NOT COMPLETED> JUST COPIED 2012-FEB-02
  *             I THINK I DO NOT NEED THIS CLASS. INSTEAD USE DALHelper
+ *      
  */
 public class SystemClientPartyHelper extends PartyHelper<SystemClientParty> {
   
+  private static Logger logger = Logger.getLogger(SystemClientPartyHelper.class.getName());
   
   /** Constructor, defining the PersistenceManagerFactory to use. */
   public SystemClientPartyHelper(PersistenceManagerFactory pmf, Class persistentClass) {

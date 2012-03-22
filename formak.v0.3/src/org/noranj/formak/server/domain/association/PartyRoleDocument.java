@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import org.noranj.formak.server.service.servlet.MigrationServlet;
 import org.noranj.formak.shared.type.DocumentType;
 import org.noranj.formak.shared.type.PartyRoleType;
 
@@ -26,9 +28,12 @@ import org.noranj.formak.shared.type.PartyRoleType;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.1
+ * @version 0.3.2012MAR21
+ * @since 0.1
  */
 public class PartyRoleDocument implements Serializable {
+
+  protected static Logger logger = Logger.getLogger(PartyRoleDocument.class.getName());
 
   private static final long serialVersionUID = -4332548052598644936L;
 

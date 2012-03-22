@@ -3,6 +3,7 @@ package org.noranj.formak.server.domain.biz;
 
 import java.net.URI;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -22,6 +23,8 @@ import org.noranj.formak.shared.type.PartyRoleType;
 @PersistenceCapable(detachable="true")
 public class TradingParty extends Party {
 
+  protected static Logger logger = Logger.getLogger(TradingParty.class.getName());
+	
   @NotPersistent
   private static final long serialVersionUID = 183741034710481700L;
 

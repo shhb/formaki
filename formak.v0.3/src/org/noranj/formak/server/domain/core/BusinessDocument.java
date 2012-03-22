@@ -4,6 +4,7 @@ package org.noranj.formak.server.domain.core;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.FetchGroup;
@@ -17,6 +18,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
+
+import org.noranj.formak.server.domain.biz.Quotation;
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PartyDTO;
@@ -41,6 +44,8 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @changes
  * 
  * BA-2012-FEB-12 Changed the key from Long to Key type. It was needed to implement 1-N relationships.
+ * BA-2012-MAR-20 Added createdTS to store the timestamp of the creation time. It is mostly used by Admin.
+ * One of the usage is to purge the documents or archive them based on their createdTS.
  */
 @PersistenceCapable(detachable="true")
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -56,6 +61,8 @@ public abstract class BusinessDocument implements Serializable {
   @NotPersistent
   private static final long serialVersionUID = 6289943276859036943L;
 
+  protected static Logger logger = Logger.getLogger(BusinessDocument.class.getName());
+  
   // these are fetch group names.
   public static final String C_ATTACHMENT_FETCH_GROUP_NAME = "attachment"; 
   public static final String C_TAGS_FETCH_GROUP_NAME = "tags"; 
@@ -183,13 +190,16 @@ public abstract class BusinessDocument implements Serializable {
   @Persistent
   protected long version;
 
+  /** it stores the creation date and time for the BusinessDocument or the date time the object added to data store. */
+  @Persistent
+  protected long createdTS;
+
   /**
    * The details of business document is stored in form of a XML file in this attribute.
    */
   @Persistent(serialized = "true")
   protected Attachment xmlBizDocument;
 
-  
   public BusinessDocument() {
     
   }
@@ -346,7 +356,15 @@ public abstract class BusinessDocument implements Serializable {
   }
 
 
-  public Attachment getXmlBizDocument() {
+  public long getCreatedTS() {
+  	return createdTS;
+  }
+
+	public void setCreatedTS(long createdTS) {
+  	this.createdTS = createdTS;
+  }
+
+	public Attachment getXmlBizDocument() {
     return xmlBizDocument;
   }
 
@@ -361,7 +379,7 @@ public abstract class BusinessDocument implements Serializable {
    * @return
    */
   public BusinessDocumentDTO getBusinessDocumentDTO () {
-    //FIXME Party information does not exist in business document table.
+    //FIXME [P1] Party information does not exist in business document table.
     HashSet sellerPartyRoles = new HashSet();
     sellerPartyRoles.add(PartyRoleType.Seller); 
     HashSet buyerPartyRoles = new HashSet();

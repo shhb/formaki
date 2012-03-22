@@ -21,7 +21,20 @@ public class Attachment implements Serializable {
   private String name;
   private MIMEType mimeType;
   
-  public byte[] getContent() {
+   
+  public Attachment() {
+	  super();
+	  // TODO Auto-generated constructor stub
+  }
+  
+	public Attachment(byte[] content, String name, MIMEType mimeType) {
+	  super();
+	  this.content = content;
+	  this.name = name;
+	  this.mimeType = mimeType;
+  }
+	
+	public byte[] getContent() {
     return content;
   }
   public void setContent(byte[] content) {

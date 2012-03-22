@@ -1,94 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 
-<!-- Servlets -->
-  <servlet>
-    <servlet-name>businessDocument</servlet-name>
-    <servlet-class>org.noranj.formak.server.service.BusinessDocumentServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>businessDocument</servlet-name>
-    <url-pattern>/formak/businessDocument</url-pattern>
-  </servlet-mapping>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>businessDocument</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.BusinessDocumentServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet>
-    <servlet-name>systemAdmin</servlet-name>
-    <servlet-class>org.noranj.formak.server.service.SystemAdminServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>systemAdmin</servlet-name>
-    <url-pattern>/formak/systemAdmin</url-pattern>
-  </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>businessDocument</servlet-name>
+		<url-pattern>/formak/businessDocument</url-pattern>
+	</servlet-mapping>
 
- <servlet>
-    <servlet-name>partyService</servlet-name>
-    <servlet-class>org.noranj.formak.server.service.PartyServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>partyService</servlet-name>
-    <url-pattern>/formak/partyService</url-pattern>
-  </servlet-mapping>
-  
- <!-- BA-2012-FEB-28 Added Login -->
-  <!-- ===================== Login Google Servlet ===================== -->
+	<servlet>
+		<servlet-name>systemAdmin</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.SystemAdminServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet>
-    <servlet-name>logingoogle</servlet-name>
-    <servlet-class>org.noranj.formak.server.service.servlet.LoginGoogleServlet</servlet-class>
-  </servlet>
+	<servlet-mapping>
+		<servlet-name>systemAdmin</servlet-name>
+		<url-pattern>/formak/systemAdmin</url-pattern>
+	</servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>logingoogle</servlet-name>
-    <url-pattern>/logingoogle</url-pattern>
-  </servlet-mapping>
+	<servlet>
+		<servlet-name>partyService</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.PartyServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet>
-    <servlet-name>logingooglecallback</servlet-name>
-    <servlet-class>org.noranj.formak.server.service.servlet.LoginGoogleCallbackServlet</servlet-class>
-  </servlet>
+	<servlet-mapping>
+		<servlet-name>partyService</servlet-name>
+		<url-pattern>/formak/partyService</url-pattern>
+	</servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>logingooglecallback</servlet-name>
-    <url-pattern>/logingooglecallback</url-pattern>
-  </servlet-mapping>
-  
+	<!-- BA-2012-FEB-28 Added Login -->
+	<!-- ===================== Login Google Servlet ===================== -->
 
- <!-- BA-2012-FEB-28 Added the LoginFilter -->
-  <filter>
-    <filter-name>loginfilter</filter-name>
-    <filter-class>org.noranj.formak.server.service.servlet.LoginFilter</filter-class>
-  </filter>
+	<servlet>
+		<servlet-name>logingoogle</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.LoginGoogleServlet</servlet-class>
+	</servlet>
 
-  <filter-mapping>
-    <filter-name>loginfilter</filter-name>
-    <url-pattern>/formak/businessDocument</url-pattern>
-  </filter-mapping>
+	<servlet-mapping>
+		<servlet-name>logingoogle</servlet-name>
+		<url-pattern>/logingoogle</url-pattern>
+	</servlet-mapping>
 
-  <!-- Configure the namespace filter. -->
-  <filter>
-    <filter-name>NamespaceFilter</filter-name>
-    <filter-class>org.noranj.formak.server.service.servlet.NamespaceFilter</filter-class>
-    <init-param>
-      <param-name>namespace-strategy</param-name>
-      <!-- Change this to the desired strategy, see NamespaceFilter.NamespaceStrategy -->
-      <!-- CLIENT_ID is the one that is used for all users of the system. -->
-      <param-value>CLIENT_ID</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-      <filter-name>NamespaceFilter</filter-name>
-      <url-pattern>/formak/*</url-pattern>
-  </filter-mapping>
+	<servlet>
+		<servlet-name>logingooglecallback</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.LoginGoogleCallbackServlet</servlet-class>
+	</servlet>
 
-  <welcome-file-list>
-    <welcome-file>Formak.html</welcome-file>
-  </welcome-file-list>
-  
+	<servlet-mapping>
+		<servlet-name>logingooglecallback</servlet-name>
+		<url-pattern>/logingooglecallback</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- BA-2012-FEB-28 Added the LoginFilter -->
+	<filter>
+		<filter-name>loginfilter</filter-name>
+		<filter-class>org.noranj.formak.server.service.servlet.LoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>loginfilter</filter-name>
+		<url-pattern>/formak/businessDocument</url-pattern>
+	</filter-mapping>
+
+	<!-- Configure the namespace filter. -->
+	<filter>
+		<filter-name>NamespaceFilter</filter-name>
+		<filter-class>org.noranj.formak.server.service.servlet.NamespaceFilter</filter-class>
+		<init-param>
+			<param-name>namespace-strategy</param-name>
+			<!-- Change this to the desired strategy, see NamespaceFilter.NamespaceStrategy -->
+			<!-- CLIENT_ID is the one that is used for all users of the system. -->
+			<param-value>CLIENT_ID</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>NamespaceFilter</filter-name>
+		<url-pattern>/formak/*</url-pattern>
+	</filter-mapping>
+
+	<!-- BA-2012-MAR-17 Added to send emails or receive emails. NOT FULLY tested 
+		YET -->
+	<!-- Mail Service configuration -->
+	<servlet>
+		<servlet-name>bizdocmailhandler</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.BizDocMailHandlerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>generalmailhandler</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.MailHandlerServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>bizdocmailhandler</servlet-name>
+		 <!-- processing received email by address xxxx@APPID.appspotmail.com -->
+		<url-pattern>/_ah/mail/bizdoc@iformak.appspotmail.com</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>generalmailhandler</servlet-name>
+		<url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- BA-2012-MAR-17 Added Migration servlet which is used to make changes 
+		in DataStore when needed such as add a new field or remove one from a object. -->
+	<!-- ===================== migration ===================== -->
+
+	<servlet>
+		<servlet-name>Migration</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.MigrationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Migration</servlet-name>
+		<url-pattern>/migration</url-pattern>
+	</servlet-mapping>
+
+	<!-- ===================== security-constraint ===================== -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Migration Servlet</web-resource-name>
+			<url-pattern>/migration</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- BA-2012-03-20 Added but not used it yet. -->
+	<security-constraint>
+		<display-name>Restrict access to XHTML files</display-name>
+		<web-resource-collection>
+			<web-resource-name>XHTML files</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint />
+	</security-constraint>
+
+	<!--  Added to restrict access to the mail handlers to Admin users only. -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Mail Service</web-resource-name>
+			<url-pattern>/_ah/mail/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<welcome-file-list>
+		<welcome-file>Formak.html</welcome-file>
+	</welcome-file-list>
+
 </web-app>
