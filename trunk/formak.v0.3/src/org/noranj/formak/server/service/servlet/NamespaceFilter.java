@@ -7,6 +7,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -28,11 +29,14 @@ import org.noranj.formak.server.domain.sa.SystemClientParty;
  * as an example but is also careful not to override the
  * namespace where it has previously been set, for example, incoming 
  * task queue requests.
- * @deprecated NOT USED YET/
+ * @since
+ * @version
+ * @changes
+ * 
  */
 public class NamespaceFilter implements Filter {
 
-  private static Logger logger = Logger.getLogger(LoginFilter.class.getName());
+  private static Logger logger = Logger.getLogger(NamespaceFilter.class.getName());
   
   /**
    * Enumeration of namespace strategies.
@@ -134,11 +138,12 @@ public class NamespaceFilter implements Filter {
           String clientId = LoginHelper.getClientIdOfLoggedInUser((HttpServletRequest)request);
           if (clientId!=null) {
             NamespaceManager.set(clientId);
-            System.out.println("Namespace is SET TO CLIENT_ID ["+clientId+"]");
+            if (logger.isLoggable(Level.FINE))
+            	logger.fine("Namespace is SET TO CLIENT_ID ["+clientId+"]");
           }
           else {
             //throw new IOException("Failed to set Namesapce.");
-            System.out.println("Namespace is NOT SET because can not find required information. Probably user is not logged in.");
+            logger.warning("Namespace is NOT SET because can not find required information. Probably user is not logged in.");
           }
           break;
         }
@@ -164,8 +169,8 @@ public class NamespaceFilter implements Filter {
       }
     }
     
-    //FIXME Log
-    System.out.println("namespace is set to : " + NamespaceManager.get());
+    if (logger.isLoggable(Level.FINE))
+    	logger.fine("namespace is set to : " + NamespaceManager.get());
     
     // chain into the next request
     chain.doFilter(request, response) ;

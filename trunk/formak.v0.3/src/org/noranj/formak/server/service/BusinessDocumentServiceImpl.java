@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.noranj.formak.client.service.BusinessDocumentService;
 import org.noranj.formak.server.BusinessDocumentHelper;
@@ -20,6 +21,8 @@ import org.noranj.formak.server.domain.biz.Quotation;
 import org.noranj.formak.server.domain.biz.RequestForQuotation;
 import org.noranj.formak.server.domain.core.Address;
 import org.noranj.formak.server.domain.core.BusinessDocument;
+import org.noranj.formak.server.service.servlet.MigrationServlet;
+import org.noranj.formak.server.service.servlet.NamespaceFilter;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.dto.XBusinessDocumentDTOX;
@@ -47,12 +50,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The API package 'datastore_v3' or call 'BeginTransaction()' was not found.*/ implements BusinessDocumentService {
 
-  
   /**
    * 
    */
   private static final long serialVersionUID = 4800671361243161205L;
 
+  protected static Logger logger = Logger.getLogger(BusinessDocumentServiceImpl.class.getName());
   
   /** 
    * There is a helper for each document type.
@@ -296,10 +299,11 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
   public List<BusinessDocumentDTO> getBusinessDocuments(DocumentType documentType,
                                                             DocumentStateType documentStateType) {
     
-    if (documentType.equals(DocumentType.Unknown)) {
-        System.out.println("*** ERROR: getBusinessDocuments can not accept an unknown DocumentType as input parameter.") ;
-        return(new ArrayList<BusinessDocumentDTO>()); //FIXME it should be handled better
-    }
+  	//BA-2012-03-21 Now we have a document type with value as Other.
+    //if (documentType.equals(DocumentType.Other)) {
+    //    System.out.println("*** ERROR: getBusinessDocuments can not accept an unknown DocumentType as input parameter.") ;
+    //    return(new ArrayList<BusinessDocumentDTO>()); //FIXME it should be handled better
+    //}
     
     boolean done = false;
     List<BusinessDocumentDTO> bizDocDetailsList = null;

@@ -3,6 +3,7 @@ package org.noranj.formak.server;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -26,6 +27,8 @@ import org.noranj.formak.shared.type.PartyRoleType;
  */
 public class PartyHelper<T> {
   
+  private static Logger logger = Logger.getLogger(PartyHelper.class.getName());
+	
   PersistenceManagerFactory pmf;
 
   /* stores the CLASS of T */

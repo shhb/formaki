@@ -20,19 +20,11 @@ package org.noranj.formak.server;
 
 
 
-import java.util.Date;
 import java.util.logging.Logger;
 
-import javax.jdo.JDOCanRetryException;
-import javax.jdo.JDOException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.noranj.formak.SystemAdminServiceImplTest;
-import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.server.utils.ServletHelper;
@@ -54,6 +46,9 @@ public class LoginHelper extends RemoteServiceServlet {
   private static final long serialVersionUID = 2888983680310646846L;
 
   private static Logger logger = Logger.getLogger(LoginHelper.class.getName());
+  
+  //FIXME Use this attribute to block users after certain times attempting to login to the system. */
+  /** number of times a user can try to login before being blocked. */ 
   private static final int NUM_RETRIES = 5;
   
   /**

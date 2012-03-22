@@ -24,7 +24,7 @@ import com.google.appengine.api.users.UserServiceFactory;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @deprecated NOT IMPLEMENTED YET
+ * @deprecated NOT NEEDED - Use LoginFilter instead
  */
 public class AuthenticationFilter implements Filter {
 	

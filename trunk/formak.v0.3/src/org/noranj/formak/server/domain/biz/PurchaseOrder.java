@@ -4,6 +4,7 @@ package org.noranj.formak.server.domain.biz;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.DiscriminatorStrategy;
@@ -13,6 +14,7 @@ import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import org.noranj.formak.server.domain.association.PartyRoleDocument;
 import org.noranj.formak.server.domain.biz.PurchaseOrderItem;
 import org.noranj.formak.server.domain.core.Address;
 import org.noranj.formak.server.domain.core.BusinessDocument;
@@ -35,7 +37,9 @@ import org.noranj.formak.shared.type.LevelOfImportanceType;
 @Discriminator(strategy=DiscriminatorStrategy.CLASS_NAME)
 @FetchGroup(name=PurchaseOrder.C_ITEMS_FETCH_GROUP_NAME, members={@Persistent(name="purchaseOrderItems")}) 
 public class PurchaseOrder extends BusinessDocument implements Serializable {
-  
+
+  protected static Logger logger = Logger.getLogger(PurchaseOrder.class.getName());
+	
   private static final long serialVersionUID = 64717699663153459L;
 
   public static final String C_ITEMS_FETCH_GROUP_NAME = "purchaseOrderItems";
@@ -62,7 +66,7 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
   /** A free text format so buyer can add any arbitrary text in it. 
    */
   @Persistent
-  private String message;
+  private String message; //FIXME don't we have a NOTE in BusinessDocument? is it different? is it extra data?
   
   @Persistent(defaultFetchGroup="true")//without this attribute these are not fetched by default. Only primitive data types are fetched by default.
   @Embedded  

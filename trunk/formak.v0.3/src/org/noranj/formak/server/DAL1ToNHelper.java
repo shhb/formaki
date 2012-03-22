@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -31,6 +32,9 @@ import org.noranj.formak.shared.type.ParentEntity;
  */
 public class DAL1ToNHelper<T extends ParentEntity, K extends ChildEntity> {
   
+	//TODO decide what kind of logger to use BA-2012-03-21 using static or dynamic persistentClass.logger???  
+  private static Logger logger = Logger.getLogger(DAL1ToNHelper.class.getName());
+	
   PersistenceManagerFactory pmf;
 
   /* stores the CLASS of T */

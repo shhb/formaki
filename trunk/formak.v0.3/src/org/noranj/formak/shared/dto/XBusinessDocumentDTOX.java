@@ -28,7 +28,7 @@ public class XBusinessDocumentDTOX implements Serializable {
     this.businessDocumentName = "NOT_ASSIGNED";
     this.description = "NOT_ASSIGNED";
     this.businessDocumentNumber = "NOT_ASSIGNED";
-    this.documentType = DocumentType.Unknown.toString();
+    this.documentType = DocumentType.Other.toString();
   }
 
   public XBusinessDocumentDTOX(String id, String businessDocumentName, 

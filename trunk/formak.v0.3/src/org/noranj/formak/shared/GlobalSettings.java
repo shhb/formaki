@@ -18,8 +18,9 @@ public class GlobalSettings {
   private static String dateTimeFormat = "YYYY-MM-DD HH:mm:SS";
   
   private static String currencyFormat = "###,###,###,###.00";
-  
-  
+ 
+  /** indicates the maximum number of files that can be attached to an email. */
+  public static int C_MAX_NUMBER_OF_ATTACHED_FILES_TO_EMAIL = 10;
   
   public static String getCurrencyFormat () {
     return(currencyFormat);

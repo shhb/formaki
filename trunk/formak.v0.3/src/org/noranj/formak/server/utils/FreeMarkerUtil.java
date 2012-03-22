@@ -7,6 +7,9 @@ import java.io.OutputStreamWriter;
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import org.noranj.formak.server.service.servlet.NamespaceFilter;
 
 /**
  * 
@@ -18,6 +21,8 @@ import java.util.Map;
  */
 public class FreeMarkerUtil {
 
+  private static Logger logger = Logger.getLogger(FreeMarkerUtil.class.getName());
+	
   /**
    *  Process a template using FreeMarker and print the results
    * @param datamodel

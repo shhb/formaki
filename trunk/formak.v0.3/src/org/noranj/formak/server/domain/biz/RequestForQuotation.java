@@ -1,6 +1,7 @@
 package org.noranj.formak.server.domain.biz;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -18,6 +19,8 @@ import org.noranj.formak.server.domain.core.BusinessDocument;
 @PersistenceCapable(detachable="true")
 public class RequestForQuotation extends BusinessDocument implements Serializable {
 
+  protected static Logger logger = Logger.getLogger(RequestForQuotation.class.getName());
+	
   @NotPersistent
   private static final long serialVersionUID = 6257544276859036943L;
   
