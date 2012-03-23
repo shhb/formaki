@@ -3,6 +3,7 @@ package org.noranj.formak.server.utils;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
+import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -13,6 +14,7 @@ import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.shared.type.MIMEType;
 
 /**
+ * 
  * 
  * This module, both source code and documentation, is in the Public Domain, and
  * comes with NO WARRANTY. See http://www.noranj.org for further information.
@@ -31,17 +33,27 @@ public class MailHelper {
 
 	private static Logger logger = Logger.getLogger(MailHelper.class.getName());
 
-	private MailMessage mailMessage = new MailMessage();
+	private MailMessage mailMessage;
 
-	public MailMessage getMessage() {
-  	return mailMessage;
+	/**
+	 * 
+	 * @param message
+	 * @return
+	 * @throws Exception
+	 */
+	public MailMessage getMailMessage(Message message) throws Exception  {
+		
+		mailMessage = new MailMessage();
+		mailMessage.setSubject(message.getSubject());
+		Address[] addresses = message.getFrom();
+		mailMessage.setFromAddress(addresses[0].toString()); // assuming the first one is the sender!!
+		//TODO add the rest of information later
+		
+		handleMessage(message);
+		return(mailMessage);
   }
 
-	public void setMailMessage(MailMessage mailMessage) {
-  	this.mailMessage = mailMessage;
-  }
-
-	public void handleMessage(Message message) throws Exception {
+	private void handleMessage(Message message) throws Exception {
 		Object content = message.getContent();
 
 		if (content instanceof String) {
@@ -56,14 +68,14 @@ public class MailHelper {
 		}
 	}
 
-	public void handleMultipart(Multipart mp) throws Exception {
+	private void handleMultipart(Multipart mp) throws Exception {
 		int count = mp.getCount();
 
 		int i = 0;
 		if (count > i++ && (mailMessage.getBody() == null)) {
 			logger.info("Found the BODY");
 			BodyPart bp = mp.getBodyPart(0);
-			mailMessage.setBody (new Attachment(((String) bp.getContent()).getBytes(), "body", MIMEType.valueOf(bp.getContentType())));
+			mailMessage.setBody (new Attachment(((String) bp.getContent()).getBytes(), "body", MIMEType.valueOfWithEncoding(bp.getContentType())));
 			logger.fine("body ["+(String) bp.getContent()+"]");
 		}
 		
@@ -75,11 +87,11 @@ public class MailHelper {
 				
 				if (content instanceof String) {
 					logger.info("\tcontent is ATTACHMENT-STRING - part ["+i+"] is ["+(String) content+"]");
-					mailMessage.addAttachment(new Attachment(((String)content).getBytes(), bp.getFileName(), MIMEType.valueOf(bp.getContentType())));
+					mailMessage.addAttachment(new Attachment(((String)content).getBytes(), bp.getFileName(), MIMEType.valueOfWithEncoding(bp.getContentType())));
 					
 				} else if (content instanceof InputStream) {
 					// handle input stream
-					mailMessage.addAttachment(new Attachment(Utils.readAll((InputStream)content), bp.getFileName(), MIMEType.valueOf(bp.getContentType())));
+					mailMessage.addAttachment(new Attachment(Utils.readAll((InputStream)content), bp.getFileName(), MIMEType.valueOfWithEncoding(bp.getContentType())));
 					logger.info("\tcontent is ATTACHMENT-InputStream - part ["+i+"] is ["+String.valueOf(Utils.readAll((InputStream)content))+"]");
 					
 				} else if (content instanceof Message) {
@@ -95,7 +107,7 @@ public class MailHelper {
 			}
 			else {
 				logger.warning("part ["+i+"] is INLINE - ["+(String) bp.getContent()+"]");
-				mailMessage.addAttachment(new Attachment(Utils.readAll((InputStream)content), (bp.getFileName()+"-INLINE-" + i), MIMEType.valueOf(bp.getContentType())));
+				mailMessage.addAttachment(new Attachment(((String)content).getBytes(), (bp.getFileName()+"-INLINE-" + i), MIMEType.valueOfWithEncoding(bp.getContentType())));
 				logger.info("\tcontent is String - part ["+i+"] is ["+(String) content+"]");
 			}
 

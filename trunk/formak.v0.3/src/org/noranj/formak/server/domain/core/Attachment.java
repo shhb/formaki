@@ -37,7 +37,11 @@ public class Attachment implements Serializable {
 	public byte[] getContent() {
     return content;
   }
-  public void setContent(byte[] content) {
+	public String getContentAsString() {
+    return String.valueOf(content);
+  }
+
+	public void setContent(byte[] content) {
     this.content = content;
   }
   public String getName() {

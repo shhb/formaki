@@ -1,9 +1,12 @@
 package org.noranj.formak.shared.utils;
 
-import java.util.Date;
-import java.util.logging.Logger;
 
-import org.noranj.formak.server.LoginHelper;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -151,6 +154,5 @@ public class Formatter {
     // this must be fixed.
     return(System.currentTimeMillis());
   }
-  
   
 }

@@ -26,15 +26,19 @@ public enum MIMEType {
     return this.description;
   }
   
-  public static MIMEType valueOfDescription (String description) {
-    if("palin/text".equals(description))
-        return(TXT);
-    if ("plain/html".equals(description))
-      return(HTML);
-    if("plain/xml".equals(description))
-      return(XML);
-    if("image/jpeg".equals(description))
-      return(JPEG);
+  public static MIMEType valueOfWithEncoding (String description) {
+  	
+  	if (description!=null) {
+	    if(description.startsWith("text/palin"))
+	        return(TXT);
+	    if (description.startsWith("text/html"))
+	      return(HTML);
+	    if(description.startsWith("text/xml"))
+	      return(XML);
+	    if(description.startsWith("image/jpeg"))
+	      return(JPEG);
+  	}
+  	
     return(NotDefined);
   }
   

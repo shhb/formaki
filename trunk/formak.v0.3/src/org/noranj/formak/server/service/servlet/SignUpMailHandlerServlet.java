@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.*; 
 
 import org.noranj.formak.server.DALHelper;
+import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.server.service.SystemAdminServiceImpl;
@@ -17,6 +18,7 @@ import org.noranj.formak.server.utils.MailHelper;
 import org.noranj.formak.server.utils.Utils;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
+import org.noranj.formak.shared.type.ActivityType;
 
 /**
  * All the emails sent to this servlet will be processed and the attachment or body is used to build a business document.
@@ -48,15 +50,53 @@ public class SignUpMailHandlerServlet extends HttpServlet {
                        HttpServletResponse resp) throws IOException { 
 		try {
      
+			logger.warning("Processing Signup Mail");
 			Properties props = new Properties();
       Session session = Session.getDefaultInstance(props, null); 
       MimeMessage message = new MimeMessage(session, req.getInputStream());
       
       //TODO parse the message
       MailHelper mailhelper = new MailHelper();
-      
-      mailhelper.handleMessage(message);
-      
+      MailMessage mail = mailhelper.getMailMessage(message);
+
+      try {
+      	
+	      if (mail.getSubject().equalsIgnoreCase("signup")) {
+	      	
+		      logger.info("A 'signup' email is received from email["+mail.getFromAddress()+"]");
+
+		      SystemClientPartyDTO sysClientDTO = new SystemClientPartyDTO(Utils.buildMap(mail.getBody().getContentAsString()));
+		      sysClientDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
+		      if (sysClientDTO.getName()==null) {
+		      	sysClientDTO.setName("client-guest-" + System.currentTimeMillis());
+		      }
+		      
+		      SystemUserDTO sysUserDTO = new SystemUserDTO(Utils.buildMap(mail.getBody().getContentAsString()));
+		      
+		      sysUserDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
+		      sysUserDTO.setEmailAddress(mail.getFromAddress()); // to overwrite the emailAddress in the mail body
+		      
+		      if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
+		      	sysUserDTO.setFirstName("Guest");
+		      	sysUserDTO.setLastName(String.valueOf(System.currentTimeMillis()));
+		      }
+
+		      SystemAdminServiceImpl service = new SystemAdminServiceImpl();
+		      sysUserDTO.setId(service.signup(sysClientDTO, sysUserDTO));
+		      logger.info("A new user successfully signed up. userid["+sysUserDTO.getId()+"] email["+sysUserDTO.getEmailAddress()+"]");
+		      
+	      } 
+	      else {
+	      	//errMsg = "subject must be one word without any quotes: signup";
+		      logger.warning("A WRONG email is received from email["+mail.getFromAddress()+"]. The subject is ["+mail.getSubject()+"]");
+	      }
+	      
+	      //if (errMsg!=null) {
+	      	//TODO reply to sender with a notification email using a slow queue so they know the subject was wrong.
+	      //}
+      } catch (Exception ex){
+      	logger.severe(ex.getMessage() + "tace is ["+Utils.stackTraceToString(ex)+"]");
+      }
       
 		//} catch (MessagingException msgex){
 		//	logger.severe("A ["+msgex.getClass()+"] happened ["+msgex.getMessage()+"]. The stack is ["+ Utils.stackTraceToString(msgex) +"]");

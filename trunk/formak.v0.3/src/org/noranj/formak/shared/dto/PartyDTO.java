@@ -1,6 +1,7 @@
 package org.noranj.formak.shared.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.noranj.formak.shared.type.ActivityType;
@@ -13,6 +14,8 @@ import org.noranj.formak.shared.type.PartyRoleType;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @since 0.3
+ * @version 0.3.20120322
  */
 public class PartyDTO implements Serializable {
 
@@ -94,6 +97,14 @@ public class PartyDTO implements Serializable {
 
   public void setRoles(Set<PartyRoleType> roles) {
     this.roles = roles;
+  }
+
+  /** roles are separated by comma.
+   * @since 0.3.20120322
+   * @version 0.3.20120322
+   */
+  public void setRoles(String rolesStr) {
+  	this.roles = PartyRoleType.convertToSet(rolesStr);
   }
   
 }
