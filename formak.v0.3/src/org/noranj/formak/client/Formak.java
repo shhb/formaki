@@ -3,11 +3,13 @@ package org.noranj.formak.client;
 import org.noranj.formak.client.event.LoginEvent;
 import org.noranj.formak.client.helper.RPCCall;
 import org.noranj.formak.client.presenter.LoginPresenter;
+import org.noranj.formak.client.presenter.SignUpPresenter;
 import org.noranj.formak.client.service.BusinessDocumentService;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.service.SystemAdminService;
 import org.noranj.formak.client.service.SystemAdminServiceAsync;
 import org.noranj.formak.client.view.LoginView;
+import org.noranj.formak.client.view.SignUpView;
 import org.noranj.formak.shared.GlobalSettings;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 
@@ -130,6 +132,15 @@ public class Formak implements EntryPoint {
     loginPresenter.go(root);
   }
 
+  //BA:12-MAR-22 Added
+  //TODO SA - review this 
+  public void showSignUpView() {
+    root = RootLayoutPanel.get();
+    root.clear();
+    SignUpPresenter signupPresenter = new SignUpPresenter(eventBus, new SignUpView());
+    signupPresenter.go(root);
+  }
+ 
   private void createUI() {
 
     GWT.runAsync(new RunAsyncCallback() {
