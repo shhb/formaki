@@ -7,10 +7,11 @@ package org.noranj.formak.shared;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.3.2012MATR06
+ * @version 0.3.20120322
  * @since 0.3
  * @change
- *  BA:12-MAR-06 Added Client ID
+ *  BA:12-03-06 Added Client ID
+ *  BA:12-03-22 Added two new constants. All used in LoginHelper.
  */
 
 public class Constants {
@@ -37,4 +38,9 @@ public class Constants {
    * 
    */
   public static final String C_SYSTEM_ADMIN_NAMESPACE = "";
+  
+  public static final String C_APPLICATION_URL_PROP_NAME = "applition.url"; //BA:12-03-22 Added
+  
+  public static final String C_DEVELOPMENT_URL="http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997"; //BA:12-03-22 Added
+  
 }

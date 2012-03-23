@@ -162,7 +162,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         } else if (token.equals("login")) { //TODO SA Added this. BA:12-MAR-01
           Formak.get().showLoginView();
           return;
-        }
+	      } else if (token.equals("signup")) { //TODO SA Added this. BA:12-MAR-22
+	        Formak.get().showSignUpView();
+	        return;
+	      }
 
         if (presenter != null) {
           presenter.go(container);

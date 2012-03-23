@@ -59,9 +59,9 @@ public class LoginHelper extends RemoteServiceServlet {
   static public String getApplitionURL(HttpServletRequest request) {
 
     if (ServletHelper.isDevelopment(request)) {
-      if (System.getProperty("applition.url")!=null) //FIXME add this to documentation
-        return System.getProperty("applition.url");
-      return("http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997");
+      if (System.getProperty(Constants.C_APPLICATION_URL_PROP_NAME)!=null) //FIXME add this to documentation
+        return System.getProperty(Constants.C_APPLICATION_URL_PROP_NAME);
+      return(Constants.C_DEVELOPMENT_URL);
     } else {
       return ServletUtils.getBaseUrl(request);
     }
@@ -78,9 +78,9 @@ public class LoginHelper extends RemoteServiceServlet {
 
     //FIXME the following code just copied from getApplicationURL and MUST BE FIXED.
     if (ServletHelper.isDevelopment(request)) {
-      if (System.getProperty("applition.url")!=null) //FIXME add this to documentation
-        return System.getProperty("applition.url");
-      return("http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997");
+      if (System.getProperty(Constants.C_APPLICATION_URL_PROP_NAME)!=null) //FIXME add this to documentation
+        return System.getProperty(Constants.C_APPLICATION_URL_PROP_NAME)+ "/signup";
+      return(Constants.C_DEVELOPMENT_URL);
     } else {
       return ServletUtils.getBaseUrl(request);
     }

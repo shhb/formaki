@@ -27,31 +27,28 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.noranj.formak.client.presenter.LoginPresenter;
+import org.noranj.formak.client.presenter.SignUpPresenter;
 
+//TODO SA : need to implement this page later
 /**
  * 
- * @version 0.3.2012MAR01
- * @since 0.3.2012MAR01
+ * @version 0.3.20120322
+ * @since 0.3.20120322
  * @change 
+ *  BA:12-MAR-22 Copied from LoginView
  */
-public class LoginView extends Composite implements LoginPresenter.Display {
+public class SignUpView extends Composite implements SignUpPresenter.Display {
   
-  @UiField PushButton googleButton;
-  
-  /* BA:12-MAR-01 Commented out
-  @ UiField PushButton twitterButton;
-  @ UiField PushButton facebookButton;
-  */
-  
+	
+  @UiField PushButton signUpButton;
   
   private static UserBadgeUiBinder uiBinder = GWT
       .create(UserBadgeUiBinder.class);
 
-  interface UserBadgeUiBinder extends UiBinder<Widget, LoginView> {
+  interface UserBadgeUiBinder extends UiBinder<Widget, SignUpView> {
   }
 
-  public LoginView() {
+  public SignUpView() {
     initWidget(uiBinder.createAndBindUi(this));
   }
 
@@ -72,8 +69,8 @@ public class LoginView extends Composite implements LoginPresenter.Display {
   */
   
   @Override
-  public HasClickHandlers getGoogleButton() {
-    return googleButton;
+  public HasClickHandlers getSignUpButton() {
+    return signUpButton;
   }
 
 }
