@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.noranj.formak.shared.GlobalSettings;
-
 /**
  * 
  * 
@@ -22,8 +20,8 @@ public class MailMessage implements Serializable {
 	
   private static final long serialVersionUID = -2525988726950171264L;
   
-	private String sender;
-	private String[] recepients;
+	private String fromAddress;
+	private String[] recepientAddresses;
 	private String[] cc;
 	private String[] bcc; //??
 
@@ -33,21 +31,21 @@ public class MailMessage implements Serializable {
 	private List<Attachment> attachments;
 	
 	public MailMessage() {
-		body = new Attachment ();
+		body = null;
 		attachments = new ArrayList<Attachment>();
 	}
 	
-	public String getSender() {
-  	return sender;
+	public String getFromAddress() {
+  	return fromAddress;
   }
-	public void setSender(String sender) {
-  	this.sender = sender;
+	public void setFromAddress(String from) {
+  	this.fromAddress = from;
   }
-	public String[] getRecepients() {
-  	return recepients;
+	public String[] getRecepientAddresses() {
+  	return recepientAddresses;
   }
-	public void setRecepients(String[] recepients) {
-  	this.recepients = recepients;
+	public void setRecepientAddresses(String[] recepients) {
+  	this.recepientAddresses = recepients;
   }
 	public String[] getCc() {
   	return cc;
@@ -90,8 +88,8 @@ public class MailMessage implements Serializable {
 		str.append("subject[");
 		str.append(getSubject());
 		str.append("]");
-		str.append("sender[");
-		str.append(getSender());
+		str.append("from[");
+		str.append(getFromAddress());
 		str.append("");
 		str.append("numberOfAttchments[");
 		str.append(getAttachments().size());

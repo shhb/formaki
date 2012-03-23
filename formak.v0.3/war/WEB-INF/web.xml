@@ -95,6 +95,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-class>org.noranj.formak.server.service.servlet.BizDocMailHandlerServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>signupmailhandler</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.SignUpMailHandlerServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>generalmailhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.MailHandlerServlet</servlet-class>
 	</servlet>
@@ -103,6 +107,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>bizdocmailhandler</servlet-name>
 		 <!-- processing received email by address xxxx@APPID.appspotmail.com -->
 		<url-pattern>/_ah/mail/bizdoc@iformak.appspotmail.com</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>signupmailhandler</servlet-name>
+		 <!-- processing received signup email at signup@APPID.appspotmail.com -->
+		<url-pattern>/_ah/mail/signup@iformak.appspotmail.com</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>generalmailhandler</servlet-name>

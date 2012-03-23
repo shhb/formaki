@@ -1,10 +1,13 @@
 package org.noranj.formak.shared.dto;
 
 
+
 import java.io.Serializable;
+import java.util.Map;
 
 import org.noranj.formak.server.domain.sa.UserProfile;
 import org.noranj.formak.shared.type.ActivityType;
+import org.noranj.formak.shared.utils.Formatter;
 
 /**
  * 
@@ -71,6 +74,43 @@ public class SystemUserDTO implements Serializable {
     this.profile = profile;
   }
 
+  /**
+   * mapString format is like a properties file.
+   * 
+   * @param mapString
+   * @since 0.3.20120322
+   * @version 0.3.20120322
+   */
+  public SystemUserDTO(Map<String, String> map) {
+  	
+  	super();
+  	setId(map.get("id"));
+  	setFirstName(map.get("firstName"));
+  	setLastName(map.get("lastName"));
+    setEmailAddress(map.get("emailAddress"));
+    setParentClientId(map.get("parentClientId"));
+    
+    if (map.get("activityType")!=null)
+    	setActivityType(ActivityType.valueOf(map.get("activityType")));
+    else
+    	setActivityType(ActivityType.Deactive); //FIXME find out what is the correct default value.
+    
+    try {
+    	setLastLoginOn(Long.parseLong(map.get("lastLoginOn")));
+    } catch(Exception ex) {
+    	setLastLoginOn(System.currentTimeMillis());
+    }
+    try {
+    	setLastActive(Long.parseLong(map.get("lastActive")));
+    } catch(Exception ex) {
+    	setLastLoginOn(System.currentTimeMillis());
+    }
+    
+    //FIXME needs to be reviewed!!!
+    this.profile = new UserProfileDTO();
+    
+  }
+  
   public String getId() {
     return id;
   }
@@ -107,7 +147,7 @@ public class SystemUserDTO implements Serializable {
     return parentClientId;
   }
 
-  public void setParentClient(String parentClientId) {
+  public void setParentClientId(String parentClientId) {
     this.parentClientId = parentClientId;
   }
 

@@ -18,7 +18,11 @@
  */
 package org.noranj.formak.server.utils;
 
+
 /**
+ * NOTE: Do not move this class to 'shared' package.
+ * There are codes that are not supported. 
+ * 
  * Some code adapted from: the Google App Engine Virtual File System (GaeVFS) project,
  * http://code.google.com/p/gaevfs/
  */
@@ -36,10 +40,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.noranj.formak.shared.dto.SystemUserDTO;
+import org.noranj.formak.shared.type.ActivityType;
+import org.noranj.formak.shared.type.PartyRoleType;
 
 import com.google.appengine.api.taskqueue.QueueFailureException;
 
@@ -52,7 +64,7 @@ import com.google.appengine.api.taskqueue.QueueFailureException;
  */
 public class Utils {
         
-    private static final Logger log = Logger.getLogger( Utils.class.getName() );
+    private static final Logger logger = Logger.getLogger( Utils.class.getName() );
     
     /**
      * Serialize an object into a byte array.
@@ -84,7 +96,7 @@ public class Utils {
      */
     public static Object deserialize( HttpServletRequest req ) {
         if ( req.getContentLength() == 0 ) {
-            log.severe( "request content length is 0" );
+            logger.severe( "request content length is 0" );
             return null;
         }
         try {
@@ -92,7 +104,7 @@ public class Utils {
             req.getInputStream().readLine( bytesIn, 0, bytesIn.length );
             return deserialize( bytesIn );
         } catch ( IOException e ) {
-            log.log( Level.SEVERE, "Error deserializing task", e );
+            logger.log( Level.SEVERE, "Error deserializing task", e );
             return null; // don't retry task
         }
     }
@@ -112,7 +124,7 @@ public class Utils {
                                         new ByteArrayInputStream( bytesIn ) ) );
             return objectIn.readObject();
         } catch ( Exception e ) {
-            log.log( Level.SEVERE, "Error deserializing task", e );
+            logger.log( Level.SEVERE, "Error deserializing task", e );
             return null; // don't retry task
         } finally {
             try {
@@ -168,4 +180,24 @@ public class Utils {
     	
     }
     
+    /**
+     * NOTE: Do not move this method to 'shared' package. 
+     * java.util.Properties is not supported by GWT.
+     * @param mapContent
+     * @return
+     */
+    public static Map<String, String> buildMap(String mapContent) {
+    	
+    	Properties prop = new Properties();
+    	
+    	try {
+    		prop.load(new ByteArrayInputStream(mapContent.getBytes()));
+    	} catch (IOException ioex) {
+    		//TODO MAKE SURE IT IS NOT USED TO EXTRACT PASSWORD
+    		logger.severe("Failed to extract the map content from ["+mapContent+"]");
+    	}
+    	
+    	return((Map)prop);
+    } 
+
 } // end class

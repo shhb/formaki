@@ -9,6 +9,7 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage; 
 import javax.servlet.http.*; 
 
+import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.server.utils.MailHelper;
 import org.noranj.formak.server.utils.Utils;
 
@@ -41,7 +42,9 @@ public class BizDocMailHandlerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, 
                        HttpServletResponse resp) throws IOException { 
 		try {
-     
+			
+			logger.warning("Processing BizDoc Mail");
+
 			Properties props = new Properties();
       Session session = Session.getDefaultInstance(props, null); 
       MimeMessage message = new MimeMessage(session, req.getInputStream());
@@ -49,11 +52,11 @@ public class BizDocMailHandlerServlet extends HttpServlet {
       //TODO parse the message
       MailHelper mailhelper = new MailHelper();
       
-      mailhelper.handleMessage(message);
+      MailMessage mail = mailhelper.getMailMessage(message);
       
       ///TODO Add the message to a queue so another task will save the content to the data store. 
       
-      logger.info("received an email - ["+mailhelper.getMessage()+"]");
+      logger.info("received an email - ["+mail.toString()+"]");
       
 		//} catch (MessagingException msgex){
 		//	logger.severe("A ["+msgex.getClass()+"] happened ["+msgex.getMessage()+"]. The stack is ["+ Utils.stackTraceToString(msgex) +"]");
