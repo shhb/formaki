@@ -82,8 +82,8 @@ public class SystemUserDTO implements Serializable {
    * @version 0.3.20120322
    */
   public SystemUserDTO(Map<String, String> map) {
-  	
   	super();
+  	
   	setId(map.get("id"));
   	setFirstName(map.get("firstName"));
   	setLastName(map.get("lastName"));

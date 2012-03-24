@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.*; 
 
 import org.noranj.formak.server.DALHelper;
+import org.noranj.formak.server.SystemAdminHelper;
 import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.service.JDOPMFactory;
@@ -62,29 +63,8 @@ public class SignUpMailHandlerServlet extends HttpServlet {
       try {
       	
 	      if (mail.getSubject().equalsIgnoreCase("signup")) {
-	      	
-		      logger.info("A 'signup' email is received from email["+mail.getFromAddress()+"]");
-
-		      SystemClientPartyDTO sysClientDTO = new SystemClientPartyDTO(Utils.buildMap(mail.getBody().getContentAsString()));
-		      sysClientDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
-		      if (sysClientDTO.getName()==null) {
-		      	sysClientDTO.setName("client-guest-" + System.currentTimeMillis());
-		      }
-		      
-		      SystemUserDTO sysUserDTO = new SystemUserDTO(Utils.buildMap(mail.getBody().getContentAsString()));
-		      
-		      sysUserDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
-		      sysUserDTO.setEmailAddress(mail.getFromAddress()); // to overwrite the emailAddress in the mail body
-		      
-		      if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
-		      	sysUserDTO.setFirstName("Guest");
-		      	sysUserDTO.setLastName(String.valueOf(System.currentTimeMillis()));
-		      }
-
-		      SystemAdminServiceImpl service = new SystemAdminServiceImpl();
-		      sysUserDTO.setId(service.signup(sysClientDTO, sysUserDTO));
-		      logger.info("A new user successfully signed up. userid["+sysUserDTO.getId()+"] email["+sysUserDTO.getEmailAddress()+"]");
-		      
+	        logger.info("A 'signup' email is received from email["+mail.getFromAddress()+"]");
+	      	SystemAdminHelper.signupUser(mail);
 	      } 
 	      else {
 	      	//errMsg = "subject must be one word without any quotes: signup";
@@ -105,5 +85,5 @@ public class SignUpMailHandlerServlet extends HttpServlet {
 		}
         
 	}
-	
+
 }
