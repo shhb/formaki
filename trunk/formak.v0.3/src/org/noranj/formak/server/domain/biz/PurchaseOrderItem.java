@@ -36,7 +36,8 @@ public class PurchaseOrderItem {
   }
 
   public void setId(String id) {
-	  this.id = KeyFactory.stringToKey(id);
+	  if(!id.equals("0"))
+		  this.id = KeyFactory.stringToKey(id);
   }
 
   @Persistent

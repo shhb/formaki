@@ -15,6 +15,8 @@ import org.noranj.formak.server.utils.ServletUtils;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
 
+import com.google.gwt.core.client.GWT;
+
 /**
  * 
  * 
@@ -276,12 +278,13 @@ public class BusinessDocumentHelper<T> {
 
   /**
    * @param id is the purchase order unique identifier assigned by the application.\
+ * @throws Exception 
    * 
    * @changes 
    * BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
    */
   //public void deleteEntities (List<Long> ids) { //throws NotFoundException {
-  public void deleteEntities (List<String> ids) { //throws NotFoundException {
+  public void deleteEntities (List<String> ids)  { //throws NotFoundException {
     assert (ids != null);
 
     PersistenceManager pm = getPersistenceManager();
@@ -289,8 +292,8 @@ public class BusinessDocumentHelper<T> {
 
     try {
       tx.begin();
-      
       for (/*Long*/ String id : ids) {
+    	System.out.println("DEELEET: " + id);
         T o = (T) pm.getObjectById(persistentClass, id);
         pm.deletePersistent(o);
       } // for
@@ -299,7 +302,7 @@ public class BusinessDocumentHelper<T> {
     //FIXME
     //} catch (JDOObjectNotFoundException ex) { 
     //  throw new NotFoundException(ex);
-    } finally {
+     } finally {
       if (tx.isActive()) {
         tx.rollback();
       }

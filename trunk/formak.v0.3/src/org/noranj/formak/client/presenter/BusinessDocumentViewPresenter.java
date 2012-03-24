@@ -104,7 +104,7 @@ public class BusinessDocumentViewPresenter implements Presenter,BusinessDocument
 	// ///////////////////////////////////
 	// BA-2012-JAN-27 Added the following methods
 	public void onAddButtonClicked() {
-		eventBus.fireEvent(new AddBusinessDocumentEvent());
+		eventBus.fireEvent(new AddBusinessDocumentEvent(DocumentType.PurchaseOrder));
 	}
 
 	public void onDeleteButtonClicked() {

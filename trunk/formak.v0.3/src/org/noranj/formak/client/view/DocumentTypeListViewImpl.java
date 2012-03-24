@@ -87,9 +87,7 @@ public class DocumentTypeListViewImpl<T> extends Composite implements
 				  if (presenter != null) {
 					  presenter.onBusinessDocumentTypeListChanged(event.getSelectedItem().getText());
 				}
-				
 			}		 
-			 
 		 });		 
 		 
 		 

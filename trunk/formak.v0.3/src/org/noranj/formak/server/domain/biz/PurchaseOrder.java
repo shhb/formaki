@@ -121,7 +121,7 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     setState(DocumentStateType.Draft);
     setImportantDate(System.currentTimeMillis());
     setImportantDateDescription("Created At");
-    //TODO:DA:ReportedBySA:2012-03-09: It should be fix please check it. - Long.parseLong(po.getMonetory()) 
+    //FIXME:BA:ReportedBySA:2012-03-09: It should be fix please check it. - Long.parseLong(po.getMonetory()) 
     setMonetory(Long.parseLong("0"));  
     setNote(po.getNote());
     //

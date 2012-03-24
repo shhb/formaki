@@ -128,6 +128,21 @@ public class PurchaseOrderItemDTO implements Serializable {
     this.price = price;
   }
 
+  public static PurchaseOrderItemDTO addNewRecord(){
+	  PurchaseOrderItemDTO purchaseOrderItemDTO= new PurchaseOrderItemDTO();
+	  purchaseOrderItemDTO.setBuyerItemID("");
+	  purchaseOrderItemDTO.setDescription("");
+	  purchaseOrderItemDTO.setGTIN("");
+	  purchaseOrderItemDTO.setItemID(0);
+	  purchaseOrderItemDTO.setPrice(0);
+	  purchaseOrderItemDTO.setQtyOrdered("");
+	  purchaseOrderItemDTO.setQuantity(0);
+	  purchaseOrderItemDTO.setSequenceHolder(0);
+	  purchaseOrderItemDTO.setUOM("");
+	  purchaseOrderItemDTO.setId("0");
+	return purchaseOrderItemDTO;
+	  
+  } 
   public String toString() {
     
     StringBuilder strb = new StringBuilder();

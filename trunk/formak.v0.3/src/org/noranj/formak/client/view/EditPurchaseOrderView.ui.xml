@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:w="urn:import:org.noranj.formak.client.common"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+	<ui:image field='buttons' src='../resources/en/icons/black/sprite.png' />
 	<ui:image field='article32' src='../resources/en/images/article32.png' />
 	<ui:image field='logo_small' src='../resources/en/images/logo_small.png' />
 	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
@@ -101,7 +102,7 @@
 					</g:Grid>
 				</g:HorizontalPanel>
 				<g:HorizontalPanel styleName='{style.bodyPanel}'>
-					<c:CellTable ui:field="purchaseOrderItemsCellTable" styleName='{style.businessDocumentViewflexTable}'/>
+					<c:CellTable ui:field="purchaseOrderItemsCellTable" styleName='{style.cellTable}'/>
 				</g:HorizontalPanel>
 				<g:HorizontalPanel styleName='{style.footerPanel}'>
 					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="796px">
