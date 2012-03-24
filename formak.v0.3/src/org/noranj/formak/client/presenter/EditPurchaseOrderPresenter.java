@@ -56,6 +56,16 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 	}
 
 	public void bind() {
+		this.view.setPresenter(this);
+		this.view.getSaveButton().addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				doSave(purchaseOrderDTO);
+			}
+			
+		});
+			//FIXME:SA:2012-03-09 Use logged in users partyRule
 		rpcPartyService.getTradingPartiesIDName(PartyRoleType.Buyer,
 				new AsyncCallback<List<IDNameDTO>>() {
 
@@ -70,52 +80,48 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 					}
 				});
 
-		// FIXME the id is hard coded and it may not be correct value.
-		// BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to
-		// implement 1-N relationships.
-		rpcService.getPurchaseOrder(id, new AsyncCallback<PurchaseOrderDTO>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				GWT.log(caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(PurchaseOrderDTO result) {
-				purchaseOrderDTO = result;
-				view.setMasterData(result);
-				view.getId().setValue(result.getId());
-
-				view.getPONumber().setValue(result.getPONumber());
-				view.getPODate().setValue(result.getPODate());
-				view.getShipTo().setValue(result.getShipTo().getStreetAddress()
-								+ result.getShipTo().getCity().toString()
-								+ result.getShipTo().getStateOrProvince()
-								+ result.getShipTo().getPostalCode());
-				view.getBillTo().setValue(result.getBillTo().getStreetAddress()
-								+ result.getBillTo().getCity().toString()
-								+ result.getBillTo().getStateOrProvince()
-								+ result.getBillTo().getPostalCode());
-				view.getNote().setValue(result.getNote());
-				IDNameDTO row = new IDNameDTO();
-				row.setId(result.getReceiverParty().getId()); 
-				row.setName(result.getReceiverParty().getName());
-				view.getBuyer().setSelectedValue(row);
-				view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
-				view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
-				view.setRowData(result.getPurchaseOrderItems());
-			}
-
-		});
-		this.view.setPresenter(this);
-		this.view.getSaveButton().addClickHandler(new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				doSave(purchaseOrderDTO);
-			}
-			
-		});
-			
+		if(!id.equals("")){
+			// FIXME the id is hard coded and it may not be correct value.
+			// BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to
+			// implement 1-N relationships.
+			rpcService.getPurchaseOrder(id, new AsyncCallback<PurchaseOrderDTO>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					GWT.log(caught.getMessage());
+				}
+	
+				@Override
+				public void onSuccess(PurchaseOrderDTO result) {
+					purchaseOrderDTO = result;
+					view.setMasterData(result);
+					view.getId().setValue(result.getId());
+	
+					view.getPONumber().setValue(result.getPONumber());
+					view.getPODate().setValue(result.getPODate());
+					view.getShipTo().setValue(result.getShipTo().getStreetAddress()
+									+ result.getShipTo().getCity().toString()
+									+ result.getShipTo().getStateOrProvince()
+									+ result.getShipTo().getPostalCode());
+					view.getBillTo().setValue(result.getBillTo().getStreetAddress()
+									+ result.getBillTo().getCity().toString()
+									+ result.getBillTo().getStateOrProvince()
+									+ result.getBillTo().getPostalCode());
+					view.getNote().setValue(result.getNote());
+					IDNameDTO row = new IDNameDTO();
+					row.setId(result.getReceiverParty().getId()); 
+					row.setName(result.getReceiverParty().getName());
+					view.getBuyer().setSelectedValue(row);
+					view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
+					view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
+					view.setRowData(result.getPurchaseOrderItems());
+				}
+	
+			});
+		}
+		else{
+			purchaseOrderDTO = new PurchaseOrderDTO();
+			view.setRowData(purchaseOrderDTO.getPurchaseOrderItems());
+		}
 		}
 	
 

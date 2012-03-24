@@ -118,16 +118,21 @@ a.supersize {
     font-size: 20px;
     padding: 15px 20px;
 }
-@sprite a.save {
-    gwt-image: 'article32';
+ a.save {
+   
 	background-repeat:no-repeat;
 	background-color:#f3f3f3;
 	background-position:10px 7px;
     padding-left: 30px;
-
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	margin:0;
 }
-a.add {
-    background: url(sprite.png)  10px -27px no-repeat #f3f3f3;
+ a.add {
+
+	background-position: 10px -27px;
+	background-color:#f3f3f3;
+    background-repeat: no-repeat;
     padding-left: 30px;
     
 }
@@ -189,3 +194,10 @@ a.down-big {
 	margin: 0px 0px 0px 0px;
 
 }
+}
+ .cellTable {
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      margin-bottom: 4px;
+      width:100%;
+    }
