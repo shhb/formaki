@@ -9,17 +9,22 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage; 
 import javax.servlet.http.*; 
 
+import org.noranj.formak.server.DAL1ToNHelper;
 import org.noranj.formak.server.DALHelper;
 import org.noranj.formak.server.SystemAdminHelper;
 import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
+import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.server.service.SystemAdminServiceImpl;
 import org.noranj.formak.server.utils.MailHelper;
 import org.noranj.formak.server.utils.Utils;
+import org.noranj.formak.shared.Constants;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
+
+import com.google.appengine.api.NamespaceManager;
 
 /**
  * All the emails sent to this servlet will be processed and the attachment or body is used to build a business document.
@@ -85,5 +90,6 @@ public class SignUpMailHandlerServlet extends HttpServlet {
 		}
         
 	}
+
 
 }
