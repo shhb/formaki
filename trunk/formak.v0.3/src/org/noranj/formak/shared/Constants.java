@@ -43,4 +43,18 @@ public class Constants {
   
   public static final String C_DEVELOPMENT_URL="http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997"; //BA:12-03-22 Added
   
+  ///////////////////////////////////////////////////////////
+  /// MAIL
+  ///
+	/** the property/parameter name used for messageBody. */
+	public final static String C_MAIL_BODY_PROP_NAME = "body";
+	
+	/** the property/parameter name used for subject of the email. */
+	public final static String C_MAIL_SUBJECT_PROP_NAME = "subject";
+
+	/** the property/parameter name used for TO Address of the email. */
+	public final static String C_MAIL_TO_ADDRESS_PROP_NAME = "to";
+	
+	/** the property/parameter name used for TO Address Display Name of the email. */
+	public final static String C_MAIL_TO_DISPLAY_NAME_PROP_NAME = "toName";
 }

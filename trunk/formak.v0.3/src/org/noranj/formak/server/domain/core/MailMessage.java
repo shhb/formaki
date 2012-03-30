@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
+
+import org.noranj.formak.shared.Constants;
+import org.noranj.formak.shared.type.MIMEType;
+
 /**
  * 
  * 
@@ -14,49 +20,91 @@ import java.util.List;
  * @since 0.3.20120321
  * @version 0.3.20120321
  * @change
- *
+ *	BA:2012-03-29 changed the addresses from String to InternetAddress.
  */
 public class MailMessage implements Serializable {
 	
   private static final long serialVersionUID = -2525988726950171264L;
   
-	private String fromAddress;
-	private String[] recepientAddresses;
-	private String[] cc;
-	private String[] bcc; //??
+  private InternetAddress from;
+	private InternetAddress[] to;
+	private InternetAddress[] cc;
+	private InternetAddress[] bcc; //??
 
 	private String subject;
 	
 	private Attachment body;
 	private List<Attachment> attachments;
 	
+	/**
+	 * 
+	 */
 	public MailMessage() {
 		body = null;
 		attachments = new ArrayList<Attachment>();
 	}
+
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param body
+	 */
+	public MailMessage(InternetAddress from, InternetAddress[] to, byte[] body) {
+		this.body = new Attachment(body, Constants.C_MAIL_BODY_PROP_NAME, MIMEType.TXT);
+		this.from = from;
+		this.to = to;
+		this.attachments = new ArrayList<Attachment>();
+	}
 	
-	public String getFromAddress() {
-  	return fromAddress;
+	public String getFromStr() {
+  	return from.toString(); //TODO do we need to worry about encoding>?!>!>
   }
-	public void setFromAddress(String from) {
-  	this.fromAddress = from;
+	public InternetAddress getFrom() {
+  	return this.from;
   }
-	public String[] getRecepientAddresses() {
-  	return recepientAddresses;
+	public void setFrom (String fromStr) throws Exception {
+		this.from = null;
+		InternetAddress[] addresses = InternetAddress.parse(fromStr);
+		if ((addresses !=null) & (addresses.length>0)) {
+			this.from = addresses[0];
+		}
   }
-	public void setRecepientAddresses(String[] recepients) {
-  	this.recepientAddresses = recepients;
+	public void setFrom (InternetAddress from) {
+  	this.from = from;
   }
-	public String[] getCc() {
+	public void setFrom (Address[] fromArray) throws Exception {
+		this.from = null;
+		if (fromArray!=null)
+			setFrom(InternetAddress.toString(fromArray));
+  }
+	public String getToStr() {
+  	return InternetAddress.toString(to);
+  }
+	public InternetAddress[] getTo() {
+  	return to;
+  }
+	public void setTo(InternetAddress[] recepients) {
+  	this.to = recepients;
+  }
+	/*
+	public void addTo(InternetAddress recepients) {
+  	if (this.to==null) {
+  		this.to = new InternetAddress[GlobalSettings.C_MAX_NUMBER_OF_RECIPIENTS];
+  	}
+		this.to;
+  }
+  */
+	public InternetAddress[] getCc() {
   	return cc;
   }
-	public void setCc(String[] cc) {
+	public void setCc(InternetAddress[] cc) {
   	this.cc = cc;
   }
-	public String[] getBcc() {
+	public InternetAddress[] getBcc() {
   	return bcc;
   }
-	public void setBcc(String[] bcc) {
+	public void setBcc(InternetAddress[] bcc) {
   	this.bcc = bcc;
   }
 	public String getSubject() {
@@ -84,18 +132,28 @@ public class MailMessage implements Serializable {
 	 */
 	public String toString() {
 		
+		return(toShortString());
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String toShortString() {
 		StringBuilder str = new StringBuilder();
 		str.append("subject[");
 		str.append(getSubject());
-		str.append("]");
-		str.append("from[");
-		str.append(getFromAddress());
-		str.append("");
-		str.append("numberOfAttchments[");
+		str.append("] from[");
+		str.append(getFromStr());
+		str.append("] to[");
+		str.append(getToStr());
+		str.append("] numberOfAttchments[");
 		str.append(getAttachments().size());
 		str.append("]");
 		
 		return(str.toString());
 		
 	}
+
 }
