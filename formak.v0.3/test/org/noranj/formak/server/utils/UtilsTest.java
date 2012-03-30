@@ -43,7 +43,7 @@ public class UtilsTest {
 
 	@Test
 	public void testExtractNamesFromEmail() {
-		
+		/* the method is no longer used. instead using InternetAddress.parse.
 		String[] names = Utils.extractNamesFromEmail("Babak Noranj<babak@noranj.com>");
 		
 		if (!names[0].equals("Babak") || !names[1].equals("Noranj") ||!names[2].equals("babak@noranj.com")) {
@@ -77,7 +77,7 @@ public class UtilsTest {
 		else {
 			System.out.println("input[babak@noranj.com>] => names{"+names[0]+", "+names[1]+", "+names[2]+"}");
 		}
-
+		*/
 	}
 
 }

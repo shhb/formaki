@@ -5,7 +5,11 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
-	<!-- Servlets -->
+	<!-- 
+			==========================================================================
+																	Services Servlets
+			==========================================================================																	
+	-->
 	<servlet>
 		<servlet-name>businessDocument</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.BusinessDocumentServiceImpl</servlet-class>
@@ -71,7 +75,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/formak/businessDocument</url-pattern>
 	</filter-mapping>
 
-	<!-- Configure the namespace filter. -->
+
+	<!-- 
+		==========================================================================
+												NameSpace Filter 
+		==========================================================================
+	-->
 	<filter>
 		<filter-name>NamespaceFilter</filter-name>
 		<filter-class>org.noranj.formak.server.service.servlet.NamespaceFilter</filter-class>
@@ -87,38 +96,49 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/formak/*</url-pattern>
 	</filter-mapping>
 
-	<!-- BA-2012-MAR-17 Added to send emails or receive emails. NOT FULLY tested 
-		YET -->
-	<!-- Mail Service Handlers -->
+	<!-- BA-2012-MAR-17 Added to receive emails. NOT FULLY tested YET -->
+	<!-- 
+			==========================================================================
+													Mail Service Handlers 
+			==========================================================================
+	-->
 	<servlet>
 		<servlet-name>bizdocmailhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.BizDocMailHandlerServlet</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>bizdocmailhandler</servlet-name>
+		 <!-- processing received email by address xxxx@APPID.appspotmail.com -->
+		<url-pattern>/_ah/mail/bizdoc@iformak.appspotmail.com</url-pattern>
+	</servlet-mapping>
+
+	<!-- SignUp MailHandler -->
 	<servlet>
 		<servlet-name>signupmailhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.SignUpMailHandlerServlet</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>signupmailhandler</servlet-name>
+		 <!-- processing received signup email at signup@APPID.appspotmail.com -->
+		<url-pattern>/_ah/mail/signup@iformak.appspotmail.com</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>generalmailhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.MailHandlerServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>bizdocmailhandler</servlet-name>
-		 <!-- processing received email by address xxxx@APPID.appspotmail.com -->
-		<url-pattern>/_ah/mail/bizdoc@iformak.appspotmail.com</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>signupmailhandler</servlet-name>
-		 <!-- processing received signup email at signup@APPID.appspotmail.com -->
-		<url-pattern>/_ah/mail/signup@iformak.appspotmail.com</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>generalmailhandler</servlet-name>
 		<url-pattern>/_ah/mail/*</url-pattern>
 	</servlet-mapping>
+	<!-- 
+		==========================================================================
+		                                Queue Handlers
+		==========================================================================
+	 -->
 
-	<!-- Mail Services BA-2012-03-29 -->
+	<!-- Mail Services BA:2012-03-29 -->
 	<servlet>
 		<servlet-name>sendshortmail</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.SendShortMailServlet</servlet-class>
@@ -126,20 +146,21 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<servlet-mapping>
 		<servlet-name>sendshortmail</servlet-name>
-		<url-pattern>/_ah/sendmail/short</url-pattern>
+		<url-pattern>/_ah/queue/fast/sendmail</url-pattern>
 	</servlet-mapping>
 
-	<!-- OCR Services BA-2012-03-29 -->
+	<!-- OCR Services BA:2012-03-29 
 	<servlet>
 		<servlet-name>ocrhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.OCRHandlerServlet</servlet-class>
 	</servlet>
-
+  
 	<servlet-mapping>
 		<servlet-name>ocrhandler</servlet-name>
-		<url-pattern>/_ah/ocrhandler</url-pattern>
+		<url-pattern>/_ah/queue/slow/ocr</url-pattern>
 	</servlet-mapping>
-
+   -->
+   
 	<!-- BA-2012-MAR-17 Added Migration servlet which is used to make changes 
 		in DataStore when needed such as add a new field or remove one from a object. -->
 	<!-- ===================== migration ===================== -->
@@ -187,27 +208,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</auth-constraint>
 	</security-constraint>
 
-  <!-- Send Mail BA-2012-MAR-29 -->
+  <!-- Queue Task Consumers BA:2012-MAR-29 -->
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Send Mail</web-resource-name>
-			<url-pattern>/_ah/sendmail/*</url-pattern>
+			<web-resource-name>Queue Task Consumers</web-resource-name>
+			<url-pattern>/_ah/queue/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>
 		</auth-constraint>
 	</security-constraint>
 
-  <!-- OCR Handler BA-2012-MAR-29 -->
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>OCR Service</web-resource-name>
-			<url-pattern>/_ah/ocrhandler/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>admin</role-name>
-		</auth-constraint>
-	</security-constraint>
 
 	<welcome-file-list>
 		<welcome-file>Formak.html</welcome-file>

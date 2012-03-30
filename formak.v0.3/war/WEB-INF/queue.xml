@@ -17,7 +17,7 @@
 			<max-backoff-seconds>2000</max-backoff-seconds>
 			<max-doublings>2</max-doublings>
 			<!-- only for PUSH queue - indicates the max number of days that a task is retried. -->
-			<task-age-limit>1</task-age-limit>
+			<!--   task-age-limit>1</task-age-limit -->
 		</retry-parameters>
 
 		<!-- target - defines the version of application. 
@@ -58,7 +58,7 @@
 			<max-backoff-seconds>2000</max-backoff-seconds>
 			<max-doublings>0</max-doublings>
 			<!-- only for PUSH queue - indicates the max number of days that a task is retried. -->
-			<task-age-limit>2</task-age-limit>
+			<!--   task-age-limit>2</task-age-limit -->
 		</retry-parameters>
 
 		<!-- target - defines the version of application. 
