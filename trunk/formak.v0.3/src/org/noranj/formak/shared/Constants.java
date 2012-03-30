@@ -56,5 +56,10 @@ public class Constants {
 	public final static String C_MAIL_TO_ADDRESS_PROP_NAME = "to";
 	
 	/** the property/parameter name used for TO Address Display Name of the email. */
-	public final static String C_MAIL_TO_DISPLAY_NAME_PROP_NAME = "toName";
+	public final static String C_MAIL_TO_PERSONAL_PROP_NAME = "toPersonal";
+
+	/** the property/parameter name used for FROM Address of the email. */
+	public final static String C_MAIL_FROM_ADDRESS_PROP_NAME = "from";
+
+	
 }

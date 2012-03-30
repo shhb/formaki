@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 import javax.mail.Session; 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage; 
 import javax.servlet.http.*; 
 
@@ -18,8 +19,10 @@ import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.server.service.SystemAdminServiceImpl;
 import org.noranj.formak.server.utils.MailHelper;
+import org.noranj.formak.server.utils.QueueHelper;
 import org.noranj.formak.server.utils.Utils;
 import org.noranj.formak.shared.Constants;
+import org.noranj.formak.shared.GlobalSettings;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
@@ -42,8 +45,8 @@ import com.google.appengine.api.NamespaceManager;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3.2012MAR20
- * @version 0.3.2012MAR20
+ * @since 0.3.20120320
+ * @version 0.3.20120330
  * @change
  *
  */
@@ -69,18 +72,23 @@ public class SignUpMailHandlerServlet extends HttpServlet {
       	
 	      if (mail.getSubject().equalsIgnoreCase("signup")) {
 	        logger.info("A 'signup' email is received from email["+mail.getFrom()+"]");
-	      	SystemAdminHelper.signupUser(mail);
+	      	String userId = SystemAdminHelper.signupUser(mail);
+	      	//XXX here
+	      	QueueHelper.sendMailNotification(mail.getFrom(), "Congradulation and Welcome to Formak.", ("The user is added successfully.User Id["+userId+"]").getBytes()); //FIXME
 	      } 
 	      else {
 	      	//errMsg = "subject must be one word without any quotes: signup";
 		      logger.warning("A WRONG email is received from email["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]");
+	      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - WRONG Subject", ("Hi Daer Sir/Madam, If you are trying to sign up for Formak, you should correct the subject. It must be 'signup' as one word only without quotes.").getBytes()); //FIXME
 	      }
 	      
 	      //if (errMsg!=null) {
 	      	//TODO reply to sender with a notification email using a slow queue so they know the subject was wrong.
 	      //}
       } catch (Exception ex){
-      	logger.severe(ex.getMessage() + "tace is ["+Utils.stackTraceToString(ex)+"]");
+      	logger.severe(ex.getMessage() + "trace is ["+Utils.stackTraceToString(ex)+"]");
+      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - An unexpected error", ("Hi Daer Sir/Madam, signup process failed. Sorry for any inconvenient. We will find the problem and will fix it in 24 hours. If have not received any email from us, please, contact system adminitrator at 'sysadmin@noranj.com'.").getBytes()); //FIXME
+    		QueueHelper.sendMailNotification(new InternetAddress(GlobalSettings.C_SYSADMIN_MAIL_ADDRESS, GlobalSettings.C_SYSADMIN_MAIL_PERSONAL), "Signup Failed - An unexpected error", ("from["+mail.getFrom()+"] subject["+mail.getSubject()+"]body["+mail.getBody().getContent()+"]").getBytes()); //FIXME
       }
       
 		//} catch (MessagingException msgex){
