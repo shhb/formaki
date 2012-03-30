@@ -89,7 +89,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<!-- BA-2012-MAR-17 Added to send emails or receive emails. NOT FULLY tested 
 		YET -->
-	<!-- Mail Service configuration -->
+	<!-- Mail Service Handlers -->
 	<servlet>
 		<servlet-name>bizdocmailhandler</servlet-name>
 		<servlet-class>org.noranj.formak.server.service.servlet.BizDocMailHandlerServlet</servlet-class>
@@ -116,6 +116,28 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>generalmailhandler</servlet-name>
 		<url-pattern>/_ah/mail/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Mail Services BA-2012-03-29 -->
+	<servlet>
+		<servlet-name>sendshortmail</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.SendShortMailServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>sendshortmail</servlet-name>
+		<url-pattern>/_ah/sendmail/short</url-pattern>
+	</servlet-mapping>
+
+	<!-- OCR Services BA-2012-03-29 -->
+	<servlet>
+		<servlet-name>ocrhandler</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.OCRHandlerServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ocrhandler</servlet-name>
+		<url-pattern>/_ah/ocrhandler</url-pattern>
 	</servlet-mapping>
 
 	<!-- BA-2012-MAR-17 Added Migration servlet which is used to make changes 
@@ -159,6 +181,28 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<web-resource-collection>
 			<web-resource-name>Mail Service</web-resource-name>
 			<url-pattern>/_ah/mail/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+  <!-- Send Mail BA-2012-MAR-29 -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Send Mail</web-resource-name>
+			<url-pattern>/_ah/sendmail/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+  <!-- OCR Handler BA-2012-MAR-29 -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>OCR Service</web-resource-name>
+			<url-pattern>/_ah/ocrhandler/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>

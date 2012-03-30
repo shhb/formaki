@@ -39,21 +39,23 @@ public class SystemAdminHelper {
 	 * @param mail
 	 */
 	public static String signupUser(MailMessage mail) {
+
+		///XXX HERE 2012-MAR-27
+		/**
+		1- check emailAddress and if it is already a member, throw an exception or send an email or return message that the user is already a member.
+		2- send email to notify sender about the status of their email.
+		3- add organization (client) to the body of email in case someone knows their client name. use the name to find the client and add the current user to that client.
+		3-1- another way could be using the domain of email address to search for the client.
+		*/
 		
-		logger.fine("Attributes in body are {");
 		Map<String, String> dataFieldsFromBody = Utils.buildMap(mail.getBody().getContentAsString());
-		/** extract first name, last name and email address from email when the data is available.
-		 * The order of extracted the fields are always
-		 * <ol>[0]=First Name
-		 * <ol>[1]=Last Name
-		 * <ol>[2]=Email Address
-		 */
-		String[] emailExtractedData=Utils.extractNamesFromEmail(mail.getFromAddress());
 		
 		if (logger.isLoggable(Level.FINE)) {
+			logger.fine("Attributes in body are {");
 			for(String key:dataFieldsFromBody.keySet()) {
-				logger.fine("key["+key+"] value=["+dataFieldsFromBody.get(key)+"]");
+				logger.fine("key=["+key+"] value=["+dataFieldsFromBody.get(key)+"]");
 			} // for
+			logger.fine("} Attributes in body");
 		}
 		
     SystemClientPartyDTO sysClientDTO = new SystemClientPartyDTO(dataFieldsFromBody);
@@ -66,20 +68,24 @@ public class SystemAdminHelper {
     SystemUserDTO sysUserDTO = new SystemUserDTO(dataFieldsFromBody);
     
     sysUserDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
-    sysUserDTO.setEmailAddress(emailExtractedData[2]); // to overwrite the emailAddress in the mail body
+    sysUserDTO.setEmailAddress(mail.getFrom().getAddress()); // to overwrite the emailAddress in the mail body
     
+    //Extract First Name and Last Name from emailAddresFROM
     if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
-    	//XXX here use email adress tro extract the names. uses Utils....
-    	//sysUserDTO.setFLName(mail.getFromAddress());
-    	if (emailExtractedData[0]!=null && !emailExtractedData[0].equals(""))
+    	sysUserDTO.setFirstName(mail.getFrom().getPersonal());
+    	//still no value
+    	if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
     		sysUserDTO.setFirstName("Guest"); //TODO review 
-    	
-    	if (emailExtractedData[1]!=null && !emailExtractedData[1].equals(""))
     		sysUserDTO.setLastName(String.valueOf(System.currentTimeMillis()));
+    	}
     }
-
+		
+    if (logger.isLoggable(Level.FINE)) {
+			logger.fine("User DTO is ["+sysUserDTO.toString()+"]");
+    }
     sysUserDTO.setId(signup(sysClientDTO, sysUserDTO));
     logger.info("A new user successfully signed up. userid["+sysUserDTO.getId()+"] email["+sysUserDTO.getEmailAddress()+"]");
+    
 		return(sysUserDTO.getId());
 		
 	}

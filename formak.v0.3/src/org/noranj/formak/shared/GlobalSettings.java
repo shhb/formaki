@@ -22,6 +22,12 @@ public class GlobalSettings {
   /** indicates the maximum number of files that can be attached to an email. */
   public static int C_MAX_NUMBER_OF_ATTACHED_FILES_TO_EMAIL = 10;
   
+  /** Max number of recipient addresses that can be set in one email. */
+  public static int C_MAX_NUMBER_OF_RECIPIENTS = 128;
+  
+  public final static String C_FROM_ADDRESS = "formak@noranj.com";
+  public final static String C_FROM_ADDRESS_DISPLAY_NAME = "Noranj.com Admin";
+ 
   public static String getCurrencyFormat () {
     return(currencyFormat);
   }

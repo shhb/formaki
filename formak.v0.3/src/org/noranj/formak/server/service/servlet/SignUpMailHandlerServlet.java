@@ -68,12 +68,12 @@ public class SignUpMailHandlerServlet extends HttpServlet {
       try {
       	
 	      if (mail.getSubject().equalsIgnoreCase("signup")) {
-	        logger.info("A 'signup' email is received from email["+mail.getFromAddress()+"]");
+	        logger.info("A 'signup' email is received from email["+mail.getFrom()+"]");
 	      	SystemAdminHelper.signupUser(mail);
 	      } 
 	      else {
 	      	//errMsg = "subject must be one word without any quotes: signup";
-		      logger.warning("A WRONG email is received from email["+mail.getFromAddress()+"]. The subject is ["+mail.getSubject()+"]");
+		      logger.warning("A WRONG email is received from email["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]");
 	      }
 	      
 	      //if (errMsg!=null) {

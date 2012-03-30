@@ -134,7 +134,28 @@ public class SystemUserDTO implements Serializable {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-
+  /**
+   * First Name and Last Name
+   * @param fullName
+   */
+  public void setNames(String fullName) {
+  	
+  	setFirstName(null);
+  	setLastName(null);
+  	
+  	if(fullName!=null) {
+  		int pos = fullName.indexOf(32); //space
+  		if (pos>0) {
+  			setFirstName(fullName.substring(0, pos));
+  			setLastName(fullName.substring(pos+1));
+  		}
+  		else {
+  			setFirstName(fullName);
+  			setLastName("");
+  		}
+  	} 
+  }
+  
   public String getEmailAddress() {
     return emailAddress;
   }
@@ -183,5 +204,17 @@ public class SystemUserDTO implements Serializable {
     this.lastActive = lastActive;
   }
   
-  
+  public String toString() {
+  	
+  	StringBuilder str = new StringBuilder();
+  	str.append("First Name[");
+  	str.append(getFirstName());
+  	str.append("] Last Name[");
+  	str.append(getFirstName());
+  	str.append("] Email[");
+  	str.append(getEmailAddress());
+  	str.append("]");
+  	
+  	return(str.toString());
+  }
 }

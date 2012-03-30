@@ -1,16 +1,26 @@
 package org.noranj.formak.server.utils;
 
 import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.core.MailMessage;
+import org.noranj.formak.shared.Constants;
+import org.noranj.formak.shared.GlobalSettings;
 import org.noranj.formak.shared.type.MIMEType;
 
 /**
@@ -33,6 +43,48 @@ public class MailHelper {
 
 	private static Logger logger = Logger.getLogger(MailHelper.class.getName());
 
+	/**
+	 * 
+	 * @param message
+	 */
+	public static void sendMailMessage(MailMessage mailMessage) throws Exception {
+		
+    logger.info("sendMailMessage - sending email - " + mailMessage.toShortString());
+    
+		Properties props = new Properties();
+    Session mailSession = Session.getDefaultInstance(props, null);
+
+    if(logger.isLoggable(Level.FINE))
+    	logger.fine("sendMailMessage - got the Mail Session");
+    //try {
+    	
+      Message msg = new MimeMessage(mailSession);
+      
+      msg.setFrom(mailMessage.getFrom());
+
+      msg.addRecipients(Message.RecipientType.TO,
+      									mailMessage.getTo());
+                       //new InternetAddress(req.getParameter(Constants.C_MAIL_TO_ADDRESS_PROP_NAME)/*"babak@noranj.com"*/, req.getParameter(Constants.C_MAIL_TO_DISPLAY_NAME_PROP_NAME)/*"Mr. Babak"*/));
+      
+      msg.setSubject(mailMessage.getSubject()); //req.getParameter(Constants.C_MAIL_SUBJECT_PROP_NAME)); //"Your Example.com account has been activated");
+      
+      msg.setText(mailMessage.getBody().getContentAsString());
+      
+      if(logger.isLoggable(Level.FINE))
+      	logger.fine("sendMailMessage - The message is ready to be sent");
+
+      Transport.send(msg);
+      
+    	logger.info("sendMailMessage - The message is sent");
+
+    //} catch (AddressException e) {
+    //	logger.severe("Failed to send mail because of an AddressException["+e.getMessage()+"] [" + Utils.stackTraceToString(e)+"]");
+    //	throw e;
+    //} catch (MessagingException e) {
+    //	logger.severe("Failed to send mail because of an MessageException["+e.getMessage()+"] [" + Utils.stackTraceToString(e)+"]");
+    //	throw e;
+    //}
+	}
 	
 	/**
 	 * 
@@ -44,8 +96,9 @@ public class MailHelper {
 		
 		MailMessage mailMessage = new MailMessage();
 		mailMessage.setSubject(message.getSubject());
-		Address[] addresses = message.getFrom();
-		mailMessage.setFromAddress(addresses[0].toString()); // assuming the first one is the sender!!
+		
+		mailMessage.setFrom(message.getFrom()); // assuming the first one is the sender!!
+		
 		//TODO add the rest of information later
 		
 		mailMessage = handleMessage(message, mailMessage);
@@ -68,7 +121,7 @@ public class MailHelper {
 			// handle string
 			if (mailMessage.getBody() == null) {
 				logger.info("Found the BODY");
-				mailMessage.setBody (new Attachment(((String) content).getBytes(), "body", MIMEType.TXT));
+				mailMessage.setBody (new Attachment(((String) content).getBytes(), Constants.C_MAIL_BODY_PROP_NAME, MIMEType.TXT));
 				logger.fine("body ["+(String) content+"]");
 			}
 			
@@ -100,7 +153,7 @@ public class MailHelper {
 		if (count > i && (mailMessage.getBody() == null)) {
 			logger.info("Found the BODY");
 			BodyPart bp = mp.getBodyPart(i);
-			mailMessage.setBody (new Attachment(((String) bp.getContent()).getBytes(), "body", MIMEType.valueOfWithEncoding(bp.getContentType())));
+			mailMessage.setBody (new Attachment(((String) bp.getContent()).getBytes(), Constants.C_MAIL_BODY_PROP_NAME, MIMEType.valueOfWithEncoding(bp.getContentType())));
 			logger.fine("body ["+(String) bp.getContent()+"]");
 			++i;
 		}
@@ -139,4 +192,6 @@ public class MailHelper {
 		}
 		return(mailMessage);
 	}
+	
+	
 }

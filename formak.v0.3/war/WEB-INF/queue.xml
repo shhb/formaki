@@ -1,0 +1,69 @@
+<!--Change the total storage limit for all queues to 50MB -->
+<queue-entries>
+
+	<total-storage-limit>50M</total-storage-limit>
+	
+	<queue>
+		<!-- this queue is for task with very low failure ratio. -->
+		<name>lowrisk</name>
+		<!-- this value is for development  -->
+		<rate>2/s</rate>
+		<bucket-size>40</bucket-size>
+		<max-concurrent-requests>5</max-concurrent-requests>
+		<!-- runs with interval starts at 10s and will increase to 2000s 
+				by doubling intervals 20s and fails permanently after 2 days. -->
+		<retry-parameters>
+			<min-backoff-seconds>100</min-backoff-seconds>
+			<max-backoff-seconds>2000</max-backoff-seconds>
+			<max-doublings>2</max-doublings>
+			<!-- only for PUSH queue - indicates the max number of days that a task is retried. -->
+			<task-age-limit>1</task-age-limit>
+		</retry-parameters>
+
+		<!-- target - defines the version of application. 
+		If not available, it means run the task in the same version as it was enqueued. -->
+
+	</queue>
+	
+	<queue>
+		<!-- this queue is good for the tasks that are small and runs quickly. -->
+		<name>fast</name>
+		<rate>5/s</rate>
+		<bucket-size>20</bucket-size>
+		<max-concurrent-requests>10</max-concurrent-requests>
+		<retry-parameters>
+			<task-retry-limit>10</task-retry-limit>
+			<min-backoff-seconds>10</min-backoff-seconds>
+			<max-backoff-seconds>60</max-backoff-seconds>
+			<max-doublings>0</max-doublings>
+		</retry-parameters>
+		
+		<!-- target - defines the version of application. 
+		If not available, it means run the task in the same version as it was enqueued. -->
+	
+	</queue>
+	
+	<queue>
+		<!-- this is for slow processing tasks. -->
+		<name>slow</name>
+		<rate>1/s</rate>
+		<bucket-size>10</bucket-size>
+		<max-concurrent-requests>5</max-concurrent-requests>
+		<!-- retry max 10 times and fail permanently after 2 days. -->
+		<retry-parameters>
+		<!-- runs maximum 10 times with interval starts at 10s and will increase to 2000s 
+				by doubling intervals. it fails permanently after 2 days. -->
+			<task-retry-limit>10</task-retry-limit>
+			<min-backoff-seconds>100</min-backoff-seconds>
+			<max-backoff-seconds>2000</max-backoff-seconds>
+			<max-doublings>0</max-doublings>
+			<!-- only for PUSH queue - indicates the max number of days that a task is retried. -->
+			<task-age-limit>2</task-age-limit>
+		</retry-parameters>
+
+		<!-- target - defines the version of application. 
+		If not available, it means run the task in the same version as it was enqueued. -->
+		
+	</queue>
+	
+</queue-entries>

@@ -200,30 +200,4 @@ public class Utils {
     	return((Map)prop);
     } 
 
-    /**
-     * It extract the first name and last name from emails.
-     * Some emails look like John Smith<jsmith@noranj.com>.
-     * 
-     * @param emailAddress
-     * @return
-     */
-    public static String[] extractNamesFromEmail(String emailAddress) {
-    	String names[] = new String[4];
-    	int pos1 = emailAddress.indexOf(0x20); //space
-    	int pos2 = emailAddress.indexOf(0x3C); // <
-     	int pos3 = emailAddress.indexOf(0x3E); // >
-    	
-     	if (pos1 > 0 && pos1<pos2) {
-    		names[0]= emailAddress.substring(0, pos1).trim(); //First Name
-    		names[1]= emailAddress.substring(pos1, pos2).trim(); //Last Name
-    	}
-    	if (pos3 > 0 && pos2<pos3) {
-    		names[2]= emailAddress.substring(pos2+1, pos3); //Email Address
-    	}
-    	else {
-    		names[2] = emailAddress;
-    	}
-    	return(names);
-    } 
-    
 } // end class
