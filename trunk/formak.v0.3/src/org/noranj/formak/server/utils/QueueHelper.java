@@ -46,7 +46,7 @@ public class QueueHelper {
    * @param subject
    * @param body
    */
-	public static void sendMailNotification(InternetAddress to, String subject, byte[] body) {
+	public static void sendMailNotification(InternetAddress to, String subject, String body) { //FIXME it should be byte[]???
 
 		logger.info("Adding send mail notification task to queue.");
 		

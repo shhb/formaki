@@ -25,7 +25,7 @@ public class GlobalSettings {
   /** Max number of recipient addresses that can be set in one email. */
   public static int C_MAX_NUMBER_OF_RECIPIENTS = 128;
   
-  public final static String C_MAIL_FROM_ADDRESS = "formak@noranj.com";
+  public final static String C_MAIL_FROM_ADDRESS = "babak@noranj.com";
   public final static String C_MAIL_FROM_PERSONAL = "Noranj.com Admin";
 
   public final static String C_SYSADMIN_MAIL_ADDRESS = "sysadmin@noranj.com";
