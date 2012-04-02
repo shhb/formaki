@@ -50,7 +50,7 @@ public class SendShortMailServlet extends HttpServlet {
 			logger.info("Processing send short mails");
 			Properties props = new Properties();
       Session mailSession = Session.getDefaultInstance(props, null);
-      String msgBody = req.getParameter(Constants.C_MAIL_BODY_PROP_NAME);
+      String msgBody = String.valueOf(req.getParameter(Constants.C_MAIL_BODY_PROP_NAME));
 
       try {
 
