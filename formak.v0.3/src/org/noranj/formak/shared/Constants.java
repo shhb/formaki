@@ -12,10 +12,15 @@ package org.noranj.formak.shared;
  * @change
  *  BA:12-03-06 Added Client ID
  *  BA:12-03-22 Added two new constants. All used in LoginHelper.
+ *  BA:12-04-12 Added C_SIGNUP_MAIL_SUBJECT
  */
 
 public class Constants {
   
+	/** this is the subject that sign up mails must have. */
+	public final static String C_SIGNUP_MAIL_SUBJECT = "signup";
+	
+	
   /* TODO
    * Q:is this class the best place to keep this attribute? shouldn't it be in SystemUser class? 
    * A: The domain class can not be sued because it is not accessible by client. The other choice would be DTO class but I think this class is better.  

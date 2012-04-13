@@ -72,7 +72,7 @@ public class SystemAdminHelper {
     
     //Extract First Name and Last Name from emailAddresFROM
     if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
-    	sysUserDTO.setFirstName(mail.getFrom().getPersonal());
+    	sysUserDTO.setNames(mail.getFrom().getPersonal()); // extract the first name and last name from the email
     	//still no value
     	if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
     		sysUserDTO.setFirstName("Guest"); //TODO review 
