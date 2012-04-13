@@ -46,22 +46,36 @@ import com.google.appengine.api.NamespaceManager;
  *
  * @author
  * @since 0.3.20120320
- * @version 0.3.20120330
+ * @version 0.3.20120412
  * @change
- *
+ *	BA:12-04-12 Commented doPost
  */
 @SuppressWarnings("serial")
 public class SignUpMailHandlerServlet extends HttpServlet { 
     
   protected static Logger logger = Logger.getLogger(SignUpMailHandlerServlet.class.getName());
 	
+  /**
+   * This function processes the received email as described in the following steps:
+   * 
+   * <ol>
+   * <li>get message
+   * <li>verify the subject is signup
+   * <li>sign up user by passing the body of email to signup() method.
+   * <li>if successfully signed up, send confirmation to user
+   * <li> send alert notification to user and sysadmin.
+   * </ol>
+   * 
+   */
 	public void doPost(HttpServletRequest req, 
                        HttpServletResponse resp) throws IOException { 
 		try {
      
 			logger.warning("Processing Signup Mail");
 			Properties props = new Properties();
-      Session session = Session.getDefaultInstance(props, null); 
+      
+			//1- get message using the Mail Session
+			Session session = Session.getDefaultInstance(props, null); 
       MimeMessage message = new MimeMessage(session, req.getInputStream());
       
       //TODO parse the message
@@ -70,24 +84,24 @@ public class SignUpMailHandlerServlet extends HttpServlet {
 
       try {
       	
-	      if (mail.getSubject().equalsIgnoreCase("signup")) {
+      	//2- verify the subject is signup
+	      if (mail.getSubject().equalsIgnoreCase(Constants.C_SIGNUP_MAIL_SUBJECT)) {
 	        logger.info("A 'signup' email is received from email["+mail.getFrom()+"]");
-	      	String userId = SystemAdminHelper.signupUser(mail);
-	      	//XXX here
-	      	QueueHelper.sendMailNotification(mail.getFrom(), "Congradulation and Welcome to Formak.", "The user is added successfully.User Id["+userId+"]"); //FIXME
+	      	
+	        // 3- sign up the user
+	        String userId = SystemAdminHelper.signupUser(mail);
+	      	
+	        // 4- send confirmation email
+	        QueueHelper.sendMailNotification(mail.getFrom(), "Welcome to Formak.", "The user is added successfully.\r\nYou can login to formak using your Google Account.\r\nThe unique ID assigned to your account is ["+userId+"]."); //FIXME
 	      } 
 	      else {
-	      	//errMsg = "subject must be one word without any quotes: signup";
 		      logger.warning("A WRONG email is received from email["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]");
-	      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - WRONG Subject", "Hi Daer Sir/Madam, If you are trying to sign up for Formak, you should correct the subject. It must be 'signup' as one word only without quotes."); //FIXME
+	      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - WRONG Subject", "Hi Dear Sir/Madam,\r\nIf you are trying to sign up for Formak, you should correct the subject.\r\nIt must be 'signup' as one word only without quotes."); //FIXME
 	      }
 	      
-	      //if (errMsg!=null) {
-	      	//TODO reply to sender with a notification email using a slow queue so they know the subject was wrong.
-	      //}
       } catch (Exception ex){
       	logger.severe(ex.getMessage() + "trace is ["+Utils.stackTraceToString(ex)+"]");
-      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - An unexpected error", "Hi Daer Sir/Madam, signup process failed. Sorry for any inconvenient. We will find the problem and will fix it in 24 hours. If have not received any email from us, please, contact system adminitrator at 'sysadmin@noranj.com'."); //FIXME
+      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - An unexpected error", "Hi Dear Sir/Madam, signup process failed. Sorry for any inconvenient. We will find the problem and will fix it in 24 hours.\r\nIf have not received any email from us in the next 24 hours, please, contact system adminitrator at 'sysadmin@noranj.com'."); //FIXME
     		QueueHelper.sendMailNotification(new InternetAddress(GlobalSettings.C_SYSADMIN_MAIL_ADDRESS, GlobalSettings.C_SYSADMIN_MAIL_PERSONAL), "Signup Failed - An unexpected error", "from["+mail.getFrom()+"] subject["+mail.getSubject()+"]body["+mail.getBody().getContent()+"]"); //FIXME
       }
       
