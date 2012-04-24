@@ -193,5 +193,19 @@ public class MailHelper {
 		return(mailMessage);
 	}
 	
-	
+
+	/**
+	 * Convert an array of type javx.mail.Address to javax.mail.internet.InternetAddress.
+	 * This is used when converting email addresses.
+	 * 
+	 * @param addresses in form of javax.mail.Address which is difficult to work with them.
+	 * It contains not only the email address but extra information such as name.
+	 * @return email addresses in form of InternetAddress which is easier to work with it.
+	 * @throws Exception
+	 */
+	public static InternetAddress[] convertAddressesToInternetAddresses (Address[] addresses) throws Exception {
+		String addressesStr = InternetAddress.toString(addresses);
+		return(InternetAddress.parse(addressesStr));
+	}
+
 }

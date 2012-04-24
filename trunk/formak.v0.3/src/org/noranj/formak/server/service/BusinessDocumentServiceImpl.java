@@ -126,7 +126,7 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
   }
   
   /**
-   * 
+   * @deprecated THIS METHOD IS ONLY USED TO PROVDIE TEST DATA/ 
    */
   @Override
   //BA-2012-FEB-12 Changed the id from Long to Key type. It was needed to implement 1-N relationships.
