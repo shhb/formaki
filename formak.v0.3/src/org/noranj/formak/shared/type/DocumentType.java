@@ -3,7 +3,7 @@ package org.noranj.formak.shared.type;
 import java.io.Serializable;
 
 /**
- * 
+ * We need both "unknown" and "Other" document type because other is a valid bizDoc type that is actually stored in data store.
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
@@ -12,9 +12,12 @@ import java.io.Serializable;
  */
 public enum DocumentType implements Serializable {
 
-  Other(0), // not sure if we need both "unknown" and "other" or using only "other" should be fine. 
-  RequestForQuotation(10), Quotation(20), PurchaseOrderResponse(30), 
-  PurchaseOrder(40), Invoice(50), DispatchAdvice(60), Item(70), Catalog(80);
+  Unknown(0), 
+  RequestForQuotation(10), Quotation(20), 
+  PurchaseOrderResponse(30), PurchaseOrder(40), 
+  Invoice(50), DispatchAdvice(60), 
+  Item(70), Catalog(80),
+  Other(99);
 
   private int code;
 
@@ -52,34 +55,48 @@ public enum DocumentType implements Serializable {
         return (DocumentType.Item);
       case 80:
         return (DocumentType.Catalog);
+    	case 99:
+    		return (DocumentType.Other);
       default:
-        return (DocumentType.Other);
+        return (DocumentType.Unknown);
     } // switch
 
   } // toString
 
+  /** converts the description to the DocumentType form.
+   * For example if gets PurchaseOrder as input, 
+   * it will return DocumentType.PurchaseOrder.
+   * @param stringDocumentType
+   * @return
+   */
   public static DocumentType fromString(String stringDocumentType) {
-	    
-	    if ( stringDocumentType.equals("RequestForQuotation"))
+	  
+  	if (stringDocumentType!=null) {
+	    	
+	    if ( stringDocumentType.equalsIgnoreCase("RequestForQuotation"))
 	      return(DocumentType.RequestForQuotation);
-	    else if (stringDocumentType.equals("Quotation"))
+	    else if (stringDocumentType.equalsIgnoreCase("Quotation"))
 	      return(DocumentType.Quotation);
-	    else if (stringDocumentType.equals("PurchaseOrderResponse"))
+	    else if (stringDocumentType.equalsIgnoreCase("PurchaseOrderResponse"))
 	      return (DocumentType.PurchaseOrderResponse);
-	    else if (stringDocumentType.equals("PurchaseOrder"))
+	    else if (stringDocumentType.equalsIgnoreCase("PurchaseOrder"))
 	      return (DocumentType.PurchaseOrder);
-	    else if (stringDocumentType.equals("Invoice"))
+	    else if (stringDocumentType.equalsIgnoreCase("Invoice"))
 	      return (DocumentType.Invoice);
-	    else if (stringDocumentType.equals("DispatchAdvice"))
+	    else if (stringDocumentType.equalsIgnoreCase("DispatchAdvice"))
 	      return (DocumentType.DispatchAdvice);
-	    else if (stringDocumentType.equals("Item"))
+	    else if (stringDocumentType.equalsIgnoreCase("Item"))
 	      return (DocumentType.Item);
-	    else if (stringDocumentType.equals("Catalog"))
+	    else if (stringDocumentType.equalsIgnoreCase("Catalog"))
 	      return (DocumentType.Catalog);
-	    else
-	    	return (DocumentType.Other);
+	    else if (stringDocumentType.equalsIgnoreCase("Other"))
+	      return (DocumentType.Other);
+    
+  	} 
+  	return (DocumentType.Unknown);
 
-	  } // toString
+	} // toString
+  
   public String codeToString() {
     return String.valueOf(code);
   }

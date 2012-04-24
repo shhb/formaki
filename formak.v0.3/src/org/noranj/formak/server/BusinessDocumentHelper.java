@@ -10,10 +10,13 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.core.BusinessDocument;
+import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.utils.ServletUtils;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
+import org.noranj.formak.shared.type.DocumentType;
 
 import com.google.gwt.core.client.GWT;
 
@@ -309,6 +312,27 @@ public class BusinessDocumentHelper<T> {
       pm.close();
     }
 
+  }
+  
+  /**
+   * 
+   * @param docType
+   * @param sysUser
+   * @param attachment
+   * @return
+   */
+  public static String storeAttachedDocuments (DocumentType docType, SystemUser sysUser, List<Attachment> attachment) {
+  	
+  	String documentID = "";
+  	///XXX here APR-19 - working on knowing what the attachments are and then tryiing to save them so they can be processed by another queue later.
+  	// 
+  	// Loop on attached document and store them.
+  	// Assume there is only one document and one attachment.
+  	// need to see how the email works and if it puts the body of email as attachment too.
+  	// or we may need to look for a specific attachment. For example, we don't want to save user's signatures.
+  	
+  	return(documentID);
+  	
   }
   
 }

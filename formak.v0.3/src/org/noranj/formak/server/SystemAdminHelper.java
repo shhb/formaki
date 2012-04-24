@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
+
 import org.noranj.formak.server.domain.core.MailMessage;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
@@ -135,6 +138,77 @@ public class SystemAdminHelper {
     	NamespaceManager.set(currentNameSpace);
     }
   }
+
+
+  /**
+   * It get a javax.mail.internet.InternetAddress as user's email address then look it up in 
+   * data store to see if email address belongs to a valid user.
+   * @param userEmail
+   * @return
+   */
+  public static SystemUser getSystemUser(InternetAddress userEmail) {
+  	String userEmailAddress = userEmail.getAddress();
+  	logger.fine("Address is ["+userEmailAddress+"]");
+  	return(getSystemUser(userEmailAddress));
+  }
+  
+  /**
+   * Uses email address to find user.
+   * This method can be used for authentication.
+   * 
+   * @param userEmailAddress
+   * @return
+   * 
+   */
+  public static SystemUser getSystemUser(String userEmailAddress) {
+    
+    assert(userEmailAddress!=null && userEmailAddress.length()>0);
+    
+    //BA:12-MAR-06 Added namespace
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
+    
+    try {
+      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+    
+      SystemUser sysUser = null;
+      int retry = 1; 
+      do {
+        sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
+                                                              null /*ordering*/, null /*parameter*/, null /*value*/,
+                                                              null,  /* ParentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
+                                                              1); /* max fetch depth */
+        
+        --retry;
+  
+        if (sysUser == null && (userEmailAddress.equals("buyer@noranj.com") || userEmailAddress.equals("seller@noranj.com"))) {
+          logger.info("LoginHelper - Try to create sample data.");
+          try {
+            Startup.makeTestDataUserRetailerParty(); //Buyer
+            Startup.makeTestDataUserManufacturerParty(); // Seller
+          } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.warning("LoginHelper - Failed to create sample data. Abort the process.");
+            retry = -1;// do not try any more 
+          }
+          
+        }
+        else {
+          //found the user, end the loop
+          retry = -1;
+        }
+        
+      }while (retry>=0);
+      
+      return(sysUser);
+    
+    } finally {
+      //BA:12-MAR-06 Added namespace
+      NamespaceManager.set(currentNameSpace); 
+    }
+
+  }
+
 
 		
 } //class

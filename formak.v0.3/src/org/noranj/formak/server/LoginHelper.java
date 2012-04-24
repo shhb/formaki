@@ -208,60 +208,6 @@ public class LoginHelper extends RemoteServiceServlet {
   
   /**
    * 
-   * @param userEmailAddress
-   * @return
-   */
-  public static SystemUser getSystemUser(String userEmailAddress) {
-    
-    assert(userEmailAddress!=null && userEmailAddress.length()>0);
-    
-    //BA:12-MAR-06 Added namespace
-    String currentNameSpace = NamespaceManager.get();
-    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
-    
-    try {
-      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
-    
-      SystemUser sysUser = null;
-      int retry = 1; 
-      do {
-        sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
-                                                              null /*ordering*/, null /*parameter*/, null /*value*/,
-                                                              null,  /* ParentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
-                                                              1); /* max fetch depth */
-        
-        --retry;
-  
-        if (sysUser == null && (userEmailAddress.equals("buyer@noranj.com") || userEmailAddress.equals("seller@noranj.com"))) {
-          logger.info("LoginHelper - Try to create sample data.");
-          try {
-            Startup.makeTestDataUserRetailerParty(); //Buyer
-            Startup.makeTestDataUserManufacturerParty(); // Seller
-          } catch (Exception ex) {
-            ex.printStackTrace();
-            logger.warning("LoginHelper - Failed to create sample data. Abort the process.");
-            retry = -1;// do not try any more 
-          }
-          
-        }
-        else {
-          //found the user, end the loop
-          retry = -1;
-        }
-        
-      }while (retry>=0);
-      
-      return(sysUser);
-    
-    } finally {
-      //BA:12-MAR-06 Added namespace
-      NamespaceManager.set(currentNameSpace); 
-    }
-
-  }
-
-  /**
-   * 
    * @param session
    * @param userEmailAddress
    * @return
@@ -270,7 +216,7 @@ public class LoginHelper extends RemoteServiceServlet {
     
     logger.info("user ["+userEmailAddress+"] tries to login");
     
-    SystemUser sysUser = getSystemUser(userEmailAddress); // googleUser.getName());
+    SystemUser sysUser = SystemAdminHelper.getSystemUser(userEmailAddress); // googleUser.getName());
     
     if (sysUser!=null) {
       // update session if login was successful

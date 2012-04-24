@@ -160,6 +160,9 @@ public class SystemUser implements Serializable, ChildEntity {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
+  public String getFullName() {
+    return firstName +" "+ lastName;
+  }
 
   public String getEmailAddress() {
     return emailAddress;

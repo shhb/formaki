@@ -96,12 +96,12 @@ public class SignUpMailHandlerServlet extends HttpServlet {
 	      } 
 	      else {
 		      logger.warning("A WRONG email is received from email["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]");
-	      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - WRONG Subject", "Hi Dear Sir/Madam,\r\nIf you are trying to sign up for Formak, you should correct the subject.\r\nIt must be 'signup' as one word only without quotes."); //FIXME
+	      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - WRONG Subject", "Dear Sir/Madam,\r\nIf you are trying to sign up for Formak, you should correct the subject.\r\nIt must be 'signup' as one word only without quotes."); //FIXME
 	      }
 	      
       } catch (Exception ex){
       	logger.severe(ex.getMessage() + "trace is ["+Utils.stackTraceToString(ex)+"]");
-      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - An unexpected error", "Hi Dear Sir/Madam, signup process failed. Sorry for any inconvenient. We will find the problem and will fix it in 24 hours.\r\nIf have not received any email from us in the next 24 hours, please, contact system adminitrator at 'sysadmin@noranj.com'."); //FIXME
+      	QueueHelper.sendMailNotification(mail.getFrom(), "Signup Failed - An unexpected error", "Dear Sir/Madam, signup process failed. Sorry for any inconvenient. We will find the problem and will fix it in 24 hours.\r\nIf have not received any email from us in the next 24 hours, please, contact system adminitrator at 'sysadmin@noranj.com'."); //FIXME
     		QueueHelper.sendMailNotification(new InternetAddress(GlobalSettings.C_SYSADMIN_MAIL_ADDRESS, GlobalSettings.C_SYSADMIN_MAIL_PERSONAL), "Signup Failed - An unexpected error", "from["+mail.getFrom()+"] subject["+mail.getSubject()+"]body["+mail.getBody().getContent()+"]"); //FIXME
       }
       
