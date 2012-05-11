@@ -12,6 +12,7 @@ import org.noranj.formak.client.service.SystemAdminService;
 import org.noranj.formak.server.DAL1ToNHelper;
 import org.noranj.formak.server.DALHelper;
 import org.noranj.formak.server.LoginHelper;
+import org.noranj.formak.server.SystemAdminHelper;
 import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.shared.Constants;
@@ -51,7 +52,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
   public SystemUserDTO getSystemUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
-    SystemUser sysUser = LoginHelper.getSystemUser(emailAddress);
+    SystemUser sysUser = SystemAdminHelper.getSystemUser(emailAddress);
     if (sysUser!=null)
       return(sysUser.getSystemUserDTO());
     else 

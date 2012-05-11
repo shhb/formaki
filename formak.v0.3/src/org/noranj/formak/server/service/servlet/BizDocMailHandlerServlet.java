@@ -21,9 +21,29 @@ import org.noranj.formak.shared.GlobalSettings;
 import org.noranj.formak.shared.type.DocumentType;
 
 /**
- * All the emails sent to this servlet will be processed and the attachment or body is used to build a business document.
+
+ * All the emails sent to this servlet will be processed and the attachment(s) or body is used to build a business document.
+ * It checks MIME-TYPE of attachment(s) and based on the type of attachment, it decides what to do with it.
+ * If the type is a known type, it stores the attachment(s) in blobstore and sends the blobkey to the corresponding queue to be processed.
+ * It sends an email notification back to sender and confirms the receive of the email.
+ * It also prints the blobstore key in that email for later tracking.
+ * THE QUESTION IS "do we need to record the keys in data store to make sure we are not losing anything?"
+ * A: They can be stored in <b>PendingDocument</b> but they must be deleted when we are done with them.
+ * It is good because both user and system admin have access to the table and are aware of the number of documents (attachments) 
+ * received and pending. As soon as the document is processed, it is removed from PendingDocument and stored in its
+ * corresponding datastore.
+ *   
  * 
+ * NOTE: For final version the QUQUE must be POLL queue because we have not that much control over the process time of attachments.
+ * They are assumed to be batch and they are being processed in sequence.
  * 
+ * The attachments can be of one of these types 
+ * <li>PALIN/TEXT
+ * <li>plain/html
+ * <li>plain/xml
+ * <li>image/jpeg
+ * PDF, PNG ????
+ *  
  * Assumption:</br>
  * <ol>
  * <li>Sender must be an authorized user, using their registered email address. 
@@ -87,7 +107,7 @@ public class BizDocMailHandlerServlet extends HttpServlet {
       	QueueHelper.sendMailNotification(internetAddress, "Unregistered Email - Formak", "Dear Sir/Madam, We are sorry but we do not recognize your email address.\r\nIf you are a user of Formak system please, use your registered email to send your documents. If you are not a user, it takes only few minutes to sign up via email or web.\r\nHOW TO SIGN UP\r\nYou can just send an email to signup@.... with subject signup to be a user.\r\n"); //FIXME
 
       	//[TEMP]
-      	//XXX Just to test the system. It should be latter removed. It is extra work and could slow down the whole system.
+      	//XXX Just to test the system. It should be later removed. It is extra work and could slow down the whole system.
       	// we may get tons of spams every minute and must filter them quickly.
         MailMessage mail = MailHelper.getMailMessage(message);
       	QueueHelper.sendMailNotification(new InternetAddress(GlobalSettings.C_SYSADMIN_MAIL_ADDRESS, GlobalSettings.C_SYSADMIN_MAIL_PERSONAL), "Unregistered Email Address ", "from["+internetAddress.getAddress()+"] subject["+mail.getSubject()+"]body["+mail.getBody().getContent()+"]"); //FIXME
