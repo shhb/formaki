@@ -10,6 +10,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.noranj.formak.server.domain.biz.RequestForQuotation;
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.core.BusinessDocument;
 import org.noranj.formak.server.domain.sa.SystemUser;
@@ -324,12 +325,37 @@ public class BusinessDocumentHelper<T> {
   public static String storeAttachedDocuments (DocumentType docType, SystemUser sysUser, List<Attachment> attachment) {
   	
   	String documentID = "";
-  	///XXX here APR-19 - working on knowing what the attachments are and then tryiing to save them so they can be processed by another queue later.
+  	///XXX here APR-19 - working on knowing what the attachments are and then trying to save them so they can be processed by another queue later.
   	// 
   	// Loop on attached document and store them.
   	// Assume there is only one document and one attachment.
   	// need to see how the email works and if it puts the body of email as attachment too.
   	// or we may need to look for a specific attachment. For example, we don't want to save user's signatures.
+  	
+  	switch(docType) {
+  	case RequestForQuotation:
+  		//XXX here
+  		//RequestForQuotation.storeAttachedDocument(System sysUser, Attachment attachment);
+  		break;
+  	case Quotation: 
+  		break;
+    case PurchaseOrderResponse: 
+    break;
+    case PurchaseOrder: 
+    break;
+    case Invoice: 
+    break;
+    case DispatchAdvice: 
+    break;
+    case Item: 
+    break;
+    case Catalog: 
+    break;
+    case Other: 
+  	default:
+  	case Unknown:
+
+  	}
   	
   	return(documentID);
   	
