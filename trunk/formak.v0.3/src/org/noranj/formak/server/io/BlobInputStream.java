@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.channels.Channels;
 import java.nio.channels.IllegalBlockingModeException;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileReadChannel;
 import com.google.appengine.api.files.FileService;
@@ -20,37 +21,42 @@ import com.google.appengine.api.files.FileServiceFactory;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3
- * @version 0.3
+ * @since 0.3.20120510
+ * @version 0.3.20120513
  * @change
  *
  */
 public class BlobInputStream extends InputStream {
 
+  
+  private AppEngineFile file = null;
+
   /** 
    * an open channel to read from blob.
    * we need this as attribute so later we can close it when we are done.
    */
-  FileReadChannel readChannel=null;
+  private FileReadChannel readChannel=null;
   
   /**
    * this object provides access to channel as an input stream.
    */
-  InputStream ins = null;
+  private InputStream ins = null;
   
   /** 
    * @param fullPath blob full path. This is the value that is returned when the blob is created. See BlobOutputStream.
    * @param lock allows to restrict access top the file. false means let other people read at the same time
    * @throws IOException
    */
-  public BlobInputStream(String fullPath, boolean lock) throws IOException {
+  public BlobInputStream(String blobKeyString, boolean lock) throws IOException {
     
   	try {
 	  	/** Get a file service */
 	    FileService fileService = FileServiceFactory.getFileService();
 	    
-	    // Write more to the file in a separate request:
-			AppEngineFile file = new AppEngineFile(fullPath);
+	    BlobKey blobKey = new BlobKey(blobKeyString);
+	    
+	    // read from the file
+			file = fileService.getBlobFile(blobKey); 
 		
 		  FileReadChannel readChannel = fileService.openReadChannel(file, lock);
 	
@@ -58,16 +64,52 @@ public class BlobInputStream extends InputStream {
 	  	ins = Channels.newInputStream(readChannel);
 	  } catch (IllegalBlockingModeException ibmex) {
 	  	//FIXME logger?!?!?!
-	  	throw new IOException ("Failed to open Blob ["+fullPath+"] as input stream due to a IllegalBlockingModeException - ["+ibmex.getMessage()+"]", ibmex);
+	  	throw new IOException ("Failed to open BlobKey ["+blobKeyString+"] as input stream due to a IllegalBlockingModeException - ["+ibmex.getMessage()+"]", ibmex);
 	  } catch (Exception ex) {
-	  	throw new IOException ("Failed to open Blob ["+fullPath+"] as input stream due to a Exception - ["+ex.getMessage()+"]", ex);
+	  	throw new IOException ("Failed to open BlobKey ["+blobKeyString+"] as input stream due to a Exception - ["+ex.getMessage()+"]", ex);
 	  }
 	  
 	  if (ins == null)
 	  	throw new IOException("Failed to open the blob as Inputstream.");
 	  
   }
-	
+
+  /**
+   * The blob key to the file stored in blobstore.
+   * It can be used to read the data later.
+   * @return the blob key to the stored data in blobstore.
+   */
+  public BlobKey getBlobKey() {
+    /** Get a file service */
+    FileService fileService = FileServiceFactory.getFileService();
+    return(fileService.getBlobKey(file));
+  }
+  
+  /**
+   * The full path to the file stored in blobstore.
+   * It can be used to read the data later.
+   * @return the full path to the stored data in blobstore.
+   */
+  public String getFileFullPath() {
+    return(file.getFullPath());
+  }
+  
+  /**
+   * The name of file stored in blobstore.
+   * @return the name of file that is stored in blobstore.
+   */
+  public String getFileNamePart() {
+    return(file.getNamePart());
+  }
+  
+  /**
+   *
+   * @return file system used to store the data!!! (not sure what it is).(12-05-13)
+   */
+  public String getFileSystemName() {
+    return(file.getFileSystem().getName());
+  }
+  
 	/**    
 	 * Reads the next byte of data from the input stream.
 	 */

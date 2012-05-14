@@ -12,6 +12,10 @@ import org.noranj.formak.shared.type.MIMEType;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @since 0.3
+ * @version 0.3.20120513
+ * @change
+ *  BA:12-05-13 Added toString
  */
 public class Attachment implements Serializable {
   
@@ -24,7 +28,6 @@ public class Attachment implements Serializable {
    
   public Attachment() {
 	  super();
-	  // TODO Auto-generated constructor stub
   }
   
 	public Attachment(byte[] content, String name, MIMEType mimeType) {
@@ -56,5 +59,27 @@ public class Attachment implements Serializable {
   public void setMimeType(MIMEType mimeType) {
     this.mimeType = mimeType;
   }
+  
+  public long getSize() {
+    if (this.content!=null)
+      return(content.length);
+    return(0);
+  }
 
+  //BA:12-05-13 Added to print better log messages
+  /**
+   * 
+   */
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append("name[");
+    str.append(name);
+    str.append("] size[");
+    str.append(getSize());
+    str.append("] mimetype[");
+    str.append(mimeType);
+    str.append("]");
+    return(str.toString());
+  }
+  
 }

@@ -22,7 +22,7 @@ public enum MIMEType {
     this.description = newDescription;
   }
 
-  public String getDescription() {
+  public String toString() {
     return this.description;
   }
   

@@ -136,6 +136,7 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     }
     
   }
+  
   public String getMessage() {
     return message;
   }
