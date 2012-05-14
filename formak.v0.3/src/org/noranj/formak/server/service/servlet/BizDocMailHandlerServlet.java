@@ -12,7 +12,9 @@ import javax.servlet.http.*;
 
 import org.noranj.formak.server.BusinessDocumentHelper;
 import org.noranj.formak.server.SystemAdminHelper;
+import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.core.MailMessage;
+import org.noranj.formak.server.domain.core.PendingDocument;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.utils.MailHelper;
 import org.noranj.formak.server.utils.QueueHelper;
@@ -133,20 +135,25 @@ public class BizDocMailHandlerServlet extends HttpServlet {
 	      if (docType != DocumentType.Unknown) {
 	        logger.info("A 'BizDocument' of type ["+docType+"] is received from email["+mail.getFrom()+"]");
 	      	
-	        //-/Add BizDocument to data store
-	        String pendingDocumentID = BusinessDocumentHelper.storeAttachedDocuments(docType, systemUser, mail.getAttachments());
 	        
-	        //-/Put at least the pendingDocumentID and systemUser.parentClientID in the queue to be processed later.
-          QueueHelper.processDocument(docType, pendingDocumentID, systemUser.getParentClientId());
-	        
-	        
-	        //XXX here - APR-19 working on adding the document ID and document Type and MIMETYPE in another QUEUE for further processes.
-	        // the question is if we have more than one attachments which process is going to look at them and find the business document.
-	        // attachments could be any type and hard to say which one is business document. However, the PDF files could be considered as business document always.
-	        // should BusinessDocumentHelper does the filtering? or MailHelper does that!>?!>!>!>
-	        
-	        //-/ send confirmation email
-	        QueueHelper.sendMailNotification(mail.getFrom(), "Received ["+docType+"]", "The document is saved and pedning to be processed with this ID ["+pendingDocumentID+"]."); //FIXME
+	        PendingDocument pendingDocument = null;
+	        for (Attachment attached : mail.getAttachments()) {
+  	        //-/Add BizDocument to data store
+  	        pendingDocument = BusinessDocumentHelper.storeAttachedDocument(docType, systemUser /*originator*/, systemUser /*receiver*/, attached);
+  	        
+  	        //-/Put at least the pendingDocumentID and systemUser.parentClientID in the queue to be processed later.
+            QueueHelper.processDocument(docType, pendingDocument, systemUser);
+  	        
+  	        
+  	        //XXX here - APR-19 working on adding the document ID and document Type and MIMETYPE in another QUEUE for further processes.
+  	        // the question is if we have more than one attachments which process is going to look at them and find the business document.
+  	        // attachments could be any type and hard to say which one is business document. However, the PDF files could be considered as business document always.
+  	        // should BusinessDocumentHelper does the filtering? or MailHelper does that!>?!>!>!>
+  	        
+  	        //-/ send confirmation email
+  	        QueueHelper.sendMailNotification(mail.getFrom(), "Received ["+docType+"]", "The document is saved and pending to be processed with this ID ["+pendingDocument.getId()+"]."); //FIXME
+
+	        }
 	      } 
 	      else {
 		      logger.warning("An email with WRONG subject is received from ["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]. The email is ignored.");

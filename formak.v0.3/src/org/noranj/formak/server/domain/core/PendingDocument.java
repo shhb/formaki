@@ -49,5 +49,12 @@ public class PendingDocument extends BusinessDocument implements Serializable {
   public PendingDocument() {
     super();
   }
+
+  /**
+   * @deprecated because it is not done yet 
+   */
+  public String toString() {
+    return("id["+getId()+"] name["+getName()+"] note["+getNote()+"] bizDocNum["+getBizDocumentNumber()+"]");
+  }
   
 }

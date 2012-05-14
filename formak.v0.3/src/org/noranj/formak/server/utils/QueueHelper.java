@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.mail.internet.InternetAddress;
 
+import org.noranj.formak.server.domain.core.PendingDocument;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.shared.Constants;
 import org.noranj.formak.shared.GlobalSettings;
@@ -71,22 +72,27 @@ public class QueueHelper {
 
 	/**
    * It adds a job to slow queue to be process by "OCR" handler.
+   * 
    * NOTE: this is a test and probably it should not be sent to OCR directly. We don't know if the attachments are OCR material. They might be XML files.
    * We need a filter before the documents go to OCR.
    * 
+   * NOTE: Queues are NAMESPACE aware.
+   *  
    * @param docType indicates the type of document.
-   * @param pendingDocumentID uniquely identifies the document in data store.
+   * @param pendingDocument stores the document pending for process in data store.
    * @param systemUser is used to get user's namesapce.
    * @deprecated IT MUST NOT SEND THE JOBS TO OCR DIRECTLY. It must be fixed.
    */
-	public static void processDocument(DocumentType docType, String pendingDocumentID, SystemUser systemUser) { //FIXME it should be byte[]???
+	public static void processDocument(DocumentType docType, PendingDocument pendingDocument, SystemUser systemUser) { //FIXME it should be byte[]???
 
-    //FIXME REPLACE OCR with another Queue
+    ///XXX HERE 12-0513 review the param in queue!!!
+	  
+	  //FIXME REPLACE OCR with another Queue
     
     logger.info("Adding send mail notification task to queue.");
     
     if(logger.isLoggable(Level.FINE)) {
-      logger.fine("queue ["+C_SLOW_QUEUE_NAME+"] at ["+C_SLOW_QUEUE_BASE_URL+ C_OCR_URL+"] documentType["+docType+"] prndingDocID["+pendingDocumentID+"] systemUser["+systemUser.getSystemUserDTO().toString()+"]");
+      logger.fine("queue ["+C_SLOW_QUEUE_NAME+"] at ["+C_SLOW_QUEUE_BASE_URL+ C_OCR_URL+"] documentType["+docType+"] pendingDoc["+pendingDocument+"] systemUser["+systemUser.getSystemUserDTO().toString()+"]");
     }
     
     Queue queue = QueueFactory.getQueue(C_SLOW_QUEUE_NAME);
@@ -94,7 +100,7 @@ public class QueueHelper {
     if(logger.isLoggable(Level.FINE))
       logger.fine("Got the "+C_SLOW_QUEUE_NAME+"queue");
     
-    queue.add(Builder.withUrl(C_SLOW_QUEUE_BASE_URL + C_OCR_URL).param(Constants.C_DOC_TYPE_PROP_NAME, docType.codeToString()).param(Constants.C_DOC_ID_PROP_NAME, pendingDocumentID).param(Constants.C_DOC_NS_PROP_NAME, systemUser.getParentClientId()).method(Method.POST));
+    queue.add(Builder.withUrl(C_SLOW_QUEUE_BASE_URL + C_OCR_URL).param(Constants.C_DOC_TYPE_PROP_NAME, docType.codeToString()).param(Constants.C_DOC_ID_PROP_NAME, pendingDocument.getId()).param(Constants.C_DOC_NS_PROP_NAME, systemUser.getParentClientId()).method(Method.POST));
     
     logger.info("OCR task has been added to slow processing queue successfully.");
     
