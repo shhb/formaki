@@ -14,6 +14,7 @@ public enum DocumentStateType implements Serializable, IsSerializable {
   Completed, //ready
   Deleted,
   Draft,
+  Pending, // it is in the system but needs to be processed before being "Received"
   Received,
   Rejected,
   Sent;

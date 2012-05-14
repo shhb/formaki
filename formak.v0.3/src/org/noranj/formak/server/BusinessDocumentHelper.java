@@ -13,12 +13,20 @@ import javax.jdo.Transaction;
 import org.noranj.formak.server.domain.biz.RequestForQuotation;
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.core.BusinessDocument;
+import org.noranj.formak.server.domain.core.PendingDocument;
+import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
+import org.noranj.formak.server.service.JDOPMFactory;
+import org.noranj.formak.server.utils.FileServiceHelper;
 import org.noranj.formak.server.utils.ServletUtils;
+import org.noranj.formak.server.utils.Utils;
+import org.noranj.formak.shared.Constants;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
+import org.noranj.formak.shared.type.DocumentStatusType;
 import org.noranj.formak.shared.type.DocumentType;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.core.client.GWT;
 
 /**
@@ -314,51 +322,71 @@ public class BusinessDocumentHelper<T> {
     }
 
   }
-  
+
   /**
+   * It stores the attached document in BlobStroe and creates a PendingDocument for it.
+   * The blobstore key is stored in PendingDocument so it can be found and processed later.
+   * 
+   * <li> Set NameSpace
+   * <li> Store attachments in blobstore
+   * <li> Add new PendingDocument to dataStore
+   * <li> Reset Namespace to original value
+   * 
+   * NOTE: the pending documents are stored in different namespaces, it is important to provide namespace (SystemUser.parentClientID)
+   * to the processing queue so they can access the documents. Otherwise, no one can see them but the user.
    * 
    * @param docType
-   * @param sysUser
-   * @param attachment
-   * @return
+   * @param originatorUser - they sent the document.
+   * @param receiverUser - the document is sent to them.
+   * @param attachments
+   * @return the key .
    */
-  public static String storeAttachedDocuments (DocumentType docType, SystemUser sysUser, List<Attachment> attachment) {
-  	
-  	String documentID = "";
-  	///XXX here APR-19 - working on knowing what the attachments are and then trying to save them so they can be processed by another queue later.
-  	// 
-  	// Loop on attached document and store them.
-  	// Assume there is only one document and one attachment.
-  	// need to see how the email works and if it puts the body of email as attachment too.
-  	// or we may need to look for a specific attachment. For example, we don't want to save user's signatures.
-  	
-  	switch(docType) {
-  	case RequestForQuotation:
-  		//XXX here
-  		//RequestForQuotation.storeAttachedDocument(System sysUser, Attachment attachment);
-  		break;
-  	case Quotation: 
-  		break;
-    case PurchaseOrderResponse: 
-    break;
-    case PurchaseOrder: 
-    break;
-    case Invoice: 
-    break;
-    case DispatchAdvice: 
-    break;
-    case Item: 
-    break;
-    case Catalog: 
-    break;
-    case Other: 
-  	default:
-  	case Unknown:
+  public static PendingDocument storeAttachedDocuments (DocumentType docType, SystemUser originatorUser, SystemUser receiverUser, Attachment attachment) {
+    
+    assert(originatorUser!=null) : "originatorUser can not be null. This is the originator of the document and can not be NULL.";
+    assert(receiverUser!=null) : "receoverUser can not be null. This is the receiver of the document and can not be NULL.";
+    assert(attachment!=null) : "the method stores attachment and if there is none, we should not be in this method.";
+    
+    //store current namespace
+    //set namesapce to SystemUser.parentClientID
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(receiverUser.getParentClientId()); // store the document in user's namespace
 
-  	}
-  	
-  	return(documentID);
-  	
+    // used to add new PendingDocument objects
+    PendingDocument pendingDocument;
+    // stores the blobkey for future references
+    String blobKey;
+
+    try {
+
+      // get business document helper to help us with storing and reading document 
+      BusinessDocumentHelper<PendingDocument> businessDocumentHelper = new BusinessDocumentHelper<PendingDocument>(JDOPMFactory.getTxOptional(), PendingDocument.class);
+
+      blobKey = FileServiceHelper.write(docType, originatorUser, receiverUser, attachment);
+
+      pendingDocument = new PendingDocument();
+      pendingDocument.setCreatedTS(System.currentTimeMillis());
+      pendingDocument.setOriginatorPartyID(originatorUser.getParentClientId());// it is assumed the originator sends the document to themselves
+      pendingDocument.setReceiverPartyID(receiverUser.getParentClientId());// it is assumed the originator sends the document to themselves
+      pendingDocument.setBizDocumentNumber(blobKey);
+      pendingDocument.setState(DocumentStateType.Received);
+      pendingDocument.setNote("Attachment stored in blobstore. BizDocNumber is the key.");
+      
+      businessDocumentHelper.storeEntity(pendingDocument);
+      
+    } catch (Exception ex) {
+      logger.severe("Failed to store attachment in blobstore due to an exception ["+ex.getMessage()+"]. Stack Trace["+Utils.stackTraceToString(ex)+"]");
+      pendingDocument = null;
+    } finally {
+      if (blobKey!=null && pendingDocument==null) {
+        /// delete the attachment from blobstore.
+        FileServiceHelper.delete(originatorUser, receiverUser, blobKey);
+      }
+      NamespaceManager.set(currentNameSpace);
+    }
+    
+    return(pendingDocument);
+
   }
   
 }

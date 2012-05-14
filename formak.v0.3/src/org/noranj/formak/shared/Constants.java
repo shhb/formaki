@@ -7,12 +7,13 @@ package org.noranj.formak.shared;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.3.20120322
+ * @version 0.3.20120513
  * @since 0.3
  * @change
  *  BA:12-03-06 Added Client ID
  *  BA:12-03-22 Added two new constants. All used in LoginHelper.
  *  BA:12-04-12 Added C_SIGNUP_MAIL_SUBJECT
+ *  BA:12-05-13 Added C_DOC...
  */
 
 public class Constants {
@@ -67,4 +68,16 @@ public class Constants {
 	public final static String C_MAIL_FROM_ADDRESS_PROP_NAME = "from";
 
 	
+  ///////////////////////////////////////////////////////////
+  /// Document
+  ///
+  /** the property/parameter name used for document type. */
+  public final static String C_DOC_TYPE_PROP_NAME = "docType";
+  
+  /** the property/parameter name used for subject of the email. */
+  public final static String C_DOC_ID_PROP_NAME = "docID";
+
+  /** the property/parameter name used for TO Address of the email. */
+  public final static String C_DOC_NS_PROP_NAME = "docNS";
+  
 }
