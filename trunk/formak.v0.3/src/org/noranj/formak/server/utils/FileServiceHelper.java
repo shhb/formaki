@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.noranj.formak.server.BusinessDocumentHelper;
 import org.noranj.formak.server.domain.core.Attachment;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.io.BlobInputStream;
@@ -12,6 +11,7 @@ import org.noranj.formak.server.io.BlobOutputStream;
 import org.noranj.formak.shared.type.DocumentType;
 
 import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreFailureException;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.files.AppEngineFile;
@@ -21,6 +21,9 @@ import com.google.appengine.api.files.FileServiceFactory;
 /**
  * This class is developed to work with files on blobstore.
  * The File Service used in this class is experimental APIs in GAE so it is important to hide them in this class.
+ * 
+ * 
+ * NOTE: BlobStore is NOT segmented by NAMESPACES.
  * 
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
@@ -37,16 +40,30 @@ public class FileServiceHelper {
 
   private static Logger logger = Logger.getLogger(FileServiceHelper.class.getName());
 
-  
-  public void delete(SystemUser originatorUser, SystemUser receiverUser, String blobKey) {
 
-    /** Get a file service */
-    FileService fileService = FileServiceFactory.getFileService();
-    BlobstoreService blobStoreService = BlobstoreServiceFactory.getBlobstoreService();
-    BlobKey[] bks m= 
-    blobStoreService.delete(blobKey);
-    String segment = new String(blobStoreService.fetchData(blobKey, start, end));
-    return(segment);
+  /**
+   * 
+   * @param blobKeyString
+   * @throws IOException
+   */
+  public static void deleteBlobFile(String blobKeyString) throws IOException {
+
+    //FIXME maybe FINE is better level!!
+    if(logger.isLoggable(Level.INFO))
+      logger.info("deleteBlobFile: blobKey["+blobKeyString+"]");
+    
+    try {
+      BlobstoreService blobStoreService = BlobstoreServiceFactory.getBlobstoreService();
+      BlobKey[] bks = new BlobKey[1]; 
+      bks[0]=new BlobKey(blobKeyString);
+      blobStoreService.delete(bks);
+    } catch (BlobstoreFailureException bfex) {
+      throw new IOException("Failed to delete the blob with the key["+blobKeyString+"] due to a BlobstoreFailureException["+bfex.getMessage()+"]");
+    }
+
+    if(logger.isLoggable(Level.INFO))
+      logger.info("deleteBlobFile: deleted successfully blobKey["+blobKeyString+"]");
+
   }
   
   /**
@@ -58,7 +75,7 @@ public class FileServiceHelper {
    * @return
    * @throws IOException
    */
-	public String writeToFile(DocumentType docType, SystemUser originatorUser, SystemUser receiverUser, Attachment attachment) throws IOException {
+	public static String writeToBlobFile(DocumentType docType, SystemUser originatorUser, SystemUser receiverUser, Attachment attachment) throws IOException {
 	  
     //FIXME maybe FINE is better level!!
 	  if(logger.isLoggable(Level.INFO))
@@ -89,7 +106,7 @@ public class FileServiceHelper {
 	 * @param path
 	 * @throws IOException
 	 */
-	public void readFromFile(String blobKeyString) throws IOException {
+	public static void readFromBlobFile(String blobKeyString) throws IOException {
 	  
     //FIXME maybe FINE is better level!!
     if(logger.isLoggable(Level.INFO))

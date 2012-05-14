@@ -1,8 +1,10 @@
 package org.noranj.formak.server;
 
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
@@ -341,46 +343,61 @@ public class BusinessDocumentHelper<T> {
    * @param attachments
    * @return the key .
    */
-  public static PendingDocument storeAttachedDocuments (DocumentType docType, SystemUser originatorUser, SystemUser receiverUser, Attachment attachment) {
+  public static PendingDocument storeAttachedDocument (DocumentType docType, SystemUser originatorUser, SystemUser receiverUser, Attachment attachment) throws IOException {
     
     assert(originatorUser!=null) : "originatorUser can not be null. This is the originator of the document and can not be NULL.";
     assert(receiverUser!=null) : "receoverUser can not be null. This is the receiver of the document and can not be NULL.";
     assert(attachment!=null) : "the method stores attachment and if there is none, we should not be in this method.";
     
+    if(logger.isLoggable(Level.INFO)) {
+      logger.info("storeAttachedDocument: DocumentType["+docType+"] originator[" + originatorUser +"] receiver[" + receiverUser+"] Attachment["+attachment+"]");
+    }
+    
     //store current namespace
     //set namesapce to SystemUser.parentClientID
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(receiverUser.getParentClientId()); // store the document in user's namespace
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("storeAttachedDocument: current was["+currentNameSpace+"] set namespace to["+receiverUser.getParentClientId()+"]");
+    }
 
     // used to add new PendingDocument objects
-    PendingDocument pendingDocument;
+    PendingDocument pendingDocument=null;
     // stores the blobkey for future references
-    String blobKey;
+    String blobKeyStr=null;
 
     try {
 
       // get business document helper to help us with storing and reading document 
       BusinessDocumentHelper<PendingDocument> businessDocumentHelper = new BusinessDocumentHelper<PendingDocument>(JDOPMFactory.getTxOptional(), PendingDocument.class);
 
-      blobKey = FileServiceHelper.write(docType, originatorUser, receiverUser, attachment);
+      blobKeyStr = FileServiceHelper.writeToBlobFile(docType, originatorUser, receiverUser, attachment);
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("storeAttachedDocument: wrote the file blobkey["+blobKeyStr+"]");
+      }
 
       pendingDocument = new PendingDocument();
       pendingDocument.setCreatedTS(System.currentTimeMillis());
       pendingDocument.setOriginatorPartyID(originatorUser.getParentClientId());// it is assumed the originator sends the document to themselves
       pendingDocument.setReceiverPartyID(receiverUser.getParentClientId());// it is assumed the originator sends the document to themselves
-      pendingDocument.setBizDocumentNumber(blobKey);
+      pendingDocument.setBizDocumentNumber(blobKeyStr);
       pendingDocument.setState(DocumentStateType.Received);
       pendingDocument.setNote("Attachment stored in blobstore. BizDocNumber is the key.");
       
       businessDocumentHelper.storeEntity(pendingDocument);
       
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("storeAttachedDocument: pending document["+pendingDocument.toString()+"]");
+      }
+
+      
     } catch (Exception ex) {
-      logger.severe("Failed to store attachment in blobstore due to an exception ["+ex.getMessage()+"]. Stack Trace["+Utils.stackTraceToString(ex)+"]");
-      pendingDocument = null;
+      //logger.severe("Failed to store attachment in blobstore due to an exception ["+ex.getMessage()+"]. Stack Trace["+Utils.stackTraceToString(ex)+"]");
+      throw new IOException("Failed to store attachment in blobstore due to an exception ["+ex.getMessage()+"]", ex);
     } finally {
-      if (blobKey!=null && pendingDocument==null) {
+      if (blobKeyStr!=null && pendingDocument==null) {
         /// delete the attachment from blobstore.
-        FileServiceHelper.delete(originatorUser, receiverUser, blobKey);
+        FileServiceHelper.deleteBlobFile(blobKeyStr);
       }
       NamespaceManager.set(currentNameSpace);
     }
