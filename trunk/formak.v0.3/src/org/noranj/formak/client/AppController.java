@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.noranj.formak.client.common.BusinessDocumentsColumnDefinitionsFactory;
 import org.noranj.formak.client.common.ColumnDefinition;
+import org.noranj.formak.client.event.AddBusinessDocumentEvent;
+import org.noranj.formak.client.event.AddBusinessDocumentEventHandler;
 import org.noranj.formak.client.event.DocumentTypeListChangedEvent;
 import org.noranj.formak.client.event.DocumentTypeListChangedEventHandler;
 import org.noranj.formak.client.event.EditBusinessDocumentEvent;
@@ -36,7 +38,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
-  
+  private DocumentType documentType; 
   private String documentTypeCode;
   private String businessDocumentId;
   private final HandlerManager eventBus;
@@ -61,6 +63,14 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
   
   private void bind() {
     History.addValueChangeHandler(this);
+    eventBus.addHandler(AddBusinessDocumentEvent.TYPE , new AddBusinessDocumentEventHandler() {
+		
+		@Override
+		public void onAddBusinessDocument(AddBusinessDocumentEvent event) {
+			addBusinessDocument(event.getDocumentType());
+			
+		}
+	});
     
     eventBus.addHandler(DocumentTypeListChangedEvent.TYPE, new DocumentTypeListChangedEventHandler() {
   		@Override
@@ -84,6 +94,11 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
       }
     });
     
+  }
+
+  private void addBusinessDocument(DocumentType documentType){
+	  this.documentType = documentType;
+	  History.newItem("addpo");
   }
   
   private void doEditBusinessDocument(String id) {
@@ -159,7 +174,17 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         	editPurchaseOrderView.setColumnDefinitions(purchaseOrderItemColumnDefinition); 
         	
           presenter = new EditPurchaseOrderPresenter(rpcService, editPurchaseOrderView,businessDocumentId);
-        } else if (token.equals("login")) { //TODO SA Added this. BA:12-MAR-01
+        }
+        else if (token.equals("addpo")) {
+        	editPurchaseOrderView = new EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO>();
+        	if (purchaseOrderItemColumnDefinition==null){
+        	  purchaseOrderItemColumnDefinition = BusinessDocumentsColumnDefinitionsFactory.getPurchaseOrderItemColumnDefinitions();
+        	}
+        	editPurchaseOrderView.setColumnDefinitions(purchaseOrderItemColumnDefinition); 
+        	
+          presenter = new EditPurchaseOrderPresenter(rpcService, editPurchaseOrderView,"");
+        }
+        else if (token.equals("login")) { //TODO SA Added this. BA:12-MAR-01
           Formak.get().showLoginView();
           return;
 	      } else if (token.equals("signup")) { //TODO SA Added this. BA:12-MAR-22
