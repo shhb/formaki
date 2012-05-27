@@ -210,3 +210,6 @@ body {
 	margin-right: 5px;
 }
 
+.clickable{
+	cursor:pointer;cursor:hand;
+}
