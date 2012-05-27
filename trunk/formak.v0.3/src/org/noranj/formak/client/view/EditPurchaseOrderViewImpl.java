@@ -3,7 +3,7 @@ package org.noranj.formak.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.ast.ArrayAllocationExpression;
+import org.noranj.formak.client.common.BusinessDocumentsColumnDefinitionsFactory;
 import org.noranj.formak.client.common.ColumnDefinition;
 import org.noranj.formak.client.common.HasSelectedValue;
 import org.noranj.formak.client.common.SelectOneListBox;
@@ -12,44 +12,41 @@ import org.noranj.formak.client.resources.en.GlobalResources;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 
-import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.cell.client.ImageResourceCell;
-import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.TextHeader;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.HasCellPreviewHandlers;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.HasRows;
 import com.google.gwt.view.client.ListDataProvider;
 
-public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
-		EditPurchaseOrderView<T, K, L> {
+public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements EditPurchaseOrderView<T, K, L> {
 
 	@UiTemplate("EditPurchaseOrderView.ui.xml")
 	interface EditPurchaseOrderViewUiBinder extends
@@ -73,22 +70,31 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 
 	@UiField
 	TextBox id;
+	
 	@UiField
 	TextBox poNumber;
+	
 	@UiField
 	TextBox poDate;
+	
 	@UiField
 	Label taxRatePercent;
+	
 	@UiField
 	TextBox totalTaxAmount;
+	
 	@UiField
 	TextArea shipTo;
+	
 	@UiField
 	TextArea billTo;
+	
 	@UiField
 	TextArea note;
+	
 	@UiField()
 	SelectOneListBox<L> buyer;
+	
 	@UiFactory
 	SelectOneListBox<IDNameDTO> initSelect() {
 		return new SelectOneListBox<IDNameDTO>(
@@ -106,29 +112,23 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 				});
 
 	}
+	
 	@UiField()
 	CellTable<K> purchaseOrderItemsCellTable;
+	
 	@UiField
 	Anchor saveButton;
+	
 	@UiField
 	Anchor cancelButton;
-
+	
+	@UiField
+	Anchor addNewRowButton;
+	
 	@Override
 	public void setPresenter(EditPurchaseOrderView.Presenter<T> presenter) {
 		this.presenter = presenter;
 
-	}
-
-	// //@UiHandler("saveButton")
-	// void onSaveButtonClicked(ClickEvent event) {
-	//
-	// if (presenter != null) {
-	// //presenter.onSaveMasterButtonClicked(masterRowData);
-	// }
-	// }
-
-	public HasData<K> getPurchaseOrderItemsCellTable() {
-		return purchaseOrderItemsCellTable;
 	}
 
 	@Override
@@ -173,6 +173,12 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 		return saveButton;
 	}
 
+	@Override
+	public HasClickHandlers getAddNewRowButton() {
+		return addNewRowButton;
+	}
+
+	
 	public void setMasterData(T masterData) {
 		this.masterData = masterData;
 	}
@@ -191,22 +197,20 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 		buyer.setSelections(rowBuyerData);
 	}
 
-	public void setRowData(List<K> rowData) {
-		List<PurchaseOrderItemDTO> purchaseOrderItemDTOs = (List<PurchaseOrderItemDTO>) rowData;
-		PurchaseOrderItemDTO purchaseOrderItemDTO = new PurchaseOrderItemDTO();
-		purchaseOrderItemDTOs.add(purchaseOrderItemDTO.addNewRecord());
-		CellTable<PurchaseOrderItemDTO> purchaseOrderItemsCellTable = new CellTable<PurchaseOrderItemDTO>();
-		purchaseOrderItemsCellTable = (CellTable<PurchaseOrderItemDTO>) this.purchaseOrderItemsCellTable;
+	public void displayeTable() {
+		
+		CellTable<PurchaseOrderItemDTO> purchaseOrderItemsCellTable = (CellTable<PurchaseOrderItemDTO>) this.purchaseOrderItemsCellTable;
 		purchaseOrderItemsCellTable.setWidth("100%", true);
 
 		Column<PurchaseOrderItemDTO, ImageResource> remove = new Column<PurchaseOrderItemDTO, ImageResource>(new ImageResourceCell()){
 			@Override
 			public ImageResource getValue(PurchaseOrderItemDTO object) {
 
-				return GlobalResources.RESOURCE.trash();
+				return GlobalResources.RESOURCE.delete();
 			}
 		};
 				
+		remove.setCellStyleNames(GlobalResources.RESOURCE.globalStyles().clickable());
 		Column<PurchaseOrderItemDTO, String> sequenceHolder = new Column<PurchaseOrderItemDTO, String>(	new TextCell()) {
 
 			@Override
@@ -294,8 +298,8 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 				object.setUOM(value);
 			}
 		});
-				
-		purchaseOrderItemsCellTable.addColumn(sequenceHolder, new TextHeader("#"));
+			
+		purchaseOrderItemsCellTable.addColumn(sequenceHolder, new TextHeader("ID"));
 		purchaseOrderItemsCellTable.setColumnWidth(sequenceHolder, 10, Unit.PX);
 
 		
@@ -321,15 +325,22 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements
 		purchaseOrderItemsCellTable.addColumn(total, new TextHeader("Total"));
 		purchaseOrderItemsCellTable.setColumnWidth(total, 40, Unit.PX);
 
-		purchaseOrderItemsCellTable.addColumn(remove, "");
-		purchaseOrderItemsCellTable.setColumnWidth(remove, 10, Unit.PX);
+		purchaseOrderItemsCellTable.addColumn(remove,new TextHeader(""));
+		purchaseOrderItemsCellTable.setColumnWidth(remove, 20, Unit.PX);
 		
-		ListDataProvider<PurchaseOrderItemDTO> lda = new ListDataProvider<PurchaseOrderItemDTO>();
-//		ListHandler<PurchaseOrderItemDTO> sortHandler = new ListHandler<PurchaseOrderItemDTO>(lda.getList());
-//		purchaseOrderItemsCellTable.addColumnSortHandler(sortHandler);
-		lda.setList(purchaseOrderItemDTOs);
-		lda.addDataDisplay(purchaseOrderItemsCellTable);
-
+	
 	}
 
+	public HasData getDataTable(){
+		return purchaseOrderItemsCellTable;
+	}
+    
+	@Override
+    public HasCellPreviewHandlers<K> getList() {
+	    return purchaseOrderItemsCellTable;
+	}
+    
+	public CellTable<K> getCellTable(){
+		return this.purchaseOrderItemsCellTable;
+	}
 }

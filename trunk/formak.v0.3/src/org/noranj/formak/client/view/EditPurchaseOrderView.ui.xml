@@ -8,15 +8,16 @@
 	<ui:image field='logo_small' src='../resources/en/images/logo_small.png' />
 	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
 	<ui:with field='RESOURCE' type='org.noranj.formak.client.resources.en.GlobalResources'/>
-	<g:HTMLPanel width="100%" height="100%">
+	<g:HTMLPanel width="100%" height="" >
 			<g:HorizontalPanel styleName='{style.toolPanel}'>
 				<g:HorizontalPanel >
 					<g:Anchor href="#savedoc" text="Save" styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
-					<g:Anchor href="#cancel" text="Cancel" styleName="{style.right} {style.button}" ui:field="cancelButton"></g:Anchor>
-						<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
+					<g:Anchor href="#cancel" text="Cancel" styleName="{style.middle} {style.button}" ui:field="cancelButton"></g:Anchor>
+					<g:Anchor text="Add Row" styleName="{style.button} {style.right} " ui:field="addNewRowButton"></g:Anchor>
+					<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
 				</g:HorizontalPanel>
 			</g:HorizontalPanel>
-			<g:HorizontalPanel>
+			<g:ScrollPanel styleName='{style.mainPanel}'>
 			<g:VerticalPanel styleName='{style.bodyPanel}' width="529px">
 				<g:HorizontalPanel width="529px">
 					<g:VerticalPanel>
@@ -101,8 +102,11 @@
 						</g:row>
 					</g:Grid>
 				</g:HorizontalPanel>
+				<g:HorizontalPanel>
+					
+				</g:HorizontalPanel>
 				<g:HorizontalPanel styleName='{style.bodyPanel}'>
-					<c:CellTable ui:field="purchaseOrderItemsCellTable" styleName='{style.cellTable}'/>
+					<c:CellTable ui:field="purchaseOrderItemsCellTable" styleName='{style.cellTable} {style.cellTableFooter}{}'/>
 				</g:HorizontalPanel>
 				<g:HorizontalPanel styleName='{style.footerPanel}'>
 					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT" width="796px">
@@ -147,6 +151,6 @@
 					</g:VerticalPanel>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
-			</g:HorizontalPanel>
+			</g:ScrollPanel >
 	</g:HTMLPanel>
 </ui:UiBinder> 
