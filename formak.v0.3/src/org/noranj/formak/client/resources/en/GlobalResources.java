@@ -50,6 +50,12 @@ public interface GlobalResources extends ClientBundle {
 	  @Source("org/noranj/formak/client/resources/en/icons/black/trash.png")
 	  ImageResource trash();
 	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/delete.png")
+	  ImageResource delete();
+	  
+	  @Source("org/noranj/formak/client/resources/en/icons/black/addrow.png")
+	  ImageResource addRow();
+	  
 	  @Source("org/noranj/formak/client/resources/en/icons/black/checkmark.png")
 	  ImageResource checkmark();
 	  
