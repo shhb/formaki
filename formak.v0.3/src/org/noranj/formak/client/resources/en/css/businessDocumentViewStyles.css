@@ -12,7 +12,7 @@
  		width:800px;
         margin: 5px 0px 5px 0px;
 		text-align: left;
-	
+			
     }
 .welcomeDiv {
 	margin-left: 30px;
@@ -68,6 +68,7 @@ a.button {
 	margin-top:-4px;
 	max-width: 55px;
 	max-height: 15px;
+	cursor:pointer;cursor:hand
 }
 a.button:hover {
     color: #333;
@@ -201,3 +202,31 @@ a.down-big {
       margin-bottom: 4px;
       width:100%;
     }
+ 
+ .cellTableFooter {
+  border-top: 2px solid #6f7277;
+  padding: 3px 15px;
+  text-align: left;
+  color: #4b4a4a;
+  text-shadow: #ddf 1px 1px 0;
+  overflow: hidden;
+}
+
+.cellTableHeader {
+  border-bottom: 2px solid #6f7277;
+  padding: 3px 15px;
+  text-align: left;
+  color: #4b4a4a;
+  text-shadow: #ddf 1px 1px 0;
+  overflow: hidden;
+}
+
+.cellTableCell {
+  padding: 2px 15px;
+  overflow: hidden;
+}
+  .mainPanel {
+	width: 100%;
+
+	height: 100%;
+} 
