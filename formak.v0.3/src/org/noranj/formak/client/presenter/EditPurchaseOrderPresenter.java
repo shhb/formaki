@@ -1,8 +1,9 @@
 package org.noranj.formak.client.presenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.noranj.formak.client.common.BusinessDocumentsColumnDefinitionsFactory;
+import org.noranj.formak.client.resources.en.GlobalResources;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.service.PartyService;
 import org.noranj.formak.client.service.PartyServiceAsync;
@@ -12,17 +13,26 @@ import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PartyDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
-import org.noranj.formak.shared.type.DocumentStateType;
-import org.noranj.formak.shared.type.DocumentType;
-import org.noranj.formak.shared.type.LevelOfImportanceType;
 import org.noranj.formak.shared.type.PartyRoleType;
 
+import com.google.gwt.cell.client.EditTextCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.ImageResourceCell;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextHeader;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.CellPreviewEvent.Handler;
+import com.google.gwt.view.client.ListDataProvider;
 
 /**
  * 
@@ -57,6 +67,27 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 
 	public void bind() {
 		this.view.setPresenter(this);
+		this.view.getAddNewRowButton().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				addNewRow(purchaseOrderDTO.getPurchaseOrderItems());
+			}
+		});
+		
+		this.view.getList().addCellPreviewHandler(new Handler<PurchaseOrderItemDTO>(){
+
+			@Override
+			public void onCellPreview(CellPreviewEvent<PurchaseOrderItemDTO> event) {
+				boolean isClick = "click".equals(event.getNativeEvent().getType());
+				
+				if (isClick &&  event.getColumn()== 7)
+					if(Window.confirm("Do you want to delete this record?")) 
+						doDelete(event.getValue(),purchaseOrderDTO.getPurchaseOrderItems());
+				}
+			
+		});
+		
 		this.view.getSaveButton().addClickHandler(new ClickHandler(){
 
 			@Override
@@ -113,14 +144,16 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 					view.getBuyer().setSelectedValue(row);
 					view.getTaxRatePercent().setText(Byte.toString(result.getTaxRatePercent()));
 					view.getTotalTaxAmount().setValue(Long.toString(result.getTotalTaxAmount()));
-					view.setRowData(result.getPurchaseOrderItems());
+					view.displayeTable();
+					CellTableInit(purchaseOrderDTO.getPurchaseOrderItems());
 				}
 	
 			});
 		}
 		else{
 			purchaseOrderDTO = new PurchaseOrderDTO();
-			view.setRowData(purchaseOrderDTO.getPurchaseOrderItems());
+			view.displayeTable();
+			CellTableInit(purchaseOrderDTO.getPurchaseOrderItems());
 		}
 		}
 	
@@ -154,7 +187,6 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 						@Override
 						public void onFailure(Throwable caught) {
 							GWT.log(caught.getMessage());
-
 						}
 
 						@Override
@@ -166,6 +198,14 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 					});
 		
 	}
+	
+	public void doDelete(PurchaseOrderItemDTO rowData, List<PurchaseOrderItemDTO> purchaseOrderItemDTOs) {
+		
+			purchaseOrderItemDTOs.remove(rowData);
+			purchaseOrderDTO.setPurchaseOrderItems(purchaseOrderItemDTOs);
+			//CellTableInit(purchaseOrderDTO.getPurchaseOrderItems());
+			CellTableInit(purchaseOrderItemDTOs);
+	}
 
 	@Override
 	public void onAddButtonClicked() {
@@ -173,4 +213,20 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 
 	}
 
+	public void addNewRow(List<PurchaseOrderItemDTO> rowData){
+		List<PurchaseOrderItemDTO> purchaseOrderItemDTOs = (List<PurchaseOrderItemDTO>) rowData;
+		PurchaseOrderItemDTO purchaseOrderItemDTO = new PurchaseOrderItemDTO();
+		purchaseOrderItemDTOs.add(purchaseOrderItemDTO.addNewRecord());
+		CellTableInit(purchaseOrderItemDTOs);
+	
+	}
+	public void CellTableInit(List<PurchaseOrderItemDTO> rowData) {
+		
+		ListDataProvider<PurchaseOrderItemDTO> lda = new ListDataProvider<PurchaseOrderItemDTO>();
+		lda.getList().clear();
+		lda.setList(rowData);
+		lda.addDataDisplay(this.view.getDataTable());
+	}
+
+	
 }
