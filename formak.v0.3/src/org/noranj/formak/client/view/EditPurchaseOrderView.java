@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.noranj.formak.client.common.ColumnDefinition;
 import org.noranj.formak.client.common.HasSelectedValue;
-import org.noranj.formak.shared.dto.IDNameDTO;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.HasCellPreviewHandlers;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.HasRows;
 
 public interface EditPurchaseOrderView<T,K,L> {
 
@@ -43,15 +42,21 @@ public interface EditPurchaseOrderView<T,K,L> {
 	
 	HasValue<String> getNote();
 	
-	HasData<K> getPurchaseOrderItemsCellTable();
-	
 	HasClickHandlers getSaveButton();
 	
-	void setRowData(List<K> rowData);
+	HasClickHandlers getAddNewRowButton();
+	
+	HasData getDataTable();
+	
+	void displayeTable();
 	
 	void setMasterData(T masterData);
 	
 	void setBuyerData(List<L> rowData);
+	
+	HasCellPreviewHandlers<K> getList();
+	
+	CellTable<K> getCellTable();
 	
 	Widget asWidget();
 
