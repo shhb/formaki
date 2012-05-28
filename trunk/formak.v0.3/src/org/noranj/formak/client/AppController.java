@@ -17,7 +17,6 @@ import org.noranj.formak.client.presenter.DocumentTypeListPresenter;
 import org.noranj.formak.client.presenter.BusinessDocumentViewPresenter;
 import org.noranj.formak.client.presenter.EditBusinessDocumentPresenter;
 import org.noranj.formak.client.presenter.EditPurchaseOrderPresenter;
-import org.noranj.formak.client.presenter.LogoutPresenter;
 import org.noranj.formak.client.presenter.Presenter;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.view.DocumentTypeListViewImpl;
@@ -88,6 +87,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
     });
     
     //TODO SA - review this event that I just added. BA:12-MAR-01
+    //TODO BA - doesn't need it anymore. 
     eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
       @Override public void onLogout(LogoutEvent event) {
         GWT.log("AppController: Logout event received");
