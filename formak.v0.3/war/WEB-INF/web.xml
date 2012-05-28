@@ -75,6 +75,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/formak/businessDocument</url-pattern>
 	</filter-mapping>
 
+	<!-- ===================== Logout Google Servlet ===================== -->
+	<servlet>
+		<servlet-name>logoutgoogle</servlet-name>
+		<servlet-class>org.noranj.formak.server.service.servlet.LogoutGoogleServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logoutgoogle</servlet-name>
+		<url-pattern>/logoutgoogle</url-pattern>
+	</servlet-mapping>
+	
 
 	<!-- 
 		==========================================================================
