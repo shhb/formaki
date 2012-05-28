@@ -11,8 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class HeaderPanel extends Composite {
 
 
-  private static HeaderPanelUiBinder uiBinder = GWT
-      .create(HeaderPanelUiBinder.class);
+  private static HeaderPanelUiBinder uiBinder = GWT.create(HeaderPanelUiBinder.class);
 
   interface HeaderPanelUiBinder extends UiBinder<Widget, HeaderPanel> {
   }

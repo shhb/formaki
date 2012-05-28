@@ -7,6 +7,10 @@
 
 	<ui:style src="resources/en/GlobalStylesEn.css" />
 	<g:DockLayoutPanel unit='EM' styleName='{style.outer}'>
+		<g:north size="2.2">
+			<app:TopMenu/>
+		</g:north>
+
 		<g:north size='4.5'>
 			<app:HeaderPanel ui:field='headerPanel' />
 		</g:north>

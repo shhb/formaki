@@ -17,6 +17,7 @@ import org.noranj.formak.client.presenter.DocumentTypeListPresenter;
 import org.noranj.formak.client.presenter.BusinessDocumentViewPresenter;
 import org.noranj.formak.client.presenter.EditBusinessDocumentPresenter;
 import org.noranj.formak.client.presenter.EditPurchaseOrderPresenter;
+import org.noranj.formak.client.presenter.LogoutPresenter;
 import org.noranj.formak.client.presenter.Presenter;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.view.DocumentTypeListViewImpl;
@@ -190,8 +191,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	      } else if (token.equals("signup")) { //TODO SA Added this. BA:12-MAR-22
 	        Formak.get().showSignUpView();
 	        return;
-	      }
-
+	    }
+	    else if (token.equals("logout")){
+	    	Window.Location.assign("/logoutgoogle");
+	    }
         if (presenter != null) {
           presenter.go(container);
         }
