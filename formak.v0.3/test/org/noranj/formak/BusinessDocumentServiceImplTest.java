@@ -25,6 +25,7 @@ import org.noranj.formak.server.domain.core.BusinessDocument;
 import org.noranj.formak.server.service.BusinessDocumentServiceImpl;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
+import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.type.DocumentStateType;
 import org.noranj.formak.shared.type.DocumentType;
@@ -195,28 +196,130 @@ public class BusinessDocumentServiceImplTest {
   }
   
   @Test
-  public void testSaveDocumentPUrchaseOrder() {
+  public void testSaveDocumentPurchaseOrder() {
   	
     BusinessDocumentServiceImpl service = new BusinessDocumentServiceImpl();
 
-    String id = getRandomBusinessDocumentId(DocumentType.PurchaseOrder);
-  	PurchaseOrderDTO purchaseOrderDTO =service.getPurchaseOrder(id); 
-  	purchaseOrderDTO.setNote(id);
+
+    String idx = getRandomBusinessDocumentId(DocumentType.PurchaseOrder);
+  	PurchaseOrderDTO purchaseOrderDTO =service.getPurchaseOrder(idx); 
+
+  	
+    System.out.println("---------------------- STEP - 1 Change an attribute in entity ----------------");
+  	purchaseOrderDTO.setNote("JJJ" + idx);
+  	
+    System.out.println("---------------------- STEP - 2 Change a value in PO Item ----------------");
+    List<PurchaseOrderItemDTO> poItems = purchaseOrderDTO.getPurchaseOrderItems();
+    int poItemChangedIndex=-1;
+    if(poItems.size()>0) {
+      poItemChangedIndex = getRandom(0, poItems.size());
+      PurchaseOrderItemDTO poItemDTO = purchaseOrderDTO.getPurchaseOrderItems().get(poItemChangedIndex);
+      poItemDTO.setGTIN("1234567890111");
+      System.out.println(purchaseOrderDTO.toString());
+    }
+    else {
+      System.out.println("THERE IS NO ITEM TO UPDATE!!!!");
+    }
+      
+    System.out.println("---------------------- STEP - 3 Add a new PO Item ----------------");
+    PurchaseOrderItemDTO newPOItemDTO = new PurchaseOrderItemDTO();
+    newPOItemDTO.setId("0");
+    newPOItemDTO.setGTIN("1234567890222");
+    newPOItemDTO.setDescription("Added item in test");
+    newPOItemDTO.setSequenceHolder(0);
+    purchaseOrderDTO.addPurchaseOrderItem(newPOItemDTO);
+    System.out.println(purchaseOrderDTO.toString());
+    
+    System.out.println("---------------------- STEP - 3+1 Delete a PO Item ----------------");
+    
+    poItems = purchaseOrderDTO.getPurchaseOrderItems();
+    int poItemDeletedIndex=-1;
+    if(poItems.size()>0) {
+      do {
+        poItemDeletedIndex = getRandom(0, poItems.size());
+      } while(poItemDeletedIndex == poItemChangedIndex);
+      poItems.remove(poItemDeletedIndex);
+      System.out.println(purchaseOrderDTO.toString());
+    }
+    else {
+      System.out.println("THERE IS NO ITEM TO DELETE!!!!");
+    }
+    
+    
+    System.out.println("---------------------- STEP - 4 Save PO and Items ----------------");
   	service.saveDocument(purchaseOrderDTO);
+  	
+  	
+    System.out.println("---------------------- STEP - 5 verify Results ----------------");
+  	
+    PurchaseOrderDTO purchaseOrderReadAgainDTO =service.getPurchaseOrder(idx); 
+    // Check the attribute has been updated.
+    if(!purchaseOrderReadAgainDTO.getNote().equals(purchaseOrderDTO.getNote()))
+      fail("the save failed the NOTE value has not changed!!! It should be["+purchaseOrderDTO.getNote()+"] but it is ["+purchaseOrderReadAgainDTO.getNote()+"]");
+
+    // Check the attribute of an item has been updated
+    if(purchaseOrderReadAgainDTO.getPurchaseOrderItems().size()>poItemChangedIndex && 
+        purchaseOrderDTO.getPurchaseOrderItems().size()> poItemChangedIndex && 
+        !purchaseOrderReadAgainDTO.getPurchaseOrderItems().get(poItemChangedIndex).getGTIN().equals(purchaseOrderDTO.getPurchaseOrderItems().get(poItemChangedIndex).getGTIN())
+      )
+      fail("the save failed the GTIN of item["+poItemChangedIndex+"] value has not changed!!! It should be["+purchaseOrderDTO.getPurchaseOrderItems().get(poItemChangedIndex).getGTIN()+"] but it is ["+
+        purchaseOrderReadAgainDTO.getPurchaseOrderItems().get(poItemChangedIndex).getGTIN()+"]");
+    
+    // check if the new item has been added.
+    boolean found = false;
+    for(PurchaseOrderItemDTO poItemDTO : purchaseOrderReadAgainDTO.getPurchaseOrderItems()) {
+      if (poItemDTO.getGTIN()!= null && poItemDTO.getGTIN().equals(newPOItemDTO.getGTIN())) {
+        found = true;
+        break;
+      }
+    }
+    if(!found) {
+      fail("The new item has not been added.");
+    }
+    
+    System.out.println("=====================================================================");
+  	
   }
 
   @Test
   public void testGetPurchaseOrder() {
-    fail("has not been implemented!!");
+    BusinessDocumentServiceImpl service = new BusinessDocumentServiceImpl();
+    System.out.println("--------------------------------------------------------------------");
+    String id = getRandomBusinessDocumentId(DocumentType.PurchaseOrder);
+    PurchaseOrderDTO purchaseOrderDTO =service.getPurchaseOrder(id); 
+    System.out.println(purchaseOrderDTO.toString());
+    System.out.println("=====================================================================");
   } 
 
   @Test
-  public void testGetProduct() {
-    fail("has not been implemented!!");
-  } 
-
+  public void testDeletePurchaseOrderItem() {
+    BusinessDocumentServiceImpl service = new BusinessDocumentServiceImpl();
+    System.out.println("--------------------------------------------------------------------");
+    String id = getRandomBusinessDocumentId(DocumentType.PurchaseOrder);
+    PurchaseOrderDTO purchaseOrderDTO =service.getPurchaseOrder(id); 
+    System.out.println("---------------------- STEP - 1 Before delete ----------------------");
+    System.out.println(purchaseOrderDTO.toString());
+    
+    List<PurchaseOrderItemDTO> poItems = purchaseOrderDTO.getPurchaseOrderItems();
+    if(poItems.size()>0) {
+      int rndIndex = getRandom(0, poItems.size());
+      purchaseOrderDTO.getPurchaseOrderItems().remove(rndIndex);
+      System.out.println("---------------------- STEP - 2 After delete in DTO ----------------");
+      System.out.println(purchaseOrderDTO.toString());
+      service.saveDocument(purchaseOrderDTO);
+    }
+    else {
+      System.out.println("THERE IS NO ITEM TO DELETE!!!!");
+    }
+      
+    PurchaseOrderDTO purchaseOrderReadAgainDTO =service.getPurchaseOrder(id); 
+      
+    System.out.println("---------------------- STEP - 3 After saved and read fromdata store-");
+    System.out.println(purchaseOrderReadAgainDTO.toString());
+    System.out.println("=====================================================================");
+  }
   
-  @Test
+  //@ Test
   public void testDeleteBusinessDocuments() {
     fail("has not been implemented!!");
     
@@ -235,12 +338,18 @@ public class BusinessDocumentServiceImplTest {
     if (bizDocs.size()==0) {
       fail("There is no "+documentType.codeToString()+" to delete!!!");
     }
-    Random rnd = new Random(0);
+    Random rnd = new Random(System.currentTimeMillis());
     int index = rnd.nextInt(bizDocs.size());
     
     BusinessDocumentDTO bizDocumentDTO = bizDocs.get(index);
     return(bizDocumentDTO.getId());
 
+  }
+
+  private int getRandom(int lowerBound, int upperBound) {
+    Random rnd = new Random(System.currentTimeMillis());
+    int index = rnd.nextInt(upperBound-lowerBound);
+    return(index+lowerBound);
   }
   
 }
