@@ -307,7 +307,8 @@ public class BusinessDocumentHelper<T> {
     try {
       tx.begin();
       for (/*Long*/ String id : ids) {
-    	System.out.println("DEELEET: " + id);
+        if(logger.isLoggable(Level.FINE))
+          logger.fine("DELETE: " + id);
         T o = (T) pm.getObjectById(persistentClass, id);
         pm.deletePersistent(o);
       } // for

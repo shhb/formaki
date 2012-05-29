@@ -17,7 +17,7 @@ import org.noranj.formak.server.domain.core.Party;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
-import org.noranj.formak.shared.type.ParentEntity;
+import org.noranj.formak.shared.type.ParentUnownedChildEntity;
 import org.noranj.formak.shared.type.PartyRoleType;
 
 /**
@@ -29,7 +29,7 @@ import org.noranj.formak.shared.type.PartyRoleType;
  */
 @PersistenceCapable(detachable="true")
 @FetchGroup(name=SystemClientParty.C_FETCH_GROUP_USERS, members={@Persistent(name="users")}) //this is used with pm.getFetchPlan().setMaxFetchDepth(n) to control how deep the data is retrieved up front (used in detaching). To get only the order, setMaxFetchDepth(0) and to get order and orderItems, setMaxFetchDepth(1).
-public class SystemClientParty extends Party implements Serializable, ParentEntity {
+public class SystemClientParty extends Party implements Serializable, ParentUnownedChildEntity {
 
   public static final String C_FETCH_GROUP_USERS = "users"; 
   //public static final String C_FETCH_GROUP_PROFILE = "profile"; 

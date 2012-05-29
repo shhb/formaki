@@ -16,6 +16,8 @@ import javax.jdo.annotations.Persistent;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @change 
+ *  12-05-26 added to string 
  */
 @PersistenceCapable(detachable="true")
 @EmbeddedOnly
@@ -66,6 +68,21 @@ public class AddressDTO implements Serializable{
 
     public void setPostalCode(String postalCode) {
       this.postalCode = postalCode;
+    }
+    
+    public String toString() {
+      StringBuilder str = new StringBuilder();
+      str.append("streetAddress[");
+      str.append(streetAddress);
+      str.append("] city[");
+      str.append(city);
+      str.append("] state/province[");
+      str.append(stateOrProvince);
+      str.append("]postalcode[");
+      str.append(postalCode);
+      str.append("]");
+      return(str.toString());
+    
     }
 
 }

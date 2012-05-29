@@ -1,9 +1,11 @@
 package org.noranj.formak.server.domain.biz;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.jdo.annotations.Discriminator;
@@ -14,15 +16,14 @@ import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import org.noranj.formak.server.domain.association.PartyRoleDocument;
 import org.noranj.formak.server.domain.biz.PurchaseOrderItem;
 import org.noranj.formak.server.domain.core.Address;
 import org.noranj.formak.server.domain.core.BusinessDocument;
-import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.type.DocumentStateType;
 import org.noranj.formak.shared.type.LevelOfImportanceType;
+import org.noranj.formak.shared.type.ParentOwnedEntity;
 
 //FIXME updating BusinessDocument fields. BA-2012-FEB-09
 /**
@@ -36,7 +37,7 @@ import org.noranj.formak.shared.type.LevelOfImportanceType;
 @PersistenceCapable
 @Discriminator(strategy=DiscriminatorStrategy.CLASS_NAME)
 @FetchGroup(name=PurchaseOrder.C_ITEMS_FETCH_GROUP_NAME, members={@Persistent(name="purchaseOrderItems")}) 
-public class PurchaseOrder extends BusinessDocument implements Serializable {
+public class PurchaseOrder extends BusinessDocument implements Serializable, ParentOwnedEntity {
 
   protected static Logger logger = Logger.getLogger(PurchaseOrder.class.getName());
 	
@@ -84,7 +85,7 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
       @Persistent(name="postalCode", column="billToPostalCode")})
   private Address billTo;
 
-  @Persistent(mappedBy="purchaseOrder")
+  @Persistent(mappedBy="purchaseOrder", dependentElement="true")
   @javax.jdo.annotations.Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="sequenceHolder asc")) // let DataNuclues handles the order/sequence of the line items. GAE can not do it.
   private List<PurchaseOrderItem> purchaseOrderItems = new ArrayList<PurchaseOrderItem>();
 
@@ -176,6 +177,22 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     this.purchaseOrderItems.add(purchaseOrderItem);
   }
 
+  //12:05-26 Added to remove an item using the key.
+  public void removeItem(String purchaseOrderItemId) {
+    assert (this.purchaseOrderItems != null); // Called only during development/testing.
+    assert (purchaseOrderItemId != null); // Called only during development/testing.
+
+    int i=0;
+    for (PurchaseOrderItem poItem : this.purchaseOrderItems) {
+      if(poItem.getId().equals(purchaseOrderItemId)) {
+        this.purchaseOrderItems.remove(i);
+        break;
+      }
+      ++i;
+    }
+    //XXX HERE MAy 27 Correct Sequence Holder
+  }
+
   public byte getTaxRatePercent() {
     return taxRatePercent;
   }
@@ -207,6 +224,22 @@ public class PurchaseOrder extends BusinessDocument implements Serializable {
     po.setTaxRatePercent(this.taxRatePercent);
     po.setTotalTaxAmount(this.totalTaxAmount);
     return(po);
+  }
+
+  //12-05-26 FRMK-2 : Added to fix delete child issue
+  /**
+   * Loop on purchase items and make a set of their IDs.
+   * IDs are unique so we don't need to worry bout SET missing a duplicate item.
+   */
+  @Override
+  public Set<String> getChildIds() {
+    Set<String> childIds = new HashSet<String>();
+    for (PurchaseOrderItem poItem : purchaseOrderItems) {
+      if (poItem.getId()!=null) {
+        childIds.add(poItem.getId());
+      }
+    }
+    return childIds;
   }
   
   /**
