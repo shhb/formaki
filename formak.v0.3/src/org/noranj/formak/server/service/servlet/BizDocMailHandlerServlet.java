@@ -37,7 +37,7 @@ import org.noranj.formak.shared.type.DocumentType;
  * It is good because both user and system admin have access to the table and are aware of the number of documents (attachments) 
  * received and pending. As soon as the document is processed, it is removed from PendingDocument and stored in its
  * corresponding datastore. Note the attachments are stored in blobstore and only their key stored in PendingDocumnet.
- * Also, the objects in PendingDocument are stroed in each user's specific namesapce. So the key and user's namespace (clientID) must be
+ * Also, the objects in PendingDocument are stored in each user's specific namesapce. So the key and user's namespace (clientID) must be
  * passed to the processing queue so the queue handler can find the PendingDocument object and from there it can find the attachment.
  *   
  * 

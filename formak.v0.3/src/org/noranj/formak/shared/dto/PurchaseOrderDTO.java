@@ -59,6 +59,8 @@ import org.noranj.formak.shared.type.LevelOfImportanceType;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @change 
+ *  12-05-26 added to string 
  */
 public class PurchaseOrderDTO extends BusinessDocumentDTO implements Serializable {
   
@@ -163,6 +165,28 @@ public class PurchaseOrderDTO extends BusinessDocumentDTO implements Serializabl
 
   public void setPurchaseOrderItems(List<PurchaseOrderItemDTO> purchaseOrderItems) {
 	this.purchaseOrderItems = purchaseOrderItems;
+  }
+  
+  //FIXME it is good if we can make all toStrings JSON format
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append(super.toString());
+    str.append("Note[");
+    str.append(this.getNote());
+    str.append("]");
+    str.append("ShipTo{");
+    str.append(shipTo.toString());
+    str.append("} BillTo{");
+    str.append(billTo.toString());
+    str.append("} POItems {\r\n");
+    int i=1;
+    for (PurchaseOrderItemDTO poi : this.purchaseOrderItems) {
+      str.append("\r\nitem-"+(i++)+"<");
+      str.append(poi.toString());
+      str.append(">\r\n");
+    }
+    str.append("}\r\n");
+    return(str.toString());
   }
   
 }

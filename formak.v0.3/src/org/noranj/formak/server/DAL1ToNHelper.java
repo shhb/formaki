@@ -17,8 +17,8 @@ import org.noranj.formak.server.domain.sa.SystemClientParty;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.JDOPMFactory;
 import org.noranj.formak.shared.exception.NotFoundException;
-import org.noranj.formak.shared.type.ChildEntity;
-import org.noranj.formak.shared.type.ParentEntity;
+import org.noranj.formak.shared.type.ChildUnownedEntity;
+import org.noranj.formak.shared.type.ParentUnownedChildEntity;
 
 /**
  * 
@@ -30,7 +30,7 @@ import org.noranj.formak.shared.type.ParentEntity;
  * @param <T> parent class
  * @param <K> child class
  */
-public class DAL1ToNHelper<T extends ParentEntity, K extends ChildEntity> {
+public class DAL1ToNHelper<T extends ParentUnownedChildEntity, K extends ChildUnownedEntity> {
   
 	//TODO decide what kind of logger to use BA-2012-03-21 using static or dynamic persistentClass.logger???  
   private static Logger logger = Logger.getLogger(DAL1ToNHelper.class.getName());

@@ -16,7 +16,7 @@ import javax.jdo.annotations.Unique;
 import org.noranj.formak.server.domain.core.Profile;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.ActivityType;
-import org.noranj.formak.shared.type.ChildEntity;
+import org.noranj.formak.shared.type.ChildUnownedEntity;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -36,7 +36,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @FetchGroups({
   @FetchGroup(name=SystemUser.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}),
   @FetchGroup(name=SystemUser.C_FETCH_GROUP_PARENT_CLIENT, members={@Persistent(name="parentClientId")})})
-public class SystemUser implements Serializable, ChildEntity {
+public class SystemUser implements Serializable, ChildUnownedEntity {
 
   @NotPersistent
   private static final long serialVersionUID = 2739249843928429147L;

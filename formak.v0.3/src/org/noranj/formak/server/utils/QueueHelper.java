@@ -51,7 +51,7 @@ public class QueueHelper {
    * @param subject
    * @param body
    */
-	public static void sendMailNotification(InternetAddress to, String subject, String body) { //FIXME it should be byte[]???
+	public static void sendMailNotification(InternetAddress to, String subject, String body) { //FIXME body should be byte[]???
 
 		logger.info("Adding send mail notification task to queue.");
 		
@@ -81,13 +81,11 @@ public class QueueHelper {
    * @param docType indicates the type of document.
    * @param pendingDocument stores the document pending for process in data store.
    * @param systemUser is used to get user's namesapce.
-   * @deprecated IT MUST NOT SEND THE JOBS TO OCR DIRECTLY. It must be fixed.
+   * @deprecated IT MUST NOT SEND THE JOBS TO OCR DIRECTLY. It must be fixed later.
    */
-	public static void processDocument(DocumentType docType, PendingDocument pendingDocument, SystemUser systemUser) { //FIXME it should be byte[]???
-
-    ///XXX HERE 12-0513 review the param in queue!!!
+	public static void processDocument(DocumentType docType, PendingDocument pendingDocument, SystemUser systemUser) {
 	  
-	  //FIXME REPLACE OCR with another Queue
+	  //FIXME REPLACE OCR with another Queue, the documents must not go directly to OCR
     
     logger.info("Adding send mail notification task to queue.");
     
@@ -97,9 +95,12 @@ public class QueueHelper {
     
     Queue queue = QueueFactory.getQueue(C_SLOW_QUEUE_NAME);
     
-    if(logger.isLoggable(Level.FINE))
-      logger.fine("Got the "+C_SLOW_QUEUE_NAME+"queue");
+    if(logger.isLoggable(Level.FINE)) {
+      logger.fine("calling["+C_SLOW_QUEUE_BASE_URL+ C_OCR_URL+"] params: " +Constants.C_DOC_TYPE_PROP_NAME+"["+docType.codeToString()+"] "+Constants.C_DOC_ID_PROP_NAME+"["+pendingDocument.getId()+
+                                                                          "] "+Constants.C_DOC_NS_PROP_NAME+"["+systemUser.getId()+"]");
+    }
     
+    ///XXX HERE 12-0513 review the param in queue!!!
     queue.add(Builder.withUrl(C_SLOW_QUEUE_BASE_URL + C_OCR_URL).param(Constants.C_DOC_TYPE_PROP_NAME, docType.codeToString()).param(Constants.C_DOC_ID_PROP_NAME, pendingDocument.getId()).param(Constants.C_DOC_NS_PROP_NAME, systemUser.getParentClientId()).method(Method.POST));
     
     logger.info("OCR task has been added to slow processing queue successfully.");

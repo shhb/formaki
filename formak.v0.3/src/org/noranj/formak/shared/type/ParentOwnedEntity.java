@@ -1,6 +1,6 @@
 package org.noranj.formak.shared.type;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -10,9 +10,12 @@ import java.util.List;
  *
  * @author
  */
-public interface ParentEntity {
+public interface ParentOwnedEntity {
   
-  void addChildId(String childId);
-  List<String> getChildIds();
+  String getId();
   
+  Set<String> getChildIds();
+  
+  void removeItem(String id);
+
 }

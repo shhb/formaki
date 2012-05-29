@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.noranj.formak.client.service.BusinessDocumentService;
 import org.noranj.formak.server.BusinessDocumentHelper;
+import org.noranj.formak.server.BusinessDocumentNItemsHelper;
 import org.noranj.formak.server.domain.association.PartyRoleDocument;
 import org.noranj.formak.server.domain.biz.Catalog;
 import org.noranj.formak.server.domain.biz.DispatchAdvice;
@@ -63,7 +64,14 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
    */
   @SuppressWarnings("rawtypes")
   private static Hashtable<DocumentType, BusinessDocumentHelper> businessDocumentHelpersHash = null;
-  
+
+  //12-05-26 FRMK-2 : fixing child delete issue 
+  /** 
+   * There is a helper for each document type.
+   * In order to save time, we keep them in hash and instead of creating a new one, we will reuse it.
+   */
+  @SuppressWarnings("rawtypes")
+  private static Hashtable<DocumentType, BusinessDocumentNItemsHelper> businessDocumentNItemsHelpersHash = null;
   
   @SuppressWarnings("rawtypes")
   public BusinessDocumentServiceImpl(){
@@ -72,6 +80,9 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
       intializeBusinessDocumentHelpersHash();
     }
     
+    if (this.businessDocumentNItemsHelpersHash == null) {
+      intializeBusinessDocumentNItemsHelpersHash();
+    }
   }
   
   /** it creates and cache the helpers. */
@@ -91,6 +102,21 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
     } 
       
   }
+
+  /** it creates and cache the helpers. */
+  private synchronized void intializeBusinessDocumentNItemsHelpersHash () {
+    if (BusinessDocumentServiceImpl.businessDocumentNItemsHelpersHash == null) {
+      Hashtable<DocumentType, BusinessDocumentNItemsHelper> bizDocHelpersHash = null; 
+      bizDocHelpersHash = new Hashtable<DocumentType, BusinessDocumentNItemsHelper> ();
+      
+      bizDocHelpersHash.put(DocumentType.PurchaseOrder, new BusinessDocumentNItemsHelper<PurchaseOrder, PurchaseOrderItem>(JDOPMFactory.getTxOptional(), PurchaseOrder.class, PurchaseOrderItem.class));
+      
+      BusinessDocumentServiceImpl.businessDocumentNItemsHelpersHash = bizDocHelpersHash;
+    } 
+      
+  }
+  
+  
   /**
    * @param userPartyRole stores the role of the user's party.
    */
@@ -116,11 +142,23 @@ public class BusinessDocumentServiceImpl  extends RemoteServiceServlet /*- The A
   public String saveDocument(PurchaseOrderDTO purchaseOrderDTO) {
     assert (purchaseOrderDTO!=null) : "purchaseOrderDTO can not be null.";
 
+    // It not only copied the data from DTO to entity but also correct the sequence of the items by setting the sequence number again.
     PurchaseOrder po = new PurchaseOrder(purchaseOrderDTO);
+    
+    //BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(DocumentType.PurchaseOrder);
+    //businessDocumentHelper.storeEntity(po); 
 
-    BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(DocumentType.PurchaseOrder);
-   //FIXME BA:12-MAR-01 what happens if there is an error.
-    businessDocumentHelper.storeEntity(po); 
+    if (purchaseOrderDTO.getId()==null || purchaseOrderDTO.getId().equals("0")) { // Adding a new PO.
+      BusinessDocumentHelper<PurchaseOrder> businessDocumentHelper = BusinessDocumentServiceImpl.businessDocumentHelpersHash.get(DocumentType.PurchaseOrder);
+     //FIXME BA:12-MAR-01 what happens if there is an error.
+      businessDocumentHelper.storeEntity(po); 
+    } 
+    else { // updating an existing PO
+      BusinessDocumentNItemsHelper<PurchaseOrder, PurchaseOrderItem> businessDocumentNItemsHelper = BusinessDocumentServiceImpl.businessDocumentNItemsHelpersHash.get(DocumentType.PurchaseOrder);
+     //FIXME BA:12-MAR-01 what happens if there is an error.
+      businessDocumentNItemsHelper.updateEntity(po); 
+    }
+    
     return(po.getId());
     
   }

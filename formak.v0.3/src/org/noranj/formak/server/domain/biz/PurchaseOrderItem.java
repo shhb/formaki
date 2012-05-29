@@ -1,20 +1,23 @@
 package org.noranj.formak.server.domain.biz;
 
+
 import java.util.logging.Logger;
 
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.noranj.formak.server.domain.association.PartyRoleDocument;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
+import org.noranj.formak.shared.type.ChildOwnedEntity;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 /**
  * 
+ * NOTE: If it is a new item, its ID must be set to "0".
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
@@ -22,7 +25,7 @@ import com.google.appengine.api.datastore.KeyFactory;
  * @author
  */
 @PersistenceCapable(detachable="true")
-public class PurchaseOrderItem {
+public class PurchaseOrderItem implements ChildOwnedEntity {
 
   protected static Logger logger = Logger.getLogger(PurchaseOrderItem.class.getName());
 	
@@ -32,7 +35,9 @@ public class PurchaseOrderItem {
   private Key id;
 
   public String getId() {
-	  return KeyFactory.keyToString(id);
+    if(id !=null)
+      return KeyFactory.keyToString(id);
+    return(null);
   }
 
   public void setId(String id) {
