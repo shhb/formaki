@@ -24,7 +24,7 @@
       padding: 40px;
       text-align: left;
       background-color: white;
-      border: 3px solid #ccc;
+      border: 3px solid #F5F5F5;
     }
     
     .about {
@@ -52,6 +52,7 @@
 		.provider-button {
 			float: left;
 			padding: 0 20px;
+			border: 2px solid #F5F5F5;
 		}
 		
 		.sidebox {
@@ -82,17 +83,12 @@
 			<div class='{style.container}'>
 				<div class='{style.content}'>
 					<div class='{style.logo}' />				
-					<div class='{style.sidebox}'>
-						Formak is built with Google Web Toolkit and App
-						Engine
-						in Java. 
-		    </div>
+					
 					<div class='{style.what-to-do}'>To use Formak, login with one of the following providers.</div>
-						<div class='{style.what-to-do}'>برای  استفاده از فرمک یا یکی از سرویس دهندگان زیر به سامانه وارد شوید</div>
+					<div class='{style.what-to-do}'>برای  استفاده از فرمک یا یکی از سرویس دهندگان زیر به سامانه وارد شوید</div>
 					<div class='{style.providers}'>
             <div class='{style.provider-button}'>
-              <g:PushButton ui:field='googleButton' width='120px'
-                height='40px'>
+              <g:PushButton ui:field='googleButton' width='120px'   height='40px'>
                 <g:upFace image='{google}' />
               </g:PushButton>
             </div>
