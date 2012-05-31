@@ -192,7 +192,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 						@Override
 						public void onSuccess(String result) {
 							view.getId().setValue((result.toString()));
-							Window.alert("The Save operation is completed."+ result.toString());
+							Window.alert("The Save operation is completed.");
 						}
 
 					});
