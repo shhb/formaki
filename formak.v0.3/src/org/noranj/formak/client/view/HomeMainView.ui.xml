@@ -49,7 +49,7 @@
 	border:1px solid #FD934D;
 	color: white;
 	padding: 8px 4px;
-	font-size: 1em;
+	font-size: 1.2em;
 	font-family: "Century Gothic";
 }
 .footerBar{
