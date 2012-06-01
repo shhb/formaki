@@ -117,7 +117,7 @@
 					</td>
 					<td>
 						<div class='{style.div-button}'	role="button">
-							<g:Anchor href="#" styleName='{style.link-button}'>Search</g:Anchor>
+							<g:Anchor href="#serach" styleName='{style.link-button}'>Search</g:Anchor>
 						</div>
 					</td>
 				</tr>

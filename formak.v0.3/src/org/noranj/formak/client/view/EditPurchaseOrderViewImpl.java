@@ -49,12 +49,10 @@ import com.google.gwt.view.client.ListDataProvider;
 public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements EditPurchaseOrderView<T, K, L> {
 
 	@UiTemplate("EditPurchaseOrderView.ui.xml")
-	interface EditPurchaseOrderViewUiBinder extends
-			UiBinder<Widget, EditPurchaseOrderViewImpl> {
+	interface EditPurchaseOrderViewUiBinder extends	UiBinder<Widget, EditPurchaseOrderViewImpl> {
 	}
 
-	private static EditPurchaseOrderViewUiBinder uiBinder = GWT
-			.create(EditPurchaseOrderViewUiBinder.class);
+	private static EditPurchaseOrderViewUiBinder uiBinder = GWT.create(EditPurchaseOrderViewUiBinder.class);
 
 	private Presenter<T> presenter;
 
@@ -178,7 +176,6 @@ public class EditPurchaseOrderViewImpl<T, K, L> extends Composite implements Edi
 		return addNewRowButton;
 	}
 
-	
 	public void setMasterData(T masterData) {
 		this.masterData = masterData;
 	}

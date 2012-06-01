@@ -16,7 +16,6 @@ import com.google.gwt.view.client.HasData;
 public interface EditPurchaseOrderView<T,K,L> {
 
 	public interface Presenter<T> {
-		 //public void onSaveMasterButtonClicked(T masterRowData);
 		 public void onAddButtonClicked();
 	}
 	

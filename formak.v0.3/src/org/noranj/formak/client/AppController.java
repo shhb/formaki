@@ -17,12 +17,15 @@ import org.noranj.formak.client.presenter.DocumentTypeListPresenter;
 import org.noranj.formak.client.presenter.BusinessDocumentViewPresenter;
 import org.noranj.formak.client.presenter.EditBusinessDocumentPresenter;
 import org.noranj.formak.client.presenter.EditPurchaseOrderPresenter;
+import org.noranj.formak.client.presenter.HomeMainPresenter;
 import org.noranj.formak.client.presenter.Presenter;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.view.DocumentTypeListViewImpl;
 import org.noranj.formak.client.view.BusinessDocumentViewImpl;
 import org.noranj.formak.client.view.EditBusinessDocumentView;
 import org.noranj.formak.client.view.EditPurchaseOrderViewImpl;
+import org.noranj.formak.client.view.HomeMainView;
+import org.noranj.formak.client.view.HomeMainViewImpl;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
@@ -48,7 +51,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
   private BusinessDocumentViewImpl<BusinessDocumentDTO, DocumentType> businessDocumentView = null;
   private EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO> editPurchaseOrderView = null;
   private DocumentTypeListViewImpl<DocumentType> businessDocumentListView = null;
-
+  private HomeMainViewImpl<PurchaseOrderDTO> homeView = null;
 
   //BA-2012-JAN-27 Added because it was missing from the code and sample codes.
   private List<ColumnDefinition<BusinessDocumentDTO>> businessDocumentsColumnDefinitions;
@@ -194,6 +197,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    }
 	    else if (token.equals("logout")){
 	    	Window.Location.assign("/logoutgoogle");
+	    }
+	    else if (token.equals("home")){
+	    	homeView = new HomeMainViewImpl<PurchaseOrderDTO>();
+	    	 presenter = new HomeMainPresenter(homeView);
 	    }
         if (presenter != null) {
           presenter.go(container);

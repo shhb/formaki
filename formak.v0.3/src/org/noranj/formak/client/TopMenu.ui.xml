@@ -4,9 +4,9 @@
 <ui:style src="resources/en/GlobalStylesEn.css"  />
 	<g:HTMLPanel styleName='{style.headerPanel}'>
 	<div >
-	<g:Anchor href="#" text="Home" styleName="{style.tagLine}"></g:Anchor>
-	<g:Anchor href="#" text="Change Language" styleName="{style.tagLine}"></g:Anchor>
-	<g:Anchor href="#" text="More.." styleName="{style.tagLine}"></g:Anchor>
+	<g:Anchor href="#home" text="Home" styleName="{style.tagLine}"></g:Anchor>
+	<g:Anchor href="#changelang" text="Change Language" styleName="{style.tagLine}"></g:Anchor>
+	<g:Anchor href="#openmenu" text="More.." styleName="{style.tagLine}"></g:Anchor>
 		<div class='{style.logoutLink}'>
 		<g:Anchor href='#logout' ui:field='logoutLink'>Log Out</g:Anchor>
 	</div>
