@@ -52,6 +52,18 @@
 	font-size: 1em;
 	font-family: "Century Gothic";
 }
+.footerBar{
+	margin: 8px 8px 0 8px;
+	background-color: white;
+	border:1px solid #F5F5F5;
+	color: #FD934D;
+	padding: 8px 4px;
+	font-size: 1em;
+	font-stretch:wider;
+	font-weight:bolder;
+	font-family: "Arial";
+
+	}
 .bodyBar {
 	margin:  0 8px 8px 8px;
 	background-color: #F8F8F8;
@@ -70,26 +82,44 @@
 				</g:HTMLPanel>
 			</g:Dock>
 			<g:Dock direction="CENTER">
-				<g:HTMLPanel height="300px"  styleName='{style.box}'>
+				<g:HTMLPanel height="300px" width="300px" styleName='{style.box}'>
 					<div class="{style.titleBar}">Latest News</div>
-					<div class="{style.bodyBar}" ><li>News1</li></div>
+					<div class="{style.bodyBar}" >
+					<ol>
+					  <li>Coffee is moving up</li>
+					  <li>Tea is moving up</li>
+					  <li>Milk is moving down</li>
+					</ol> 
+					</div>
 				</g:HTMLPanel>
 			</g:Dock>
 			<g:Dock direction="SOUTH">
 				<g:HTMLPanel height="250px" styleName='{style.box}'>
-					
+					<div class="{style.footerBar}">Detail</div>
 				</g:HTMLPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" >
-				<g:HTMLPanel height="300px"  styleName='{style.box}'>
+				<g:HTMLPanel height="300px" width="300px" styleName='{style.box}'>
 					<div class="{style.titleBar}">Latest Activity</div>
-					<div class="{style.bodyBar}"><li>Last</li></div>
+					<div class="{style.bodyBar}">
+					<ol>
+					  <li>Docs moved to trash </li>
+					  <li>Deleted all trash</li>
+					  <li>Copied 3 rows</li>
+					</ol> 
+					</div>
 				</g:HTMLPanel>
 			</g:Dock>
 			<g:Dock direction="EAST">
-				<g:HTMLPanel height="300px"  styleName='{style.box}'>
+				<g:HTMLPanel height="300px" width="300px"  styleName='{style.box}'>
 					<div class="{style.titleBar}">Reminder</div>
-					<div class="{style.bodyBar}"><li>Remind1</li></div>
+					<div class="{style.bodyBar}">
+						<ol>
+						  <li>Task1</li>
+						  <li>Task2</li>
+						  <li>Task3</li>
+						</ol> 
+					</div>
 				</g:HTMLPanel>
 			</g:Dock>
 		</g:DockPanel>
