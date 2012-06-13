@@ -1,0 +1,74 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:image field='logo_small' src='../resources/en/images/logo_small.png' />
+	<ui:style src="../resources/en/css/businessDocumentViewStyles.css" />
+		<g:HTMLPanel width="100%" height="" styleName="{style.content}" >
+			<g:VerticalPanel styleName="{style.sidebox}">
+				<g:HTMLPanel>
+				<div>Registry Form</div>
+			</g:HTMLPanel>
+			</g:VerticalPanel>
+			<g:DecoratorPanel styleName="{style.decoratedPan}">
+				<g:VerticalPanel>
+					<g:HorizontalPanel>
+				<g:ScrollPanel styleName='{style.mainPanel}'>
+			<g:VerticalPanel styleName='{style.bodyPanel}' >
+			<g:Grid>
+				<g:row>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:Label text="First Name"></g:Label>
+						</g:SimplePanel>
+					</g:customCell>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:TextBox ui:field="firstName"></g:TextBox>
+						</g:SimplePanel>
+					</g:customCell>
+						</g:row>
+						<g:row>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:Label text="Last Name"></g:Label>
+						</g:SimplePanel>
+					</g:customCell>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:TextBox ui:field="lastName"></g:TextBox>
+						</g:SimplePanel>
+					</g:customCell>
+					</g:row>
+						<g:row>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:Label text="Email Address"></g:Label>
+						</g:SimplePanel>
+					</g:customCell>
+					<g:customCell>
+						<g:SimplePanel>
+							<g:TextBox ui:field="emailAddress"></g:TextBox>
+						</g:SimplePanel>
+					</g:customCell>
+				</g:row>
+				
+			</g:Grid>
+			</g:VerticalPanel>
+			</g:ScrollPanel>
+			</g:HorizontalPanel>
+					<g:HorizontalPanel styleName='{style.toolPanel}'>
+				<g:HorizontalPanel >
+					<g:Anchor href="#" text="Save" styleName="{style.button} {style.left}" ui:field="saveButton"></g:Anchor>
+					<g:Anchor href="#" text="Cancel" styleName="{style.middle} {style.button}" ui:field="cancelButton"></g:Anchor>
+					<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
+				</g:HorizontalPanel>
+			</g:HorizontalPanel>
+				</g:VerticalPanel>
+			</g:DecoratorPanel>
+			<g:VerticalPanel >
+			<g:HTMLPanel>
+				<div>Please fill and save to complete your registration.</div>
+			</g:HTMLPanel>
+			</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

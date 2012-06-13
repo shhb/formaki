@@ -1,5 +1,6 @@
 package org.noranj.formak.client.service;
 
+import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.exception.NotLoggedInException;
@@ -49,5 +50,6 @@ public interface SystemAdminServiceAsync {
    */
   public void logout(AsyncCallback<Void> callback) throws NotLoggedInException;
   
-
+  
+  public void addSystemClientParty(SystemClientPartyDTO systemClientParty,AsyncCallback<String> callback);
 }

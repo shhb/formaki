@@ -2,6 +2,7 @@ package org.noranj.formak.client.service;
 
 
 
+import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.exception.NotFoundException;
 import org.noranj.formak.shared.exception.NotLoggedInException;
@@ -36,6 +37,8 @@ public interface SystemAdminService extends RemoteService {
    * @param systemUser holds the data for the new user.
    */
   public String addSystemUser(SystemUserDTO systemUser); // the implementation throws NotFoundException;
+  
+  public String addSystemClientParty(SystemClientPartyDTO systemClientParty);
 
   SystemUserDTO getLoggedInUserDTO();
   
