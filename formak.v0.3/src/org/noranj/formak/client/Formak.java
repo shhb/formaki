@@ -124,7 +124,9 @@ public class Formak implements EntryPoint {
         	if ("".equals(History.getToken())) {
         			showLoginView();
         	   }
-        	else{
+        	else{//when logged in User but doesn't have record in SystemUser entity. 
+        		//TODO BA look at this just for redirecting to sign up page.
+        		//SA:12-JUN-13 Added 
         		SystemAdminServiceAsync rpc =  GWT.create(SystemAdminService.class);
         		UserDefinitionViewImpl<SystemUserDTO> userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>(); 
         		Presenter presenter  = new UserDefinitionPresenter(userDefinitionView , "",rpc);

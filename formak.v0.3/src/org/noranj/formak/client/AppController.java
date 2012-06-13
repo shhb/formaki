@@ -129,7 +129,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
     this.container = container;
     
     if ("".equals(History.getToken())) {
-      History.newItem("list");
+      History.newItem("home");
     }
     else {
       History.fireCurrentHistoryState();
@@ -162,10 +162,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
           presenter = new BusinessDocumentViewPresenter(rpcService, eventBus, businessDocumentView,documentTypeCode);
           //container = Formak.get().getMainPanel();
         }
-        else if (token.equals("list")){
+        else if (token.equals("home")){
         	
          	menuPresenter = new DocumentTypeListPresenter(rpcService,new DocumentTypeListViewImpl<DocumentType>(),eventBus);
          	menuPresenter.go(Formak.get().getFolders());
+         	
+         	homeView = new HomeMainViewImpl<PurchaseOrderDTO>();
+	    	presenter = new HomeMainPresenter(homeView);
          
         }
         else if (token.equals("add")) {
@@ -202,10 +205,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    else if (token.equals("logout")){
 	    	Window.Location.assign("/logoutgoogle");
 	    }
-	    else if (token.equals("home")){
-	    	homeView = new HomeMainViewImpl<PurchaseOrderDTO>();
-	    	 presenter = new HomeMainPresenter(homeView);
-	    }
+//	    else if (token.equals("home")){
+//	    	homeView = new HomeMainViewImpl<PurchaseOrderDTO>();
+//	    	 presenter = new HomeMainPresenter(homeView);
+//	    }
 	    else if (token.equals("signup")){
 	    	userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>();
 	    	//presenter = new UserDefinitionPresenter(userDefinitionView, "",);
