@@ -19,6 +19,7 @@ import org.noranj.formak.client.presenter.EditBusinessDocumentPresenter;
 import org.noranj.formak.client.presenter.EditPurchaseOrderPresenter;
 import org.noranj.formak.client.presenter.HomeMainPresenter;
 import org.noranj.formak.client.presenter.Presenter;
+import org.noranj.formak.client.presenter.UserDefinitionPresenter;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.view.DocumentTypeListViewImpl;
 import org.noranj.formak.client.view.BusinessDocumentViewImpl;
@@ -26,10 +27,12 @@ import org.noranj.formak.client.view.EditBusinessDocumentView;
 import org.noranj.formak.client.view.EditPurchaseOrderViewImpl;
 import org.noranj.formak.client.view.HomeMainView;
 import org.noranj.formak.client.view.HomeMainViewImpl;
+import org.noranj.formak.client.view.UserDefinitionViewImpl;
 import org.noranj.formak.shared.dto.BusinessDocumentDTO;
 import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
+import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.DocumentType;
 
 import com.google.gwt.core.client.GWT;
@@ -52,6 +55,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
   private EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO> editPurchaseOrderView = null;
   private DocumentTypeListViewImpl<DocumentType> businessDocumentListView = null;
   private HomeMainViewImpl<PurchaseOrderDTO> homeView = null;
+  private UserDefinitionViewImpl<SystemUserDTO> userDefinitionView = null; 
 
   //BA-2012-JAN-27 Added because it was missing from the code and sample codes.
   private List<ColumnDefinition<BusinessDocumentDTO>> businessDocumentsColumnDefinitions;
@@ -201,6 +205,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	    else if (token.equals("home")){
 	    	homeView = new HomeMainViewImpl<PurchaseOrderDTO>();
 	    	 presenter = new HomeMainPresenter(homeView);
+	    }
+	    else if (token.equals("signup")){
+	    	userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>();
+	    	//presenter = new UserDefinitionPresenter(userDefinitionView, "",);
 	    }
         if (presenter != null) {
           presenter.go(container);

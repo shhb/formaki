@@ -48,7 +48,7 @@ public class LoginGoogleCallbackServlet extends HttpServlet {
       if (sysUser == null) { // user is not in Formak
         log.warning("user is not in the system - " + googleUser.getName());
         // user is not in the system, so we redirect them to the sign up page. //TODO SA review 
-        response.sendRedirect(LoginHelper.getSignupURL(request));
+        response.sendRedirect(LoginHelper.getSignupURL(request)+"#signup");
         return;
       }
       else {

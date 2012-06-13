@@ -2,26 +2,37 @@ package org.noranj.formak.client;
 
 import org.noranj.formak.client.event.LoginEvent;
 import org.noranj.formak.client.helper.RPCCall;
+import org.noranj.formak.client.presenter.HomeMainPresenter;
 import org.noranj.formak.client.presenter.LoginPresenter;
+import org.noranj.formak.client.presenter.Presenter;
 import org.noranj.formak.client.presenter.SignUpPresenter;
+import org.noranj.formak.client.presenter.UserDefinitionPresenter;
 import org.noranj.formak.client.service.BusinessDocumentService;
 import org.noranj.formak.client.service.BusinessDocumentServiceAsync;
 import org.noranj.formak.client.service.SystemAdminService;
 import org.noranj.formak.client.service.SystemAdminServiceAsync;
+import org.noranj.formak.client.view.HomeMainViewImpl;
 import org.noranj.formak.client.view.LoginView;
 import org.noranj.formak.client.view.SignUpView;
+import org.noranj.formak.client.view.UserDefinitionViewImpl;
 import org.noranj.formak.shared.GlobalSettings;
+import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
+
+import sun.java2d.loops.CustomComponent;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -110,7 +121,16 @@ public class Formak implements EntryPoint {
       @Override public void onSuccess(SystemUserDTO loggedInUserDTO) {
         if (loggedInUserDTO == null) {
           // nobody is logged in
-          showLoginView();
+        	if ("".equals(History.getToken())) {
+        			showLoginView();
+        	   }
+        	else{
+        		SystemAdminServiceAsync rpc =  GWT.create(SystemAdminService.class);
+        		UserDefinitionViewImpl<SystemUserDTO> userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>(); 
+        		Presenter presenter  = new UserDefinitionPresenter(userDefinitionView , "",rpc);
+        		presenter.go(RootLayoutPanel.get());
+        	}
+          
         } else {
           // user is logged in
           setCurrentUser(loggedInUserDTO);
