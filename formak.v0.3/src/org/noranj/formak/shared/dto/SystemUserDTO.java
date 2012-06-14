@@ -106,6 +106,10 @@ public class SystemUserDTO implements Serializable {
     	setLastLoginOn(System.currentTimeMillis());
     }
     
+    if (getFirstName()==null && getLastName()==null) {
+      setNames(map.get("fullName")); // extract the first name and last name from the email
+    }
+
     //FIXME needs to be reviewed!!!
     this.profile = new UserProfileDTO();
     

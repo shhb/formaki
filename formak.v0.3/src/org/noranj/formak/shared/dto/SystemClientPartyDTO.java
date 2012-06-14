@@ -55,6 +55,11 @@ public class SystemClientPartyDTO extends PartyDTO {
     this.users = users;
   }
   
+  /** 
+   * @deprecated it is not a good idea to use such constructor 
+   * because then other codes have to use the same field name as used here.
+   * I don't think it is a good idea to define the named as constants. 2012-06-13 
+   */
   public SystemClientPartyDTO(Map<String, String> map) {
   	super();
   	setId(map.get("id"));

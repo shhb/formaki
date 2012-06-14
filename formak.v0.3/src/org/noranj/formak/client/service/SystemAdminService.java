@@ -40,6 +40,8 @@ public interface SystemAdminService extends RemoteService {
   
   public String addSystemClientParty(SystemClientPartyDTO systemClientParty);
 
+  public String signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO);
+  
   SystemUserDTO getLoggedInUserDTO();
   
   void logout() throws NotLoggedInException;
