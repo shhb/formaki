@@ -59,46 +59,69 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 	}
 
 	public void doSave(SystemUserDTO user) {
-	    HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
-	    roles.add(PartyRoleType.Buyer);
-	    
-		SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-	    rpc.addSystemClientParty(parentClient,new AsyncCallback<String>() {
+	  
+	  //BA:2012-JUN-14 this must be set in UI by showing a list box for now 9single choice. */
+    HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
+    roles.add(PartyRoleType.Buyer);
+    
+	  SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    
+	  //BA:2012-JUN-14 no need to add party. the party will be added in signup.
+	  //it is not right to add client and user in two transaction. There might be a failure insystemUser and crashes the system. */
+	  //rpc.addSystemClientParty(parentClient,new AsyncCallback<String>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Fail To Save");
-			}
+		//@Override
+		//  public void onFailure(Throwable caught) {
+		//	   Window.alert("Fail To Save");
+		//  }
 
-			@Override
-			public void onSuccess(String result) {
-				view.getid().setValue(result); //ParentId store in id field on the view 
-				
-			}
-		});
-	    
-	    parentClient.setId(view.getid().getValue());
-	    
-		user = new SystemUserDTO(null, this.view.getFirstName().getValue(),
-													 this.view.getFirstName().getValue(), 
-													 this.view.getEmailAddress().getValue() , 
-													 parentClient.getId(), 
-													 ActivityType.Active, 
-													 System.currentTimeMillis(), 
-													 System.currentTimeMillis(), 
-													 new UserProfileDTO());
-		rpc.addSystemUser(user, new AsyncCallback<String>() {
+		//  @Override
+	  //	public void onSuccess(String result) {
+	  //		view.getid().setValue(result); //ParentId store in id field on the view 
 			
-			@Override
-			public void onSuccess(String result) {
-				view.getid().setValue(result); //ChildId store in id field on the view and the Save proccess is finished.
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				//System.out.printf("Fail To Save");
-				Window.alert("Fail To Save");
-			}
-		});
+	  //  }
+    //});
+	  
+  //BA:2012-JUN-14 there is no need to ID when using *"signup"*
+  //parentClient.setId(view.getid().getValue());
+	    
+	user = new SystemUserDTO(null, this.view.getFirstName().getValue(),
+												 this.view.getLastName().getValue(), 
+												 this.view.getEmailAddress().getValue() , 
+												 null, //BA:2012-JUN-14 parentClient.getId(), 
+												 ActivityType.Active, 
+												 System.currentTimeMillis(), 
+												 System.currentTimeMillis(), 
+												 new UserProfileDTO());
+	
+  //BA:2012-JUN-14 no need to add user when using signup.
+	//rpc.addSystemUser(user, new AsyncCallback<String>() {
+  			
+  //                	@Override
+  //               	public void onSuccess(String result) {
+  //                		view.getid().setValue(result); //ChildId store in id field on the view and the Save process is finished.
+  //                	}
+  //               	
+  //                	@Override
+  //                	public void onFailure(Throwable caught) {
+  //                		//System.out.printf("Fail To Save");
+  //                		Window.alert("Fail To Save");
+  //                	}
+  //                });
+	
+	//BA:2012-JUN-14
+	rpc.signup(parentClient, user, new AsyncCallback<String>() {
+    
+                @Override
+                public void onSuccess(String result) {
+                    view.getid().setValue(result); //ChildId store in id field on the view and the Save process is finished.
+                }
+                
+                @Override
+                public void onFailure(Throwable caught) {
+                 //System.out.printf("Fail To Save");
+                  Window.alert("Fail To Save");
+                }
+	           });
 	}
 }

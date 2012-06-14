@@ -43,6 +43,16 @@ public interface SystemAdminServiceAsync {
    */
   public void getLoggedInUserDTO(AsyncCallback<SystemUserDTO> callback);
   
+  //FIXME the header documentation must be corrected. The only mandatory field is party name. it then should search for the party that matches the name. 
+  /**
+   * 
+   * @param systemClientPartyDTO - the only required attribute is client name. if NULL passed, a client is added with user's last name. 
+   * if client's id is empty, it adds a new client.
+   * @param systemUserDTO
+   * @param callback
+   */
+  public void signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO, AsyncCallback<String> callback);
+  
   /**
    * 
    * @param callback

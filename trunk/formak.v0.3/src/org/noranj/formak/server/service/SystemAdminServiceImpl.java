@@ -35,6 +35,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @since 0.3.20120613.1740
+ * @version 0.3.20120613.1740
+ * @change
+ *  BA:2012-06-13 Added signup
  */
 public class SystemAdminServiceImpl extends RemoteServiceServlet implements SystemAdminService {
   
@@ -154,6 +158,28 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     
   }
   
+  /**
+   * It gets client party and user information then sign up the user for the specified party. 
+   * @param systemClientPartyDTO stores the client information. 
+   * If the id is not set, the assumption is that the party is a new party and will be added to the system.
+   * The only required field in that case is party Name.
+   * If it is passed as NULL, we assume the party doesn't exist so user's last name is used as party name.
+   * @param systemUserDTO
+   * @return
+   * @since 0.3.20120613.1740
+   * @version 0.3.20120613.1740
+   */
+  public String signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO) {
+    
+    if (systemClientPartyDTO==null) {
+      //Adding a new party named as user's last name.
+      systemClientPartyDTO= new SystemClientPartyDTO();
+      systemClientPartyDTO.setName(systemUserDTO.getLastName());
+    }
+    
+    return(SystemAdminHelper.signup(systemClientPartyDTO, systemUserDTO));
+   
+  }
   
   @Override
   public SystemUserDTO getLoggedInUserDTO() {
