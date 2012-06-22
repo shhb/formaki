@@ -1,15 +1,19 @@
 package org.noranj.formak.client.view;
 
+import java.util.List;
+
+import org.noranj.formak.client.common.HasSelectedValue;
+
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public interface UserDefinitionView<T> {
+public interface UserDefinitionView<T,K> {
 	
-	public interface Presenter<T>{};
+	public interface Presenter<T,K>{};
 	
-	void setPresenter(Presenter<T> presenter);
+	void setPresenter(Presenter<T,K> presenter);
 	
 	HasClickHandlers getSaveButton();
 	
@@ -23,6 +27,14 @@ public interface UserDefinitionView<T> {
 	
 	HasValue<String> getEmailAddress();
 
+	HasValue<String> getBusinessName();
+	
+	HasSelectedValue<K> getBusinessRole();
+	
+	void setBusinessRoleData(List<K> rowBusinessRoleData);
+		
 	Widget asWidget();
+
+	
 	
 }
