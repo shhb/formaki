@@ -16,8 +16,10 @@ import org.noranj.formak.client.view.LoginView;
 import org.noranj.formak.client.view.SignUpView;
 import org.noranj.formak.client.view.UserDefinitionViewImpl;
 import org.noranj.formak.shared.GlobalSettings;
+import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
+import org.noranj.formak.shared.type.PartyRoleType;
 
 import sun.java2d.loops.CustomComponent;
 
@@ -128,7 +130,7 @@ public class Formak implements EntryPoint {
         		//TODO BA look at this just for redirecting to sign up page.
         		//SA:12-JUN-13 Added 
         		SystemAdminServiceAsync rpc =  GWT.create(SystemAdminService.class);
-        		UserDefinitionViewImpl<SystemUserDTO> userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>(); 
+        		UserDefinitionViewImpl<SystemUserDTO,IDNameDTO> userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO,IDNameDTO>(); 
         		Presenter presenter  = new UserDefinitionPresenter(userDefinitionView , "",rpc);
         		presenter.go(RootLayoutPanel.get());
         	}

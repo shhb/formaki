@@ -34,6 +34,7 @@ import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderItemDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
 import org.noranj.formak.shared.type.DocumentType;
+import org.noranj.formak.shared.type.PartyRoleType;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -55,7 +56,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
   private EditPurchaseOrderViewImpl<PurchaseOrderDTO,PurchaseOrderItemDTO,IDNameDTO> editPurchaseOrderView = null;
   private DocumentTypeListViewImpl<DocumentType> businessDocumentListView = null;
   private HomeMainViewImpl<PurchaseOrderDTO> homeView = null;
-  private UserDefinitionViewImpl<SystemUserDTO> userDefinitionView = null; 
+  private UserDefinitionViewImpl<SystemUserDTO,PartyRoleType> userDefinitionView = null; 
 
   //BA-2012-JAN-27 Added because it was missing from the code and sample codes.
   private List<ColumnDefinition<BusinessDocumentDTO>> businessDocumentsColumnDefinitions;
@@ -210,7 +211,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 //	    	 presenter = new HomeMainPresenter(homeView);
 //	    }
 	    else if (token.equals("signup")){
-	    	userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO>();
+	    	userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO,PartyRoleType>();
 	    	//presenter = new UserDefinitionPresenter(userDefinitionView, "",);
 	    }
         if (presenter != null) {

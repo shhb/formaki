@@ -146,13 +146,11 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 		}
 		}
 	
-
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
 		container.add(view.asWidget());
 	}
-
 
 	public void doSave(PurchaseOrderDTO purchaseOrderDTO) {
 			purchaseOrderDTO.setId(view.getId().getValue());
@@ -209,6 +207,7 @@ public class EditPurchaseOrderPresenter implements Presenter,EditPurchaseOrderVi
 		CellTableInit(purchaseOrderItemDTOs);
 	
 	}
+	
 	public void CellTableInit(List<PurchaseOrderItemDTO> rowData) {
 		
 		ListDataProvider<PurchaseOrderItemDTO> lda = new ListDataProvider<PurchaseOrderItemDTO>();

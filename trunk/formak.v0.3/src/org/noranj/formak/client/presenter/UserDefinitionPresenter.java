@@ -1,11 +1,17 @@
 package org.noranj.formak.client.presenter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.noranj.formak.client.service.SystemAdminServiceAsync;
 import org.noranj.formak.client.view.UserDefinitionView;
+import org.noranj.formak.server.LoginHelper;
+import org.noranj.formak.server.domain.core.Party;
 import org.noranj.formak.server.domain.sa.SystemUser;
 import org.noranj.formak.server.service.SystemAdminServiceImpl;
+import org.noranj.formak.shared.dto.IDNameDTO;
 import org.noranj.formak.shared.dto.PurchaseOrderDTO;
 import org.noranj.formak.shared.dto.SystemClientPartyDTO;
 import org.noranj.formak.shared.dto.SystemUserDTO;
@@ -15,18 +21,20 @@ import org.noranj.formak.shared.type.PartyRoleType;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
-public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Presenter<SystemUserDTO> {
+public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Presenter<SystemUserDTO,IDNameDTO> {
 
-	private final UserDefinitionView<SystemUserDTO> view;
+	private final UserDefinitionView<SystemUserDTO,IDNameDTO> view;
 	private final SystemAdminServiceAsync rpc;
 	private final String id;
 	
-	public UserDefinitionPresenter(UserDefinitionView<SystemUserDTO> view, String id,SystemAdminServiceAsync rpc){
+	
+	public UserDefinitionPresenter(UserDefinitionView<SystemUserDTO,IDNameDTO> view, String id,SystemAdminServiceAsync rpc){
 		 this.view = view;
 		 this.id= id ; 
 		 this.rpc = rpc;
@@ -35,6 +43,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 	
 	public void bind() {
 		this.view.setPresenter(this);
+		
 		this.view.getSaveButton().addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -50,6 +59,15 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 				Window.Location.assign("#");
 			}
 		});
+	
+		List<IDNameDTO> partyRoleTypeList = new ArrayList<IDNameDTO>();
+		partyRoleTypeList.add(new IDNameDTO("1","Buyer"));
+		partyRoleTypeList.add(new IDNameDTO("2","Seller"));
+		partyRoleTypeList.add(new IDNameDTO("3","Supplier"));
+		partyRoleTypeList.add(new IDNameDTO("4","Manufacturer"));
+		partyRoleTypeList.add(new IDNameDTO("5","Unknown"));
+		this.view.setBusinessRoleData(partyRoleTypeList);
+		
 	}
 	
 	@Override
@@ -64,26 +82,12 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Buyer);
     
-	  SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
-    
-	  //BA:2012-JUN-14 no need to add party. the party will be added in signup.
-	  //it is not right to add client and user in two transaction. There might be a failure insystemUser and crashes the system. */
-	  //rpc.addSystemClientParty(parentClient,new AsyncCallback<String>() {
-
-		//@Override
-		//  public void onFailure(Throwable caught) {
-		//	   Window.alert("Fail To Save");
-		//  }
-
-		//  @Override
-	  //	public void onSuccess(String result) {
-	  //		view.getid().setValue(result); //ParentId store in id field on the view 
-			
-	  //  }
-    //});
-	  
-  //BA:2012-JUN-14 there is no need to ID when using *"signup"*
-  //parentClient.setId(view.getid().getValue());
+	  SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, 
+																  this.view.getBusinessName().getValue(), 
+																  "http://retailer.noranj.com", 
+																  ActivityType.Active, 
+																  roles /*roles*/, 
+																  null /*users*/);
 	    
 	user = new SystemUserDTO(null, this.view.getFirstName().getValue(),
 												 this.view.getLastName().getValue(), 
@@ -93,28 +97,13 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 												 System.currentTimeMillis(), 
 												 System.currentTimeMillis(), 
 												 new UserProfileDTO());
-	
-  //BA:2012-JUN-14 no need to add user when using signup.
-	//rpc.addSystemUser(user, new AsyncCallback<String>() {
-  			
-  //                	@Override
-  //               	public void onSuccess(String result) {
-  //                		view.getid().setValue(result); //ChildId store in id field on the view and the Save process is finished.
-  //                	}
-  //               	
-  //                	@Override
-  //                	public void onFailure(Throwable caught) {
-  //                		//System.out.printf("Fail To Save");
-  //                		Window.alert("Fail To Save");
-  //                	}
-  //                });
-	
-	//BA:2012-JUN-14
+
 	rpc.signup(parentClient, user, new AsyncCallback<String>() {
     
                 @Override
                 public void onSuccess(String result) {
                     view.getid().setValue(result); //ChildId store in id field on the view and the Save process is finished.
+                    Window.Location.assign("/logingoogle");
                 }
                 
                 @Override
