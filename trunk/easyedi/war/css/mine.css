@@ -1,0 +1,157 @@
+div.panel,p.flip{
+			margin-top:10px;
+			padding:5px;
+			text-align:center;
+			background:white;
+			border:dotted 1px #c3c3c3;
+			margin: 8px 8px 0 8px;
+			font-family: "Century Gothic";
+}
+
+div.panel{
+			height:400px;
+			/* display:none This part is for when we r going to collapse all parts in first load*/;
+			margin: 8px 8px 0 8px;
+}
+
+div.ex	{
+			background-color:white;
+			padding:20px;
+			border:solid 1px #c3c3c3;
+			margin: 8px 8px 0 8px;
+}
+
+.fileUpload{
+			background-color:white;
+			padding:0px;
+			border:solid 1px #c3c3c3;
+			margin-left: 0px;
+			width: 200px;
+			
+}
+
+.titleBar {
+	margin: 18px 8px 0 8px;
+	background-color: #25587E;
+	border:1px solid #0000A0;
+	color: white;
+	padding: 8px 8px;
+	font-size: 1.2em;
+	font-family: "Century Gothic";
+}
+.childBar {
+	margin: 18px 8px 0 8px;
+	background-color: #FFFFFF;
+	border:1px solid #EBDDE2;
+	color: black;
+	padding: 8px 8px;
+	font-size: 1.2em;
+	font-family: "Century Gothic";
+}
+.closeImage{
+	padding: -8px -8px;
+}
+.button { 
+    background-color: #F8F8F8;
+    border-color: #F5F5F5;
+    border-radius: 1px 1px 1px 1px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(101, 101, 101, 0.1);
+	margin: 0 8px 8px 0;
+    position: relative;
+    top: 1px;
+}
+.ad {
+	background-color: #F8F8F8;
+    border-color: #F5F5F5;
+    border-radius: 1px 1px 1px 1px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 0 1px rgba(101, 101, 101, 0.1);
+	margin: 2px 8px 8px 0;
+    position: relative;
+	top:2px;
+	}
+.adText {
+	margin:  5px 8px 8px 8px;
+	background-color: #F8F8F8;
+	color: #777777;
+	padding: 8px 5px;
+	font-face:Arial,sans-serif;
+	font-size: 1em;
+	}
+.ordinaryText {
+	margin:  5px 8px 8px 8px;
+	background-color: white;
+	color: #777777;
+	padding: 8px 5px;
+	font-face:Arial,sans-serif;
+	font-size: 1em;
+
+	}
+.ad:hover{
+	box-shadow: 0 0 8px  rgba(0, 0, 0, 0.3);
+	top: 1.5px;
+	}
+.box { 
+    background-color: #F8F8F8;
+    border-color: #F5F5F5;
+    border-radius: 1px 1px 1px 1px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(101, 101, 101, 0.1);
+	margin: 0 8px 8px 0;
+    position: relative;
+    top: 1px;
+    
+}
+
+.image{
+	margin:  5px 8px 8px 8px;
+	padding: 0px 20px;
+	
+}
+.contentBar {
+	background-color:  #F8F8F8;
+	color: white;
+	padding: 8px 4px;
+	font-size: 1.1em;
+	font-family: "Century Gothic";
+	align:left;
+}
+
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+	
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+
+}
+
+.fileInput {
+			background-color: #F1F1F1;
+			border-bottom: 1px solid #EBEBEB;
+			height: 15px;
+			width:230px;
+			left: 0;
+			padding: 5px 10px;
+			
+			right: 0;
+			top: 0;
+
+}
