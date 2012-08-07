@@ -1,0 +1,7 @@
+@CHARSET "ISO-8859-1";
+.base{
+	background-color: #FFFFFF;
+	border-bottom: 0px solid #000000;
+	border-right: 0px solid #C0C0C0;
+	border-left: 0px solid #000000;
+}

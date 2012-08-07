@@ -15,28 +15,43 @@
  */
 package org.noranj.easytax.client;
 
+import org.noranj.easytax.client.Tax.TaxUiBinder;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Tax implements EntryPoint {
-	private Button clickMeButton;
+	
+	private static final TaxUiBinder uiBinder = GWT.create(TaxUiBinder.class);
+	
+	interface TaxUiBinder extends UiBinder<DockLayoutPanel, Tax> {	}
+	
+	RootLayoutPanel root;
+	
+	
+	private static Tax singleton;
+	
+	public static Tax get() {
+	    return singleton;
+	  }
 	public void onModuleLoad() {
-		RootPanel rootPanel = RootPanel.get();
-
-		clickMeButton = new Button();
-		rootPanel.add(clickMeButton);
-		clickMeButton.setText("Click me!");
-		clickMeButton.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event) {
-				Window.alert("Hello, GWT World!");
-			}
-		});
+		singleton = this;
+		DockLayoutPanel outer = uiBinder.createAndBindUi(this);
+		root = RootLayoutPanel.get();
+		root.clear();
+		root.add(outer);
 	}
 }
