@@ -3,3 +3,10 @@
 	background-color: #F1F1F1;
 	border-left:dotted 1.5px solid #000000;
 }
+
+@sprite .stepbackactive {
+			margin: 0px 0 0 30px;
+			gwt-image: 'stepba';
+			border: dotted q.5px solid #000000;
+}
+			
