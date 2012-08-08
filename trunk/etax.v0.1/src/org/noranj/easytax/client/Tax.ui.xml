@@ -23,7 +23,7 @@
 		<g:east size="4.6">
 			<app:PublicPlace/>
 		</g:east>
-		<g:west size='14.5'>
+		<g:west size='15.9'>
 	 		<app:ControlMenu/>
 		</g:west>
 

@@ -7,8 +7,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProgressBar extends Composite {
 
-	private static ProgressBarUiBinder uiBinder = GWT
-			.create(ProgressBarUiBinder.class);
+	private static ProgressBarUiBinder uiBinder = GWT.create(ProgressBarUiBinder.class);
 
 	interface ProgressBarUiBinder extends UiBinder<Widget, ProgressBar> {
 	}

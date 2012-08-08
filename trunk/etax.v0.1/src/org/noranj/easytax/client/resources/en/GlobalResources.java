@@ -62,7 +62,7 @@ public interface GlobalResources extends ClientBundle {
 	  @Source("org/noranj/easytax/client/resources/en/icons/black/sprite.png")
 	  ImageResource sprite();
 	  
-	  @Source("org/noranj/easytax/client/resources/en/GlobalStylesEn.css")
+	  @Source("org/noranj/easytax/client/resources/en/css/GlobalStylesEn.css")
 	  GlobalStylesheet globalStyles();
 
 	  //FIXME SA 2012-02-10 
