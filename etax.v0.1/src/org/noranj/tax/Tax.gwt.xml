@@ -3,5 +3,5 @@
 	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
 	<entry-point class="org.noranj.tax.client.Tax"/>
 	<source path='client'/>
-  	<!-- <source path='shared'/> -->
+  	<source path='shared'/>
 </module>
