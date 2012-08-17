@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+
+<!-- ===================== Login Google Servlet ===================== -->
+
+	<servlet>
+		<servlet-name>logingoogle</servlet-name>
+		<servlet-class>org.noranj.tax.server.service.servlet.LoginGoogleServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logingoogle</servlet-name>
+		<url-pattern>/logingoogle</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>logingooglecallback</servlet-name>
+		<servlet-class>org.noranj.tax.server.service.servlet.LoginGoogleCallbackServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logingooglecallback</servlet-name>
+		<url-pattern>/logingooglecallback</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- BA-2012-FEB-28 Added the LoginFilter -->
+	<filter>
+		<filter-name>loginfilter</filter-name>
+		<filter-class>org.noranj.tax.server.service.servlet.LoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>loginfilter</filter-name>
+		<url-pattern>/tax/businessDocument</url-pattern>
+	</filter-mapping>
+
+	<!-- ===================== Logout Google Servlet ===================== -->
+	<servlet>
+		<servlet-name>logoutgoogle</servlet-name>
+		<servlet-class>org.noranj.tax.server.service.servlet.LogoutGoogleServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logoutgoogle</servlet-name>
+		<url-pattern>/logoutgoogle</url-pattern>
+	</servlet-mapping>
+	
+
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value/>
+  </init-param>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <url-pattern>/_ah/spi/*</url-pattern>
+ </servlet-mapping>
+</web-app>
