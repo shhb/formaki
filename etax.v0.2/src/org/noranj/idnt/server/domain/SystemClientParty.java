@@ -13,11 +13,11 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import org.noranj.core.server.domain.Party;
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ParentUnownedChildEntity;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
-import org.noranj.tax.server.domain.core.Party;
 import org.noranj.tax.shared.type.PartyRoleType;
 
 /**
