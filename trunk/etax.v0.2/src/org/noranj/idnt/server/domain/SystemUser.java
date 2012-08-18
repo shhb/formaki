@@ -1,4 +1,4 @@
-package org.noranj.tax.server.domain.sa;
+package org.noranj.idnt.server.domain;
 
 import java.io.Serializable;
 
@@ -15,8 +15,6 @@ import javax.jdo.annotations.Unique;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ChildUnownedEntity;
-import org.noranj.idnt.server.domain.Profile;
-import org.noranj.idnt.server.domain.UserProfile;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
 
 import com.google.appengine.api.datastore.Key;

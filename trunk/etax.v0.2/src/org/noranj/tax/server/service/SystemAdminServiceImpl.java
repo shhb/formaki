@@ -10,13 +10,13 @@ import javax.servlet.http.HttpSession;
 
 //import org.noranj.tax.client.service.SystemAdminService;
 import org.noranj.tax.server.SystemAdminHelper;
-import org.noranj.tax.server.domain.sa.SystemClientParty;
-import org.noranj.tax.server.domain.sa.SystemUser;
 import org.noranj.core.server.DAL1ToNHelper;
 import org.noranj.core.server.DALHelper;
 import org.noranj.core.server.JDOPMFactory;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.exception.NotLoggedInException;
+import org.noranj.idnt.server.domain.SystemClientParty;
+import org.noranj.idnt.server.domain.SystemUser;
 import org.noranj.idnt.server.servlet.LoginHelper;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;

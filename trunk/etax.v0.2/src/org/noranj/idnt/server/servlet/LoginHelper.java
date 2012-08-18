@@ -12,9 +12,9 @@ import org.noranj.core.server.JDOPMFactory;
 import org.noranj.core.server.utils.ServletHelper;
 import org.noranj.core.server.utils.ServletUtils;
 import org.noranj.core.shared.Constants;
+import org.noranj.idnt.server.domain.SystemUser;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
 import org.noranj.tax.server.SystemAdminHelper;
-import org.noranj.tax.server.domain.sa.SystemUser;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

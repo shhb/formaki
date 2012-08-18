@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import javax.mail.internet.InternetAddress;
 
 import org.noranj.core.shared.Constants;
+import org.noranj.idnt.server.domain.SystemUser;
 /*import org.noranj.tax.server.domain.core.PendingDocument;*/ //TODO:BA:2012-AUG-10 needs to review 
-import org.noranj.tax.server.domain.sa.SystemUser;
 import org.noranj.tax.shared.GlobalSettings;
 import org.noranj.tax.shared.type.DocumentType;
 
