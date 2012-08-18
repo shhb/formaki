@@ -1,4 +1,4 @@
-package org.noranj.tax.server.domain.core;
+package org.noranj.core.server.domain;
 
 import java.io.Serializable;
 import java.net.URI;
