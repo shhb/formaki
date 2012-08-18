@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.noranj.tax.server.domain.sa.SystemUser;
+import org.noranj.idnt.server.domain.SystemUser;
 
 @SuppressWarnings("serial") 
 public class LoginGoogleCallbackServlet extends HttpServlet {

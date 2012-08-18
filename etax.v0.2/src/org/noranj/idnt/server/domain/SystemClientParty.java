@@ -1,4 +1,4 @@
-package org.noranj.tax.server.domain.sa;
+package org.noranj.idnt.server.domain;
 
 import java.io.Serializable;
 import java.net.URI;

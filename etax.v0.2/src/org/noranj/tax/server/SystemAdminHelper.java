@@ -14,11 +14,11 @@ import org.noranj.core.server.domain.MailMessage;
 import org.noranj.core.server.utils.Utils;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.type.ActivityType;
+import org.noranj.idnt.server.domain.SystemClientParty;
+import org.noranj.idnt.server.domain.SystemUser;
 import org.noranj.idnt.server.servlet.SignUpMailHandlerServlet;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
-import org.noranj.tax.server.domain.sa.SystemClientParty;
-import org.noranj.tax.server.domain.sa.SystemUser;
 import org.noranj.tax.server.service.SystemAdminServiceImpl;
 
 import com.google.appengine.api.NamespaceManager;
