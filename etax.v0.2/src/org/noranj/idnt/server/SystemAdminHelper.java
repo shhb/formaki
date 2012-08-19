@@ -1,4 +1,4 @@
-package org.noranj.tax.server;
+package org.noranj.idnt.server;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -14,12 +14,13 @@ import org.noranj.core.server.domain.MailMessage;
 import org.noranj.core.server.utils.Utils;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.type.ActivityType;
-import org.noranj.idnt.server.domain.SystemClientParty;
-import org.noranj.idnt.server.domain.SystemUser;
+import org.noranj.idnt.server.domain.ClientParty;
+import org.noranj.idnt.server.domain.User;
+import org.noranj.idnt.server.service.SystemAdminServiceImpl;
 import org.noranj.idnt.server.servlet.SignUpMailHandlerServlet;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
-import org.noranj.tax.server.service.SystemAdminServiceImpl;
+import org.noranj.tax.server.Startup;
 
 import com.google.appengine.api.NamespaceManager;
 
@@ -133,9 +134,9 @@ public class SystemAdminHelper {
 
     try {
     	
-	  	DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+	  	DALHelper<ClientParty> systemClientHelper = new DALHelper<ClientParty>(JDOPMFactory.getTxOptional(), ClientParty.class);
 
-	  	SystemClientParty newSystemClientParty;
+	  	ClientParty newSystemClientParty;
 	    
 	  	// check if client exist
 	  	if(systemClientPartyDTO.getId()!=null) {
@@ -146,7 +147,7 @@ public class SystemAdminHelper {
 	  		}
 	  	}
 	  	else { // add client if the id is null.
-	  		newSystemClientParty = new SystemClientParty(systemClientPartyDTO);
+	  		newSystemClientParty = new ClientParty(systemClientPartyDTO);
 	  		systemClientHelper.storeEntity(newSystemClientParty);
 	  	}
 	  	
@@ -154,8 +155,8 @@ public class SystemAdminHelper {
 	  	systemUserDTO.setParentClientId(newSystemClientParty.getId());
 	  	
 	  	// save the user in the system
-	    DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper2 = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
-	    SystemUser sysUser = new SystemUser(systemUserDTO);
+	    DAL1ToNHelper<ClientParty, User> systemClientHelper2 = new DAL1ToNHelper<ClientParty, User>(JDOPMFactory.getTxOptional(), ClientParty.class, User.class);
+	    User sysUser = new User(systemUserDTO);
 	    systemUserDTO.setId(systemClientHelper2.addChildEntity(sysUser));
 	    return(systemUserDTO.getId());
 	    
@@ -171,7 +172,7 @@ public class SystemAdminHelper {
    * @param userEmail
    * @return
    */
-  public static SystemUser getSystemUser(InternetAddress userEmail) {
+  public static User getSystemUser(InternetAddress userEmail) {
   	String userEmailAddress = userEmail.getAddress();
   	logger.fine("Address is ["+userEmailAddress+"]");
   	return(getSystemUser(userEmailAddress));
@@ -185,7 +186,7 @@ public class SystemAdminHelper {
    * @return
    * 
    */
-  public static SystemUser getSystemUser(String userEmailAddress) {
+  public static User getSystemUser(String userEmailAddress) {
     
     assert(userEmailAddress!=null && userEmailAddress.length()>0);
     
@@ -194,12 +195,12 @@ public class SystemAdminHelper {
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
     
     try {
-      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+      DALHelper<User> systemUserHelper = new DALHelper<User>(JDOPMFactory.getTxOptional(), User.class);
     
-      SystemUser sysUser = null;
+      User sysUser = null;
       int retry = 1; 
       do {
-        sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
+        sysUser = systemUserHelper.getEntityByQuery(String.format("%s == '%s'", User.C_EMAIL_ADDRESS, userEmailAddress), /*filter*/ 
                                                               null /*ordering*/, null /*parameter*/, null /*value*/,
                                                               null,  /* ParentClient is no longer needs to be in Fatch Group because it is only a KEY    //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
                                                               1); /* max fetch depth */

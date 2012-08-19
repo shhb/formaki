@@ -1,4 +1,4 @@
-package org.noranj.tax.shared.type;
+package org.noranj.idnt.shared.type;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,29 +7,29 @@ import java.util.Set;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
+ * This class defined the list of roles that a user can have.
  * 
+ * NOTE: NOT SURE IF THE ROLES ARE EXCLUSIVE OR NOT.
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
  *
- * @author
- * @since 0.3
- * @version 0.3.20120810
- * @deprecated NOT USED IN THIS PROJECT 
+ * @author BA
+ * @since 0.2.20120819
+ * @version 0.2.20120819
  * @change
- *  BA-2012-08-11 Added new method convertToSet.
- *  BA-2012-08-19 Depreacted the method.
- * 
+ *  
  */
-public enum PartyRoleType implements Serializable, IsSerializable {
+public enum UserRoleType implements Serializable, IsSerializable {
 
-  Unknown, // not sure if this role is needed.
-  Buyer,
-  Seller,
-  Manufacturer,
-  Supplier;
+  Applicant, // not sure if this role is needed.
+  Advisor,
+  Support,
+  SystemAdmin,
+  SuperAdmin,
+  Management;
   
-  PartyRoleType () {
+  UserRoleType () {
   }
   
   /** 
@@ -37,7 +37,7 @@ public enum PartyRoleType implements Serializable, IsSerializable {
    * @since 0.3.20120322
    * @version 0.3.20120322
    */
-  public static Set<PartyRoleType> convertToSet(String rolesStr) {
+  public static Set<UserRoleType> convertToSet(String rolesStr) {
   	if (rolesStr == null) {
   		return(null);
   	}
@@ -49,11 +49,11 @@ public enum PartyRoleType implements Serializable, IsSerializable {
    * @since 0.3.20120322
    * @version 0.3.20120322
    */
-  public static Set<PartyRoleType> convertToSet(String[] rolesArray) {
+  public static Set<UserRoleType> convertToSet(String[] rolesArray) {
   	assert(rolesArray!=null);
-  	HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>(); //TODO is it the best implementation for Set??
+  	HashSet<UserRoleType> roles = new HashSet<UserRoleType>(); //TODO is it the best implementation for Set??
   	for(String role : rolesArray) {
-  		roles.add(PartyRoleType.valueOf(role.trim()));
+  		roles.add(UserRoleType.valueOf(role.trim()));
   	}
     return(roles);
   }

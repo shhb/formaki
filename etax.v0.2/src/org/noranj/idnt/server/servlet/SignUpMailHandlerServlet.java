@@ -16,7 +16,7 @@ import org.noranj.core.server.utils.MailHelper;
 import org.noranj.core.server.utils.QueueHelper;
 import org.noranj.core.server.utils.Utils;
 import org.noranj.core.shared.Constants;
-import org.noranj.tax.server.SystemAdminHelper;
+import org.noranj.idnt.server.SystemAdminHelper;
 import org.noranj.tax.shared.GlobalSettings;
 
 /**

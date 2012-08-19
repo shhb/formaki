@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.noranj.idnt.server.domain.SystemUser;
+import org.noranj.idnt.server.domain.User;
 
 @SuppressWarnings("serial") 
 public class LoginGoogleCallbackServlet extends HttpServlet {
@@ -22,7 +22,7 @@ public class LoginGoogleCallbackServlet extends HttpServlet {
     
     if (googleUser != null) {
       
-      SystemUser sysUser = LoginHelper.loginStarts(request.getSession(), googleUser.getName());
+      User sysUser = LoginHelper.loginStarts(request.getSession(), googleUser.getName());
       
       if (sysUser == null) { // user is not in Formak
         log.warning("user is not in the system - " + googleUser.getName());

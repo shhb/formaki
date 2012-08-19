@@ -26,16 +26,17 @@ import com.google.appengine.api.datastore.KeyFactory;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.3.2012AUG10
+ * @version 0.2.20120819
+ * @since 0.2
  * @change
  *  BA-2012-AUG-10 Added two new attributes lastActive, lastLoginOn.
  */
 @PersistenceCapable(detachable="true")
-@Index(name="EMAIL", unique="true",  members={SystemUser.C_EMAIL_ADDRESS}) //BA-2012-FEB-23 Added to be able to search by emailAddress
+@Index(name="EMAIL", unique="true",  members={User.C_EMAIL_ADDRESS}) //BA-2012-FEB-23 Added to be able to search by emailAddress
 @FetchGroups({
-  @FetchGroup(name=SystemUser.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}),
-  @FetchGroup(name=SystemUser.C_FETCH_GROUP_PARENT_CLIENT, members={@Persistent(name="parentClientId")})})
-public class SystemUser implements Serializable, ChildUnownedEntity {
+  @FetchGroup(name=User.C_FETCH_GROUP_PROFILE , members={@Persistent(name="profile")}),
+  @FetchGroup(name=User.C_FETCH_GROUP_PARENT_CLIENT, members={@Persistent(name="parentClientId")})})
+public class User implements Serializable, ChildUnownedEntity {
 
   @NotPersistent
   private static final long serialVersionUID = 2739249843928429147L;
@@ -90,7 +91,7 @@ public class SystemUser implements Serializable, ChildUnownedEntity {
   //////                                    //////
   ////////////////////////////////////////////////
 
-  public SystemUser(String id, String parentClientId, String firstName,
+  public User(String id, String parentClientId, String firstName,
                     String lastName, String emailAddress, ActivityType activityType,
                     UserProfile profile/*, long version*/) {
     super();
@@ -110,7 +111,7 @@ public class SystemUser implements Serializable, ChildUnownedEntity {
    * @param parentClient
    * @deprecated NOT NEEDED AND NOT USED. REMOVE THE TAG IF NEEDED. It makes the code complicated.
    */
-  public SystemUser(SystemUserDTO systemUserDTO) {
+  public User(SystemUserDTO systemUserDTO) {
     
     this(systemUserDTO.getId(),
           systemUserDTO.getParentClientId(),

@@ -12,9 +12,9 @@ import org.noranj.core.server.JDOPMFactory;
 import org.noranj.core.server.utils.ServletHelper;
 import org.noranj.core.server.utils.ServletUtils;
 import org.noranj.core.shared.Constants;
-import org.noranj.idnt.server.domain.SystemUser;
+import org.noranj.idnt.server.SystemAdminHelper;
+import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
-import org.noranj.tax.server.SystemAdminHelper;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -90,9 +90,9 @@ public class LoginHelper extends RemoteServiceServlet {
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
 
     try {
-      DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+      DALHelper<User> systemUserHelper = new DALHelper<User>(JDOPMFactory.getTxOptional(), User.class);
       
-      SystemUser sysUser = systemUserHelper.getEntityById (userId, null /*Fetch group*/, 1); 
+      User sysUser = systemUserHelper.getEntityById (userId, null /*Fetch group*/, 1); 
       
       if (sysUser!=null) {
         
@@ -196,11 +196,11 @@ public class LoginHelper extends RemoteServiceServlet {
    * @param userEmailAddress
    * @return
    */
-  public static SystemUser loginStarts(HttpSession session, String userEmailAddress /*UserAccount user*/) {
+  public static User loginStarts(HttpSession session, String userEmailAddress /*UserAccount user*/) {
     
     logger.info("user ["+userEmailAddress+"] tries to login");
     
-    SystemUser sysUser = SystemAdminHelper.getSystemUser(userEmailAddress); // googleUser.getName());
+    User sysUser = SystemAdminHelper.getSystemUser(userEmailAddress); // googleUser.getName());
     
     if (sysUser!=null) {
       // update session if login was successful

@@ -26,10 +26,12 @@ import org.noranj.tax.shared.type.PartyRoleType;
  * See http://www.noranj.org for further information.
  *
  * @author
+ * @version 0.2.20120819
+ * @since 0.2
  */
 @PersistenceCapable(detachable="true")
-@FetchGroup(name=SystemClientParty.C_FETCH_GROUP_USERS, members={@Persistent(name="users")}) //this is used with pm.getFetchPlan().setMaxFetchDepth(n) to control how deep the data is retrieved up front (used in detaching). To get only the order, setMaxFetchDepth(0) and to get order and orderItems, setMaxFetchDepth(1).
-public class SystemClientParty extends Party implements Serializable, ParentUnownedChildEntity {
+@FetchGroup(name=ClientParty.C_FETCH_GROUP_USERS, members={@Persistent(name="users")}) //this is used with pm.getFetchPlan().setMaxFetchDepth(n) to control how deep the data is retrieved up front (used in detaching). To get only the order, setMaxFetchDepth(0) and to get order and orderItems, setMaxFetchDepth(1).
+public class ClientParty extends Party implements Serializable, ParentUnownedChildEntity {
 
   public static final String C_FETCH_GROUP_USERS = "users"; 
   //public static final String C_FETCH_GROUP_PROFILE = "profile"; 
@@ -59,7 +61,7 @@ public class SystemClientParty extends Party implements Serializable, ParentUnow
   //////              METHODS               //////
   //////                                    //////
   ////////////////////////////////////////////////
-  public SystemClientParty() {
+  public ClientParty() {
     
   }
   /**
@@ -67,11 +69,11 @@ public class SystemClientParty extends Party implements Serializable, ParentUnow
    * @param name
    * @param roles
    */
-  public SystemClientParty(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
+  public ClientParty(String name, String logoURI, ActivityType activityType, Set<PartyRoleType> roles) {
     super(name, logoURI, activityType, roles);
   }
 
-  public SystemClientParty(SystemClientPartyDTO systemClientPartyDTO) {
+  public ClientParty(SystemClientPartyDTO systemClientPartyDTO) {
     super(  systemClientPartyDTO.getName(), 
             systemClientPartyDTO.getLogoURI(), 
             systemClientPartyDTO.getActivityType(), 

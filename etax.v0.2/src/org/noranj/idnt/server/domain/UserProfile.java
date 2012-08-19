@@ -30,7 +30,7 @@ import org.noranj.idnt.shared.dto.UserProfileDTO;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.3.2012FEB21
+ * @version 0.2
  * @deprecated HAS NOT BEEN IMPLEMENTED YET
  */
 @PersistenceCapable(detachable="true")
