@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.logging.Logger;
 
 import org.noranj.core.shared.type.ActivityType;
+import org.noranj.idnt.server.service.SystemAdminServiceImpl;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
-import org.noranj.tax.server.service.SystemAdminServiceImpl;
 import org.noranj.tax.shared.type.PartyRoleType;
 
 /**

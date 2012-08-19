@@ -1,4 +1,4 @@
-package org.noranj.tax.server.service;
+package org.noranj.idnt.server.service;
 
 
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 
 //import org.noranj.tax.client.service.SystemAdminService;
-import org.noranj.tax.server.SystemAdminHelper;
 import org.noranj.core.server.DAL1ToNHelper;
 import org.noranj.core.server.DALHelper;
 import org.noranj.core.server.JDOPMFactory;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.exception.NotLoggedInException;
-import org.noranj.idnt.server.domain.SystemClientParty;
-import org.noranj.idnt.server.domain.SystemUser;
+import org.noranj.idnt.server.SystemAdminHelper;
+import org.noranj.idnt.server.domain.ClientParty;
+import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.server.servlet.LoginHelper;
 import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
 import org.noranj.idnt.shared.dto.SystemUserDTO;
@@ -57,7 +57,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
   public SystemUserDTO getSystemUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
-    SystemUser sysUser = SystemAdminHelper.getSystemUser(emailAddress);
+    User sysUser = SystemAdminHelper.getSystemUser(emailAddress);
     if (sysUser!=null)
       return(sysUser.getSystemUserDTO());
     else 
@@ -83,16 +83,16 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
     
     try {
     	
-	    DALHelper<SystemUser> systemUserHelper = new DALHelper<SystemUser>(JDOPMFactory.getTxOptional(), SystemUser.class);
+	    DALHelper<User> systemUserHelper = new DALHelper<User>(JDOPMFactory.getTxOptional(), User.class);
 	    
-	    Collection<SystemUser> sysUsers = systemUserHelper.getEntities(); 
+	    Collection<User> sysUsers = systemUserHelper.getEntities(); 
 	                                                            //(String.format("%s == '%s'", SystemUser.C_EMAIL_ADDRESS, emailAddress), /*filter*/ 
 	                                                            //null /*ordering*/, null /*parameter*/, null /*value*/,
 	                                                            //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
 	                                                            //1); /* max fetch depth */
 	    
 	    List<SystemUserDTO> sysUserList = new ArrayList<SystemUserDTO>();
-	    for (SystemUser su : sysUsers) {
+	    for (User su : sysUsers) {
 	      sysUserList.add(su.getSystemUserDTO());
 	    }
 	    return(sysUserList);
@@ -120,9 +120,9 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
     try {
     	
     
-	    DALHelper<SystemClientParty> systemClientHelper = new DALHelper<SystemClientParty>(JDOPMFactory.getTxOptional(), SystemClientParty.class);
+	    DALHelper<ClientParty> systemClientHelper = new DALHelper<ClientParty>(JDOPMFactory.getTxOptional(), ClientParty.class);
 	    
-	    SystemClientParty newSystemClientParty = new SystemClientParty(systemClientParty);
+	    ClientParty newSystemClientParty = new ClientParty(systemClientParty);
 	    
 	    systemClientHelper.storeEntity(newSystemClientParty);
 	    
@@ -148,8 +148,8 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
 
     try {
     	
-	    DAL1ToNHelper<SystemClientParty, SystemUser> systemClientHelper = new DAL1ToNHelper<SystemClientParty, SystemUser>(JDOPMFactory.getTxOptional(), SystemClientParty.class, SystemUser.class);
-	    SystemUser sysUser = new SystemUser(systemUserDTO);
+	    DAL1ToNHelper<ClientParty, User> systemClientHelper = new DAL1ToNHelper<ClientParty, User>(JDOPMFactory.getTxOptional(), ClientParty.class, User.class);
+	    User sysUser = new User(systemUserDTO);
 	    systemUserDTO.setId(systemClientHelper.addChildEntity(sysUser));
 	    return(systemUserDTO.getId());
 	    
