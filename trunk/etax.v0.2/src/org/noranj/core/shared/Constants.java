@@ -45,9 +45,9 @@ public class Constants {
    */
   public static final String C_SYSTEM_ADMIN_NAMESPACE = "";
   
-  public static final String C_APPLICATION_URL_PROP_NAME = "applition.url"; //BA:12-03-22 Added
+  public static final String C_APPLICATION_URL_PROP_NAME = "application.url"; //BA:12-03-22 Added
   
-  public static final String C_DEVELOPMENT_URL="http://127.0.0.1:9888/Formak.html?gwt.codesvr=127.0.0.1:9997"; //BA:12-03-22 Added
+  public static final String C_DEVELOPMENT_URL="http://127.0.0.1:9888/Tax.html?gwt.codesvr=127.0.0.1:9997"; //BA:12-03-22 Added
   
   ///////////////////////////////////////////////////////////
   /// MAIL

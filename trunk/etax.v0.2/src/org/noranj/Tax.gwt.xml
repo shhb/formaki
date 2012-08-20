@@ -2,6 +2,8 @@
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
 	<entry-point class="org.noranj.tax.client.Tax"/>
-	<source path='client'/>
-  	<source path='shared'/>
+	<source path='tax/client'/>
+	<source path='idnt/shared'/>
+  	<source path='core/shared'/>
+  	<source path='tax/shared'/>
 </module>

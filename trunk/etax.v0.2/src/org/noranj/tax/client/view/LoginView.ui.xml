@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <!-- 
+      version 0.3.2012MAR01 
+      since   0.3.2012MAR01
+      change 
+   -->
+<ui:image field='logo' src='../resources/en/images/flogo.png' /> <!-- FIXME "en" path must be based on user's locale.  -->
+<ui:image field='google' src='../resources/en/images/googlelogo.gif' />
+<g:HTMLPanel>
+	<g:PushButton ui:field='googleButton' width='120px'   height='40px'>
+		<g:upFace image='{google}' />
+	</g:PushButton>
+</g:HTMLPanel>
+</ui:UiBinder> 
+
