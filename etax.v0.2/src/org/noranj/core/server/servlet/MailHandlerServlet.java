@@ -18,8 +18,8 @@ import javax.servlet.http.*;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3
- * @version 0.3
+ * @since 0.2
+ * @version 0.2.20120820
  * @change
  *
  */
