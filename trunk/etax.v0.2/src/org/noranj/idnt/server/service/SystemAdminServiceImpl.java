@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-//import org.noranj.tax.client.service.SystemAdminService;
+import org.noranj.tax.client.service.SystemAdminService;
 import org.noranj.core.server.DAL1ToNHelper;
 import org.noranj.core.server.DALHelper;
 import org.noranj.core.server.JDOPMFactory;
@@ -40,7 +40,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * @change
  *  BA:2012-06-13 Added signup
  */
-public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements SystemAdminService {//TODO:BA:2012-08-10: please check it 
+public class SystemAdminServiceImpl extends RemoteServiceServlet implements SystemAdminService {//TODO:BA:2012-08-10: please check it 
   
   private static final long serialVersionUID = -2326021829857086171L;
 
@@ -182,10 +182,10 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
   }
   
   //TODO:BA:2012-08-10 It should change because it can't use a reference to client
-/*  @Override
-  public SystemUserDTO getLoggedInUserDTO() {
+ @Override
+  public UserDTO getLoggedInUserDTO() {
     HttpSession session = getThreadLocalRequest().getSession();
-    SystemUserDTO userDTO = LoginHelper.getLoggedInUser(session);
+    UserDTO userDTO = LoginHelper.getLoggedInUser(session);
     return userDTO;
   }
 
@@ -193,7 +193,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
   public void logout() throws NotLoggedInException {
     getThreadLocalRequest().getSession().invalidate();
     throw new NotLoggedInException("Logged out");
-  }*/
+  }
 
  
 }
