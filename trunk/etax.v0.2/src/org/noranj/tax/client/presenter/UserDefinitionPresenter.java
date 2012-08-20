@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.idnt.shared.dto.IDNameDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
 import org.noranj.tax.client.service.SystemAdminServiceAsync;
 import org.noranj.tax.client.view.UserDefinitionView;
@@ -20,14 +20,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
-public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Presenter<SystemUserDTO,IDNameDTO> {
+public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Presenter<UserDTO,IDNameDTO> {
 
-	private final UserDefinitionView<SystemUserDTO,IDNameDTO> view;
+	private final UserDefinitionView<UserDTO,IDNameDTO> view;
 	private final SystemAdminServiceAsync rpc;
 	private final String id;
 	
 	
-	public UserDefinitionPresenter(UserDefinitionView<SystemUserDTO,IDNameDTO> view, String id,SystemAdminServiceAsync rpc){
+	public UserDefinitionPresenter(UserDefinitionView<UserDTO,IDNameDTO> view, String id,SystemAdminServiceAsync rpc){
 		 this.view = view;
 		 this.id= id ; 
 		 this.rpc = rpc;
@@ -41,7 +41,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 			
 			@Override
 			public void onClick(ClickEvent event) {
-						doSave(new SystemUserDTO());		
+						doSave(new UserDTO());		
 			}
 		});
 		
@@ -69,7 +69,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 		container.add(view.asWidget());
 	}
 
-	public void doSave(SystemUserDTO user) {
+	public void doSave(UserDTO user) {
 	  
 	  //BA:2012-JUN-14 this must be set in UI by showing a list box for now 9single choice. */
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
@@ -82,7 +82,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 																  roles roles, 
 																  null users);*/
 	    
-	user = new SystemUserDTO("", this.view.getFirstName().getValue(),
+	user = new UserDTO("", this.view.getFirstName().getValue(),
 												 this.view.getLastName().getValue(), 
 												 this.view.getEmailAddress().getValue() , 
 												 null, //BA:2012-JUN-14 parentClient.getId(), 

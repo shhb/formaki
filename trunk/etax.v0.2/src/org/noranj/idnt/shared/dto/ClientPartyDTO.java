@@ -18,7 +18,7 @@ import org.noranj.tax.shared.type.PartyRoleType;
  *
  * @author
  */
-public class SystemClientPartyDTO extends PartyDTO {
+public class ClientPartyDTO extends PartyDTO {
 
   /**
    * 
@@ -29,12 +29,12 @@ public class SystemClientPartyDTO extends PartyDTO {
    * list of users belong to the party.
    * All the users in this list share the same namespace.
    */
-  private List<SystemUserDTO> users;
+  private List<UserDTO> users;
 
   /**
    * 
    */
-  public SystemClientPartyDTO() {
+  public ClientPartyDTO() {
     
   }
   
@@ -47,9 +47,9 @@ public class SystemClientPartyDTO extends PartyDTO {
    * @param partyRoles
    * @param users
    */
-  public SystemClientPartyDTO(String id, String name, String logoURI,
+  public ClientPartyDTO(String id, String name, String logoURI,
                               ActivityType activityType, Set<PartyRoleType> partyRoles, 
-                              List<SystemUserDTO> users) {
+                              List<UserDTO> users) {
     super(id, name, logoURI, activityType, partyRoles);
     this.users = users;
   }
@@ -59,7 +59,7 @@ public class SystemClientPartyDTO extends PartyDTO {
    * because then other codes have to use the same field name as used here.
    * I don't think it is a good idea to define the named as constants. 2012-06-13 
    */
-  public SystemClientPartyDTO(Map<String, String> map) {
+  public ClientPartyDTO(Map<String, String> map) {
   	super();
   	setId(map.get("id"));
   	setName(map.get("name"));
@@ -71,17 +71,17 @@ public class SystemClientPartyDTO extends PartyDTO {
   	setRoles(map.get("partyRoles"));
   }
 
-  public List<SystemUserDTO> getUsers() {
+  public List<UserDTO> getUsers() {
     return users;
   }
 
-  public void setUsers(List<SystemUserDTO> users) {
+  public void setUsers(List<UserDTO> users) {
     this.users = users;
   }
 
-  public void addUser(SystemUserDTO systemUserDTO) {
+  public void addUser(UserDTO systemUserDTO) {
     if (users == null) {
-      users = new ArrayList<SystemUserDTO>();
+      users = new ArrayList<UserDTO>();
     }
     
     this.users.add(systemUserDTO);

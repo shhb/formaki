@@ -18,7 +18,7 @@ import org.noranj.core.shared.type.ActivityType;
  * @change
  *  BA-2012-AUG-11 Added two new attributes lastActive, lastLoginOn.
  */
-public class SystemUserDTO implements Serializable {
+public class UserDTO implements Serializable {
 
   private static final long serialVersionUID = 85316669519477098L;
 
@@ -51,10 +51,10 @@ public class SystemUserDTO implements Serializable {
   //////////////////////////////////////////////////////////////////
   /////
   //////////////////////////////////////////////////////////////////
-  public SystemUserDTO() {
+  public UserDTO() {
   }
 
-  public SystemUserDTO(String id, String firstName, String lastName,
+  public UserDTO(String id, String firstName, String lastName,
                       String emailAddress, String parentClientId, ActivityType activityType,
                       long lastLoginOn,
                       long lastActive,
@@ -78,7 +78,7 @@ public class SystemUserDTO implements Serializable {
    * @since 0.3.2012081
    * @version 0.3.2012081
    */
-  public SystemUserDTO(Map<String, String> map) {
+  public UserDTO(Map<String, String> map) {
   	super();
   	
   	setId(map.get("id"));

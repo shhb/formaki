@@ -18,8 +18,8 @@ import org.noranj.idnt.server.SystemAdminHelper;
 import org.noranj.idnt.server.domain.ClientParty;
 import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.server.servlet.LoginHelper;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -54,7 +54,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
    * @param emailAddress
    * @return the system user that is associated with the emailAddress. If it can not find the user, it returns null.
    */
-  public SystemUserDTO getSystemUser(String emailAddress) {
+  public UserDTO getSystemUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
     User sysUser = SystemAdminHelper.getSystemUser(emailAddress);
@@ -73,7 +73,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
    * @param systemClientPartyDTO stores the party that we would like to get its users. If it is set to null, it gets all users.
    * @return the list of system users that belong to the client party. If no user is found, the list will be empty.
    */
-  public List<SystemUserDTO> getSystemUsers(SystemClientPartyDTO systemClientPartyDTO) {
+  public List<UserDTO> getSystemUsers(ClientPartyDTO systemClientPartyDTO) {
     
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
@@ -91,7 +91,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
 	                                                            //new String[] {SystemUser.C_FETCH_GROUP_PARENT_CLIENT} , /* fetch groups */ 
 	                                                            //1); /* max fetch depth */
 	    
-	    List<SystemUserDTO> sysUserList = new ArrayList<SystemUserDTO>();
+	    List<UserDTO> sysUserList = new ArrayList<UserDTO>();
 	    for (User su : sysUsers) {
 	      sysUserList.add(su.getSystemUserDTO());
 	    }
@@ -110,7 +110,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
    * @param systemClientParty holds the data for the new client.
    * @return the id that is generated and assigned to the client party.
    */
-  public String addSystemClientParty(SystemClientPartyDTO systemClientParty) {
+  public String addSystemClientParty(ClientPartyDTO systemClientParty) {
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
@@ -141,7 +141,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
    * @return the new ID assigned to the SystemUserDTO
    * 
    */
-  public String addSystemUser(SystemUserDTO systemUserDTO) { //FIXME what will happen if it fails to add the user!!!
+  public String addSystemUser(UserDTO systemUserDTO) { //FIXME what will happen if it fails to add the user!!!
 
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
@@ -170,11 +170,11 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet{ //implements S
    * @since 0.3.20120613.1740
    * @version 0.3.20120613.1740
    */
-  public String signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO) {
+  public String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO) {
     
     if (systemClientPartyDTO==null) {
       //Adding a new party named as user's last name.
-      systemClientPartyDTO= new SystemClientPartyDTO();
+      systemClientPartyDTO= new ClientPartyDTO();
       systemClientPartyDTO.setName(systemUserDTO.getLastName());
     }
     

@@ -15,7 +15,7 @@ import javax.jdo.annotations.Unique;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ChildUnownedEntity;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -111,7 +111,7 @@ public class User implements Serializable, ChildUnownedEntity {
    * @param parentClient
    * @deprecated NOT NEEDED AND NOT USED. REMOVE THE TAG IF NEEDED. It makes the code complicated.
    */
-  public User(SystemUserDTO systemUserDTO) {
+  public User(UserDTO systemUserDTO) {
     
     this(systemUserDTO.getId(),
           systemUserDTO.getParentClientId(),
@@ -216,10 +216,10 @@ public class User implements Serializable, ChildUnownedEntity {
    * 
    * @return
    */
-  public SystemUserDTO getSystemUserDTO () {
+  public UserDTO getSystemUserDTO () {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
-    SystemUserDTO suDTO = new SystemUserDTO(getId(), firstName, lastName, emailAddress, 
+    UserDTO suDTO = new UserDTO(getId(), firstName, lastName, emailAddress, 
                                             getParentClientId(), 
                                             activityType, 
                                             lastActive,

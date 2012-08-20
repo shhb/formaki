@@ -5,8 +5,8 @@ import java.util.logging.Logger;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.idnt.server.service.SystemAdminServiceImpl;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
 import org.noranj.tax.shared.type.PartyRoleType;
 
@@ -35,7 +35,7 @@ public class Startup {
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Buyer);
     
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    ClientPartyDTO parentClient = new ClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
     
     id = service.addSystemClientParty(parentClient);
     parentClient.setId(id);
@@ -43,14 +43,14 @@ public class Startup {
     System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
 
     // Adding two users
-    SystemUserDTO user = null;
+    UserDTO user = null;
     
-    user = new SystemUserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO() );
+    user = new UserDTO(null, "Babak", "Retailer", "babak@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO() );
     id = service.addSystemUser(user);
     user.setId(id);
     System.out.printf("User [%s] is created and its id is [%s] and the email is [%s]\r\n", user.getFirstName(), user.getId(), user.getEmailAddress());
 
-    user = new SystemUserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO() );
+    user = new UserDTO(null, "Buyer", "Retailer", "buyer@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO() );
     id = service.addSystemUser(user);
     user.setId(id);
     System.out.printf("User [%s] is created and its id is [%s] and the email is [%s]\r\n", user.getFirstName(), user.getId(), user.getEmailAddress());
@@ -69,20 +69,20 @@ public class Startup {
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Seller);
-    SystemClientPartyDTO parentClient = new SystemClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    ClientPartyDTO parentClient = new ClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
     id = service.addSystemClientParty(parentClient);
     parentClient.setId(id);
 
     System.out.printf("Party [%s] is created and its id is [%s]\r\n", parentClient.getName(), parentClient.getId());
 
-    SystemUserDTO user = null;
+    UserDTO user = null;
     
-    user = new SystemUserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(),System.currentTimeMillis(),new UserProfileDTO());
+    user = new UserDTO(null, "Shahab", "Manufacturer", "shahab@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(),System.currentTimeMillis(),new UserProfileDTO());
     id = service.addSystemUser(user);
     user.setId(id);
     System.out.printf("User [%s] is created and its id is [%s] and the email is [%s]\r\n", user.getFirstName(), user.getId(), user.getEmailAddress());
 
-    user = new SystemUserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO());
+    user = new UserDTO(null, "Seller", "Manufacturer", "seller@noranj.com", parentClient.getId(), ActivityType.Active, System.currentTimeMillis(), System.currentTimeMillis(), new UserProfileDTO());
     id = service.addSystemUser(user);
     user.setId(id);
     System.out.printf("User [%s] is created and its id is [%s] and the email is [%s]\r\n", user.getFirstName(), user.getId(), user.getEmailAddress());

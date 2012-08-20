@@ -3,8 +3,8 @@ package org.noranj.tax.client.service;
 
 import org.noranj.core.shared.exception.NotFoundException;
 import org.noranj.core.shared.exception.NotLoggedInException;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -28,20 +28,20 @@ public interface SystemAdminService extends RemoteService {
    * @param emailAddress
    * @return
    */
-  public SystemUserDTO getSystemUser(String emailAddress);
+  public UserDTO getSystemUser(String emailAddress);
 
   /**
    * It adds a new user to the data store.
    * 
    * @param systemUser holds the data for the new user.
    */
-  public String addSystemUser(SystemUserDTO systemUser); // the implementation throws NotFoundException;
+  public String addSystemUser(UserDTO systemUser); // the implementation throws NotFoundException;
   
-  public String addSystemClientParty(SystemClientPartyDTO systemClientParty);
+  public String addSystemClientParty(ClientPartyDTO systemClientParty);
 
-  public String signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO);
+  public String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO);
   
-  SystemUserDTO getLoggedInUserDTO();
+  UserDTO getLoggedInUserDTO();
   
   void logout() throws NotLoggedInException;
   

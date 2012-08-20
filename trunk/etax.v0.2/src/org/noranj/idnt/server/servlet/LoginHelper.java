@@ -14,7 +14,7 @@ import org.noranj.core.server.utils.ServletUtils;
 import org.noranj.core.shared.Constants;
 import org.noranj.idnt.server.SystemAdminHelper;
 import org.noranj.idnt.server.domain.User;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -76,7 +76,7 @@ public class LoginHelper extends RemoteServiceServlet {
    * @param session
    * @return
    */
-  public static SystemUserDTO getLoggedInUser(HttpSession session) {
+  public static UserDTO getLoggedInUser(HttpSession session) {
 
     if (session == null)
       return null; // user not logged in

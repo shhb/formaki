@@ -18,7 +18,7 @@ package org.noranj.tax.client;
 import org.noranj.tax.client.presenter.LoginPresenter;
 //import org.noranj.tax.client.view.LoginView;
 import org.noranj.idnt.shared.dto.IDNameDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.client.helper.RPCCall;
 import org.noranj.tax.client.presenter.Presenter;
 import org.noranj.tax.client.presenter.UserDefinitionPresenter;
@@ -57,7 +57,7 @@ public class Tax implements EntryPoint {
 
   private SystemAdminServiceAsync systemAdminService = GWT.create(SystemAdminService.class);
 
-  private SystemUserDTO currentUser;
+  private UserDTO currentUser;
 
   private static Tax singleton;
 
@@ -82,22 +82,22 @@ public class Tax implements EntryPoint {
 
   private void getLoggedInUser() {
 
-    new RPCCall<SystemUserDTO>() {
+    new RPCCall<UserDTO>() {
 
       @Override
-      protected void callService(AsyncCallback<SystemUserDTO> cb) {
+      protected void callService(AsyncCallback<UserDTO> cb) {
         systemAdminService.getLoggedInUserDTO(cb);
       }
 
       @Override
-      public void onSuccess(SystemUserDTO loggedInUserDTO) {
+      public void onSuccess(UserDTO loggedInUserDTO) {
         if (loggedInUserDTO == null) {
           // nobody is logged in
           if ("".equals(History.getToken())) {
             showLoginView();
           } else {
             SystemAdminServiceAsync rpc = GWT.create(SystemAdminService.class);
-            UserDefinitionViewImpl<SystemUserDTO, IDNameDTO> userDefinitionView = new UserDefinitionViewImpl<SystemUserDTO, IDNameDTO>();
+            UserDefinitionViewImpl<UserDTO, IDNameDTO> userDefinitionView = new UserDefinitionViewImpl<UserDTO, IDNameDTO>();
             Presenter presenter = new UserDefinitionPresenter(
                 userDefinitionView, "", rpc);
             presenter.go(RootLayoutPanel.get());
@@ -121,12 +121,12 @@ public class Tax implements EntryPoint {
   public void showLoginView() {
     root = RootLayoutPanel.get();
     root.clear();
-    LoginView<SystemUserDTO> view = new LoginViewImpl<SystemUserDTO>();
+    LoginView<UserDTO> view = new LoginViewImpl<UserDTO>();
     LoginPresenter loginPresenter = new LoginPresenter(eventBus, view);
     loginPresenter.go(root);
   }
 
-  void setCurrentUser(SystemUserDTO currentUser) {
+  void setCurrentUser(UserDTO currentUser) {
     this.currentUser = currentUser;
   }
 
@@ -164,7 +164,7 @@ public class Tax implements EntryPoint {
     signupPresenter.go(root);*/
   }
  
-  SystemUserDTO getCurrentUser() {
+  UserDTO getCurrentUser() {
     return currentUser;
   }
 }

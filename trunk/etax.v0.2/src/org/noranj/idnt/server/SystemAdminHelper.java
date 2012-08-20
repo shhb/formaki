@@ -18,8 +18,8 @@ import org.noranj.idnt.server.domain.ClientParty;
 import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.server.service.SystemAdminServiceImpl;
 import org.noranj.idnt.server.servlet.SignUpMailHandlerServlet;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.server.Startup;
 
 import com.google.appengine.api.NamespaceManager;
@@ -89,11 +89,11 @@ public class SystemAdminHelper {
 	 */
 	public static String signupUser(Map<String, String> dataFields) {
     
-	  SystemClientPartyDTO sysClientDTO = new SystemClientPartyDTO(dataFields);
+	  ClientPartyDTO sysClientDTO = new ClientPartyDTO(dataFields);
     
     sysClientDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
     
-    SystemUserDTO sysUserDTO = new SystemUserDTO(dataFields);
+    UserDTO sysUserDTO = new UserDTO(dataFields);
     
     sysUserDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
     
@@ -127,7 +127,7 @@ public class SystemAdminHelper {
    * @since 0.3.20120322
    * @version @since 0.3.20120322
 	 */
-  public static String signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO) {
+  public static String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO) {
 
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
