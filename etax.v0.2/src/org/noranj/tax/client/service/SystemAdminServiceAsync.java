@@ -3,8 +3,8 @@ package org.noranj.tax.client.service;
 
 import org.noranj.core.shared.exception.NotFoundException;
 import org.noranj.core.shared.exception.NotLoggedInException;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -28,7 +28,7 @@ public interface SystemAdminServiceAsync {
    * @param callback
    * @deprecated NOT SURE IF THIS METHOD IS NEEDED BY CLIENT. REMOVE THIS COMMENT IF USED BY CLIENT.
    */
-  public void getSystemUser(String emailAddress, AsyncCallback<SystemUserDTO> callback); //; // throws ServiceCallFailed;
+  public void getSystemUser(String emailAddress, AsyncCallback<UserDTO> callback); //; // throws ServiceCallFailed;
 
   /**
    * It adds a new user to the data store.
@@ -36,13 +36,13 @@ public interface SystemAdminServiceAsync {
    * @param systemUser holds the data for the new user.
    * The return value is the userId assigned to the user by the system.
    */
-  public void addSystemUser(SystemUserDTO systemUser, AsyncCallback<String> callback); // the implementation throws NotFoundException;
+  public void addSystemUser(UserDTO systemUser, AsyncCallback<String> callback); // the implementation throws NotFoundException;
 
   /**
    * 
    * @param callback
    */
-  public void getLoggedInUserDTO(AsyncCallback<SystemUserDTO> callback);
+  public void getLoggedInUserDTO(AsyncCallback<UserDTO> callback);
   
   //FIXME the header documentation must be corrected. The only mandatory field is party name. it then should search for the party that matches the name. 
   /**
@@ -52,7 +52,7 @@ public interface SystemAdminServiceAsync {
    * @param systemUserDTO
    * @param callback
    */
-  public void signup(SystemClientPartyDTO systemClientPartyDTO, SystemUserDTO systemUserDTO, AsyncCallback<String> callback);
+  public void signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO, AsyncCallback<String> callback);
   
   /**
    * 
@@ -62,5 +62,5 @@ public interface SystemAdminServiceAsync {
   public void logout(AsyncCallback<Void> callback) throws NotLoggedInException;
   
   
-  public void addSystemClientParty(SystemClientPartyDTO systemClientParty,AsyncCallback<String> callback);
+  public void addSystemClientParty(ClientPartyDTO systemClientParty,AsyncCallback<String> callback);
 }

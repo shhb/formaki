@@ -16,8 +16,8 @@ import javax.jdo.annotations.Persistent;
 import org.noranj.core.server.domain.Party;
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ParentUnownedChildEntity;
-import org.noranj.idnt.shared.dto.SystemClientPartyDTO;
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.shared.type.PartyRoleType;
 
 /**
@@ -73,7 +73,7 @@ public class ClientParty extends Party implements Serializable, ParentUnownedChi
     super(name, logoURI, activityType, roles);
   }
 
-  public ClientParty(SystemClientPartyDTO systemClientPartyDTO) {
+  public ClientParty(ClientPartyDTO systemClientPartyDTO) {
     super(  systemClientPartyDTO.getName(), 
             systemClientPartyDTO.getLogoURI(), 
             systemClientPartyDTO.getActivityType(), 

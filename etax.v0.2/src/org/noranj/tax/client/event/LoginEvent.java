@@ -1,7 +1,7 @@
 
 package org.noranj.tax.client.event;
 
-import org.noranj.idnt.shared.dto.SystemUserDTO;
+import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -17,13 +17,13 @@ public class LoginEvent extends GwtEvent<LoginEventHandler> {
   
   public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();
   
-  private final SystemUserDTO user;
+  private final UserDTO user;
 
-  public LoginEvent(SystemUserDTO user) {
+  public LoginEvent(UserDTO user) {
     this.user = user;
   }
 
-  public SystemUserDTO getUser() {
+  public UserDTO getUser() {
     return user;
   }
 
