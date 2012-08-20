@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
 import org.noranj.core.server.DAL1ToNHelper;
@@ -16,8 +15,6 @@ import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.idnt.server.domain.ClientParty;
 import org.noranj.idnt.server.domain.User;
-import org.noranj.idnt.server.service.SystemAdminServiceImpl;
-import org.noranj.idnt.server.servlet.SignUpMailHandlerServlet;
 import org.noranj.idnt.shared.dto.ClientPartyDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.server.Startup;

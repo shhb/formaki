@@ -29,14 +29,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * It may not be needed as we will limit access to the signup pages to only Admin users and
  * by default their name space is set to the proper namespace by filter.
  * 
- * Another idea would be to use SERVLETs in backend to do the amdin jobs and limit the access their using web.xml.
+ * NOTE: Another idea would be to use SERVLETs in backend to do the amdin jobs and limit the access their using web.xml.
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3.20120613.1740
- * @version 0.3.20120613.1740
+ * @since 0.2.20120613.1740
+ * @version 0.2.20120613.1740
  * @change
  *  BA:2012-06-13 Added signup
  */
@@ -69,10 +69,10 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * It uses the users email address to find its detail information.
    * The email address is used as the user ID to sign in to the system.
    * 
-   * @param systemClientPartyDTO stores the party that we would like to get its users. If it is set to null, it gets all users.
+   * @param clientPartyDTO stores the party that we would like to get its users. If it is set to null, it gets all users.
    * @return the list of system users that belong to the client party. If no user is found, the list will be empty.
    */
-  public List<UserDTO> getSystemUsers(ClientPartyDTO systemClientPartyDTO) {
+  public List<UserDTO> getSystemUsers(ClientPartyDTO clientPartyDTO) {
     
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
@@ -166,8 +166,8 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * If it is passed as NULL, we assume the party doesn't exist so user's last name is used as party name.
    * @param systemUserDTO
    * @return
-   * @since 0.3.20120613.1740
-   * @version 0.3.20120613.1740
+   * @since 0.2.20120613.1740
+   * @version 0.2.20120613.1740
    */
   public String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO) {
     
