@@ -1,6 +1,5 @@
 package org.noranj.idnt.server.service;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
