@@ -18,7 +18,7 @@ import org.noranj.core.server.servlet.NamespaceFilter;
 public final class JDOPMFactory {
 	
   private static Logger logger = Logger.getLogger(NamespaceFilter.class.getName());
-
+  
   private static final PersistenceManagerFactory pmfTxOptionalInstance = JDOHelper.getPersistenceManagerFactory("transactions-optional");
   
   //private static final PersistenceManagerFactory pmfEventualReadShortDeadlineInstance = JDOHelper.getPersistenceManagerFactory("eventual-reads-short-deadlines");
