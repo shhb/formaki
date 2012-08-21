@@ -1,4 +1,4 @@
-<module rename-to='etax'>
+<module rename-to='tax'>
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
 	<entry-point class="org.noranj.tax.client.Tax"/>
