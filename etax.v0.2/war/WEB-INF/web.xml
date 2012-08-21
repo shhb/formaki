@@ -43,7 +43,7 @@
 
 	<filter-mapping>
 		<filter-name>loginfilter</filter-name>
-		<url-pattern>/etax/businessDocument</url-pattern>
+		<url-pattern>/tax/businessDocument</url-pattern>
 	</filter-mapping>
 
 	<!-- ===================== Logout Google Servlet ===================== -->
@@ -70,7 +70,7 @@
 
 	<servlet-mapping>
 		<servlet-name>systemAdmin</servlet-name>
-		<url-pattern>/etax/systemAdmin</url-pattern>
+		<url-pattern>/tax/systemAdmin</url-pattern>
 	</servlet-mapping>
 
   <servlet>
