@@ -27,7 +27,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 	private final String id;
 	
 	
-	public UserDefinitionPresenter(UserDefinitionView<UserDTO,IDNameDTO> view, String id,SystemAdminServiceAsync rpc){
+	public UserDefinitionPresenter(UserDefinitionView<UserDTO,IDNameDTO> view, String id, SystemAdminServiceAsync rpc){
 		 this.view = view;
 		 this.id= id ; 
 		 this.rpc = rpc;
@@ -41,7 +41,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 			
 			@Override
 			public void onClick(ClickEvent event) {
-						doSave(new UserDTO());		
+						doSave(new UserDTO());	//FIXME [SA:] why you are passing an object without any reference to it? why not passing null!! why passing any parameter at all?!?!? 	
 			}
 		});
 		
@@ -53,6 +53,7 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 			}
 		});
 	
+		//TODO [SA:] this must come from a service defined in server side. (BA:2012-08-21)
 		List<IDNameDTO> partyRoleTypeList = new ArrayList<IDNameDTO>();
 		partyRoleTypeList.add(new IDNameDTO("1","Buyer"));
 		partyRoleTypeList.add(new IDNameDTO("2","Seller"));
@@ -69,6 +70,10 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 		container.add(view.asWidget());
 	}
 
+	/**
+	 * It saves the form to data storage.
+	 * @param user - why passing this parameter?? it is not carrying any data into the method!!
+	 */
 	public void doSave(UserDTO user) {
 	  
 	  //BA:2012-JUN-14 this must be set in UI by showing a list box for now 9single choice. */
@@ -82,7 +87,8 @@ public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Pre
 																  roles roles, 
 																  null users);*/
 	    
-	user = new UserDTO("", this.view.getFirstName().getValue(),
+    user = new UserDTO(this.view.getid().getValue(), //BA:2012-08-22 Fixed [TAX-22]. The value passed was hard coded "". It must come from VIEW if there is a field for it in that VEIW. I am going to also change the constructor to treat the empty string as NULL. See [TAX-22] for more details.
+	                       this.view.getFirstName().getValue(),
 												 this.view.getLastName().getValue(), 
 												 this.view.getEmailAddress().getValue() , 
 												 null, //BA:2012-JUN-14 parentClient.getId(), 

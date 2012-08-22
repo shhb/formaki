@@ -60,7 +60,9 @@ public class UserDTO implements Serializable {
                       long lastActive,
                       UserProfileDTO profile) {
     super();
-    this.id = id;
+    //BA:2012-08-22 fixed [TAX-22]
+    //this.id = id;
+    this.id = (id!=null && !id.equals("")?id:null); // null and empty string means the user is a new entity. [TAX-22]
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;

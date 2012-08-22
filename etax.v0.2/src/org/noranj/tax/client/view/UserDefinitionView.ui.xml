@@ -9,45 +9,45 @@
 				<div>Registry Form</div>
 			</g:HTMLPanel>
 		</g:VerticalPanel>
-		<g:DecoratorPanel >
-			<g:VerticalPanel>
+		<g:DecoratorPanel width="719px" >
+			<g:VerticalPanel width="696px">
 				<g:HorizontalPanel>
 					<g:ScrollPanel >
 						<g:VerticalPanel >
-							<g:Grid>
+							<g:Grid width="435px">
 								<g:row>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:Label text="First Name"></g:Label>
+											<g:Label text="Email Address:" width="137px"></g:Label>
 										</g:SimplePanel>
 									</g:customCell>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:TextBox ui:field="firstName"></g:TextBox>
+											<g:TextBox ui:field="emailAddress" width="537px"></g:TextBox>
 										</g:SimplePanel>
 									</g:customCell>
 								</g:row>
 								<g:row>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:Label text="Last Name"></g:Label>
+											<g:Label text="First Name:"></g:Label>
 										</g:SimplePanel>
 									</g:customCell>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:TextBox ui:field="lastName"></g:TextBox>
+											<g:TextBox ui:field="firstName" width="287px"></g:TextBox>
 										</g:SimplePanel>
 									</g:customCell>
 								</g:row>
 								<g:row>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:Label text="Email Address"></g:Label>
+											<g:Label text="Last Name:"></g:Label>
 										</g:SimplePanel>
 									</g:customCell>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:TextBox ui:field="emailAddress"></g:TextBox>
+											<g:TextBox ui:field="lastName" width="286px"></g:TextBox>
 										</g:SimplePanel>
 									</g:customCell>
 								</g:row>
@@ -59,19 +59,19 @@
 									</g:customCell>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:TextBox ui:field="businessName"></g:TextBox>
+											<g:TextBox ui:field="businessName" width="285px"></g:TextBox>
 										</g:SimplePanel>
 									</g:customCell>
 								</g:row>
 								<g:row>
 									<g:customCell>
 										<g:SimplePanel>
-											<g:Label text="Business Role"></g:Label>
+											<g:Label text="Service Type"></g:Label>
 										</g:SimplePanel>
 									</g:customCell>
 									<g:customCell>
 									<g:SimplePanel width="190px">
-										<w:SelectOneListBox ui:field="businessRole" width="180px">
+										<w:SelectOneListBox ui:field="businessRole" width="181px">
 											<g:item value="-1">...</g:item>
 										</w:SelectOneListBox>
 									</g:SimplePanel>
@@ -81,18 +81,21 @@
 						</g:VerticalPanel>
 					</g:ScrollPanel>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel >
-					<g:HorizontalPanel>
-						<g:Anchor href="#" text="Save" ui:field="saveButton"></g:Anchor>
-						<g:Anchor href="#" text="Cancel" ui:field="cancelButton"></g:Anchor>
-						<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
-					</g:HorizontalPanel>
+				<g:HorizontalPanel width="290px" spacing="10" >
+					<g:Cell horizontalAlignment="ALIGN_RIGHT">
+						<g:Anchor href="#" text="Save" ui:field="saveButton" horizontalAlignment="ALIGN_LEFT"></g:Anchor>
+					</g:Cell>
+					<g:Cell horizontalAlignment="ALIGN_CENTER">
+						<g:Anchor href="#" text="Cancel" ui:field="cancelButton" horizontalAlignment="ALIGN_RIGHT"></g:Anchor>
+					</g:Cell>
+					<g:TextBox ui:field="id" readOnly="true" visible="false"></g:TextBox>
 				</g:HorizontalPanel>
 			</g:VerticalPanel>
 		</g:DecoratorPanel>
 		<g:VerticalPanel>
 			<g:HTMLPanel>
-				<div>Please fill and save to complete your registration.</div>
+				<div>Please fill in the fields and then save the form to complete your registration.</div>
+				<div><b>Bold</b> fields are mandatory.</div>
 			</g:HTMLPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
