@@ -58,7 +58,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     assert(emailAddress!=null && emailAddress.length()>0);
     User sysUser = SystemAdminHelper.getSystemUser(emailAddress);
     if (sysUser!=null)
-      return(sysUser.getSystemUserDTO());
+      return(sysUser.getUserDTO());
     else 
       return(null);
     
@@ -92,7 +92,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
 	    
 	    List<UserDTO> sysUserList = new ArrayList<UserDTO>();
 	    for (User su : sysUsers) {
-	      sysUserList.add(su.getSystemUserDTO());
+	      sysUserList.add(su.getUserDTO());
 	    }
 	    return(sysUserList);
 
