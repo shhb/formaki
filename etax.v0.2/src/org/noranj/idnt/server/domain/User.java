@@ -65,7 +65,7 @@ public class User implements Serializable, ChildUnownedEntity {
   @Persistent
   private String emailAddress;
   public final static String C_EMAIL_ADDRESS = "emailAddress"; 
-  
+
   @Persistent
   private ActivityType activityType = ActivityType.Deactive; 
 
@@ -216,10 +216,10 @@ public class User implements Serializable, ChildUnownedEntity {
    * 
    * @return
    */
-  public UserDTO getSystemUserDTO () {
+  public UserDTO getUserDTO () {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
-    UserDTO suDTO = new UserDTO(getId(), firstName, lastName, emailAddress, 
+    UserDTO userDTO = new UserDTO(getId(), firstName, lastName, emailAddress, 
                                             getParentClientId(), 
                                             activityType, 
                                             lastActive,
@@ -228,7 +228,7 @@ public class User implements Serializable, ChildUnownedEntity {
                                             /*(profile!=null?profile.getUserProfileDTO():null)*/ //FIXME
                                             );
     
-    return(suDTO);
+    return(userDTO);
   }
 
   /** This is implemented so we can use DAL1ToNHelper. */

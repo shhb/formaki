@@ -103,7 +103,7 @@ public class LoginHelper extends RemoteServiceServlet {
           systemUserHelper.storeEntity(sysUser);
         */
   
-        return(sysUser.getSystemUserDTO());
+        return(sysUser.getUserDTO());
       }
       else 
         return(null);
