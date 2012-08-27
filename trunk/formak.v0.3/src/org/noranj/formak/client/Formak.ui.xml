@@ -4,7 +4,6 @@
 	xmlns:app='urn:import:org.noranj.formak.client'
 	xmlns:view='urn:import:org.noranj.formak.client.view'
 	xmlns:formak='urn:import:org.noranj.formak.client.view'>
-
 	<ui:style src="resources/en/GlobalStylesEn.css" />
 	<g:DockLayoutPanel unit='EM' styleName='{style.outer}'>
 		<g:north size="2.2">
