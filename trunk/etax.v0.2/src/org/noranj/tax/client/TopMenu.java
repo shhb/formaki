@@ -7,10 +7,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class TopMenu<T> extends Composite {
+public class TopMenu<T> extends Composite implements ITopMenu<T>{
 
 	// This is used to hook the presenter to view
-
+	private Presenter<T> presenter;
 	
 	private static TopMenuUiBinder uiBinder = GWT.create(TopMenuUiBinder.class);
 
@@ -27,5 +27,10 @@ public class TopMenu<T> extends Composite {
 		return this;
 	}
 
+	// This is used to hook the presenter to view
+	@Override
+	public void setPresenter(Presenter<T> presenter) {
+		this.presenter = presenter;
+	}
 
 }
