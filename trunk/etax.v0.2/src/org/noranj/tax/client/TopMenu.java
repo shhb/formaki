@@ -1,24 +1,31 @@
 package org.noranj.tax.client;
 
-import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * 
- * @version 0.3.2012AUG25
- * @since 0.3.2012AUG25
- * @change 
- */
- 
-public interface TopMenu<T> {
+
+public class TopMenu<T> extends Composite {
+
+	// This is used to hook the presenter to view
 
 	
-	public interface Presenter<T> {
-		
+	private static TopMenuUiBinder uiBinder = GWT.create(TopMenuUiBinder.class);
+
+	@UiTemplate("TopMenu.ui.xml")
+	interface TopMenuUiBinder extends UiBinder<Widget, TopMenu> {
 	}
-			
-	void setPresenter(Presenter<T> presenter);
+
+	public TopMenu() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 	
-	Widget asWidget();
+	@Override
+	public Widget asWidget() {
+		return this;
+	}
+
 
 }
