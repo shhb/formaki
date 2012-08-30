@@ -9,7 +9,7 @@ import org.noranj.idnt.shared.dto.IDNameDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
 import org.noranj.tax.client.service.SystemAdminServiceAsync;
-import org.noranj.tax.client.view.UserDefinitionView;
+import org.noranj.tax.client.view.IUserDefinitionView;
 //import org.noranj.tax.shared.dto.SystemClientPartyDTO;
 import org.noranj.tax.shared.type.PartyRoleType;
 
@@ -20,14 +20,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 
-public class UserDefinitionPresenter implements Presenter,UserDefinitionView.Presenter<UserDTO,IDNameDTO> {
+public class UserDefinitionPresenter implements Presenter,IUserDefinitionView.Presenter<UserDTO,IDNameDTO> {
 
-	private final UserDefinitionView<UserDTO,IDNameDTO> view;
+	private final IUserDefinitionView<UserDTO,IDNameDTO> view;
 	private final SystemAdminServiceAsync rpc;
 	private final String id;
 	
 	
-	public UserDefinitionPresenter(UserDefinitionView<UserDTO,IDNameDTO> view, String id, SystemAdminServiceAsync rpc){
+	public UserDefinitionPresenter(IUserDefinitionView<UserDTO,IDNameDTO> view, String id, SystemAdminServiceAsync rpc){
 		 this.view = view;
 		 this.id= id ; 
 		 this.rpc = rpc;
