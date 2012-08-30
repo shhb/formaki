@@ -24,9 +24,9 @@ import org.noranj.tax.client.presenter.Presenter;
 import org.noranj.tax.client.presenter.UserDefinitionPresenter;
 import org.noranj.tax.client.service.SystemAdminService;
 import org.noranj.tax.client.service.SystemAdminServiceAsync;
+import org.noranj.tax.client.view.ILoginView;
 import org.noranj.tax.client.view.LoginView;
-import org.noranj.tax.client.view.LoginViewImpl;
-import org.noranj.tax.client.view.UserDefinitionViewImpl;
+import org.noranj.tax.client.view.UserDefinitionView;
 import org.noranj.tax.shared.GlobalSettings;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -97,7 +97,7 @@ public class Tax implements EntryPoint {
             showLoginView();
           } else {
             SystemAdminServiceAsync rpc = GWT.create(SystemAdminService.class);
-            UserDefinitionViewImpl<UserDTO, IDNameDTO> userDefinitionView = new UserDefinitionViewImpl<UserDTO, IDNameDTO>();
+            UserDefinitionView<UserDTO, IDNameDTO> userDefinitionView = new UserDefinitionView<UserDTO, IDNameDTO>();
             Presenter presenter = new UserDefinitionPresenter(
                 userDefinitionView, "", rpc);
             presenter.go(RootLayoutPanel.get());
@@ -121,7 +121,7 @@ public class Tax implements EntryPoint {
   public void showLoginView() {
     root = RootLayoutPanel.get();
     root.clear();
-    LoginView<UserDTO> view = new LoginViewImpl<UserDTO>();
+    ILoginView<UserDTO> view = new LoginView<UserDTO>();
     LoginPresenter loginPresenter = new LoginPresenter(eventBus, view);
     loginPresenter.go(root);
   }
