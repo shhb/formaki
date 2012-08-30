@@ -1,17 +1,17 @@
 package org.noranj.tax.client.presenter;
 
 import org.noranj.idnt.shared.dto.UserDTO;
-import org.noranj.tax.client.TopMenu;
+import org.noranj.tax.client.view.ITopMenu;
 
 
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class TopMenuPresenter implements Presenter  {
 
-	public TopMenuPresenter(TopMenu<UserDTO> view){
+	public TopMenuPresenter(ITopMenu<UserDTO> view){
 		this.view = view;
 	}
-	private final TopMenu<UserDTO> view;
+	private final ITopMenu<UserDTO> view;
 	@Override
 	public void go(HasWidgets container) {
 		container.clear();
