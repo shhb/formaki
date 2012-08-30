@@ -3,11 +3,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:app="urn:import:org.noranj.tax.client.view">
 	<ui:style src="resources/en/css/GlobalStylesEn.css" />
-	<g:DockLayoutPanel unit='EM'>
-		<g:north size="2.2">
+	<g:SplitLayoutPanel  >
+		<g:north size="25">
 			<app:TopMenu/>
 		</g:north>
-		<g:south size="2.2">
+		<g:south size="25.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
 				<div>
 					<g:Anchor href="#Contact" >Contact us</g:Anchor>
@@ -20,22 +20,22 @@
 				</div>
 			</g:HTMLPanel>
 		</g:south>
-		<g:east size="4.6">
+		<g:east size="45">
 			<app:PublicPlace/>
 		</g:east>
-		<g:west size='15.9'>
+		<g:west size='175'>
 	 		<app:ControlMenu/>
 		</g:west>
 
-		<g:north size='4.5'>
+		<g:north size='45'>
 			<app:HeaderPanel/>
 		</g:north>
 		
 		<g:center size='15'>
 			<app:MainPanel/>
 		</g:center>
-		<g:south size="4.0">
+		<g:south size="55">
 			<app:ProgressBar/>
 		</g:south>
-	</g:DockLayoutPanel>
+	</g:SplitLayoutPanel >
 </ui:UiBinder> 

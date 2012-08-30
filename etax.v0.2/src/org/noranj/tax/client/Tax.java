@@ -40,6 +40,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -48,7 +49,7 @@ public class Tax implements EntryPoint {
 
   private static final TaxUiBinder uiBinder = GWT.create(TaxUiBinder.class);
 
-  interface TaxUiBinder extends UiBinder<DockLayoutPanel, Tax> {
+  interface TaxUiBinder extends UiBinder<SplitLayoutPanel , Tax> {
   }
 
   RootLayoutPanel root;
