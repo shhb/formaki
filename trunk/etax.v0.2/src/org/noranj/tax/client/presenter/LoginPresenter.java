@@ -1,7 +1,7 @@
 package org.noranj.tax.client.presenter;
 
 import org.noranj.idnt.shared.dto.UserDTO;
-import org.noranj.tax.client.view.LoginView;
+import org.noranj.tax.client.view.ILoginView;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,9 +18,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
  */
 public class LoginPresenter implements Presenter {
 	
-	private final LoginView<UserDTO> view;
+	private final ILoginView<UserDTO> view;
 
-	public LoginPresenter(SimpleEventBus eventBus, LoginView<UserDTO> view) {
+	public LoginPresenter(SimpleEventBus eventBus, ILoginView<UserDTO> view) {
 		this.view = view;
 		bind();
 	}
