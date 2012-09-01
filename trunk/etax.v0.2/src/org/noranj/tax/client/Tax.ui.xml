@@ -10,12 +10,14 @@
 		<g:south size="25.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
 				<div>
-					<g:Anchor href="#Contact" >Contact us</g:Anchor>
-					|
-					<g:Anchor href="#Privacy" >Privacy</g:Anchor>
-					|
-					<g:Anchor href="#Contact" >About</g:Anchor>
-					|
+					<g:Button ui:field="openContactUs">Contact us</g:Button>
+					
+					<g:Button ui:field="openPrivacy">Privacy</g:Button>
+					
+					<g:Button ui:field="openAbout">About</g:Button> 
+					
+					<g:Button text="Help" ui:field="openHelp"></g:Button>
+					
 					© Copyright Our Company, 2012. All Rights Reserved.
 				</div>
 			</g:HTMLPanel>
