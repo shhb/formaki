@@ -32,15 +32,24 @@ import org.noranj.tax.shared.GlobalSettings;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -53,6 +62,20 @@ public class Tax implements EntryPoint {
   }
 
   RootLayoutPanel root;
+
+//TODO:SA:20120901: It should move to another class.
+  @UiHandler("openHelp")//,"openAbout","openPrivacy","openContactUs")
+  void doOpenPopup(ClickEvent e) {
+	  final DecoratedPopupPanel simplePopup = new DecoratedPopupPanel(true);
+	  simplePopup.ensureDebugId("cwBasicPopup-simplePopup");
+	  simplePopup.setWidth("150px");
+	  simplePopup.setWidget( new HTML("<html>Help yourself by reading something everyday.</html>"));
+	  int left = (Window.getClientWidth() / 2);
+      int top = (Window.getClientHeight() / 2);
+      simplePopup.setPopupPosition(left, top);
+	  simplePopup.show();
+}
+
 
   private SimpleEventBus eventBus = new SimpleEventBus();
 
