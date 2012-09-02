@@ -3,22 +3,22 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:app="urn:import:org.noranj.tax.client.view">
 	<ui:style src="resources/en/css/GlobalStylesEn.css" />
-	<g:SplitLayoutPanel  >
+	<g:SplitLayoutPanel>
 		<g:north size="25">
 			<app:TopMenu/>
 		</g:north>
-		<g:south size="25.0">
+		<g:south size="35.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
 				<div>
-					<g:Button ui:field="openContactUs">Contact us</g:Button>
-					
-					<g:Button ui:field="openPrivacy">Privacy</g:Button>
-					
-					<g:Button ui:field="openAbout">About</g:Button> 
-					
-					<g:Button text="Help" ui:field="openHelp"></g:Button>
-					
-					© Copyright Our Company, 2012. All Rights Reserved.
+					<g:Anchor >Contact us</g:Anchor>
+					|
+					<g:Anchor >Privacy</g:Anchor>
+					|
+					<g:Anchor >About</g:Anchor> 
+					|
+					<g:Anchor  ui:field="openHelp">Help</g:Anchor>
+					|
+					© Copyright Our Company, 2020. All Rights Reserved.
 				</div>
 			</g:HTMLPanel>
 		</g:south>
@@ -39,5 +39,5 @@
 		<g:south size="55">
 			<app:ProgressBar/>
 		</g:south>
-	</g:SplitLayoutPanel >
+	</g:SplitLayoutPanel>
 </ui:UiBinder> 

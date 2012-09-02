@@ -15,11 +15,10 @@
  */
 package org.noranj.tax.client;
 
-import org.noranj.tax.client.presenter.LoginPresenter;
-//import org.noranj.tax.client.view.LoginView;
 import org.noranj.idnt.shared.dto.IDNameDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.client.helper.RPCCall;
+import org.noranj.tax.client.presenter.LoginPresenter;
 import org.noranj.tax.client.presenter.Presenter;
 import org.noranj.tax.client.presenter.UserDefinitionPresenter;
 import org.noranj.tax.client.service.SystemAdminService;
@@ -33,23 +32,18 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
+//import org.noranj.tax.client.view.LoginView;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
