@@ -8,30 +8,8 @@
 			<g:ToggleButton text="New ToggleButton" height="50px" width="195px"/>
 		</g:VerticalPanel>
 		
-		<g:StackLayoutPanel unit="PX" width="100%" height="400px">
-			<g:stack>
-				<g:header size="30">Menu 1</g:header>
-				<g:HTMLPanel></g:HTMLPanel>
-			</g:stack>
-			<g:stack>
-				<g:header size="30">Menu2</g:header>
-				<g:HTMLPanel>
-					<ul style="list-style:none;">
-						<li>Elt 1</li>
-						<li>Elt 2</li>
-						<li>Elt 3</li>
-						<li>Elt 4</li>
-					</ul>
-				</g:HTMLPanel>
-			</g:stack>
-			<g:stack>
-				<g:header size="30">Menu 3</g:header>
-				<g:HTMLPanel></g:HTMLPanel>
-			</g:stack>
-			<g:stack>
-				<g:header size="30">Menu 4</g:header>
-				<g:HTMLPanel></g:HTMLPanel>
-			</g:stack>
+		<g:StackLayoutPanel unit="EM" width="100%" height="400px" ui:field='menuRoot'>
+			
 			</g:StackLayoutPanel>
 
 	</g:HTMLPanel>
