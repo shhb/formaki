@@ -17,7 +17,7 @@ import org.noranj.idnt.server.domain.ClientParty;
 import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.shared.dto.ClientPartyDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
-import org.noranj.tax.server.Startup;
+import org.noranj.tax.v2012.server.Startup;
 
 import com.google.appengine.api.NamespaceManager;
 

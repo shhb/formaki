@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.noranj.core.shared.type.ActivityType;
-import org.noranj.tax.shared.type.PartyRoleType;
+import org.noranj.tax.v2012.shared.type.PartyRoleType;
 
 
 /**
