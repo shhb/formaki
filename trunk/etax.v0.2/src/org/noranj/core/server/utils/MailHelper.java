@@ -21,7 +21,7 @@ import org.noranj.core.server.domain.Attachment;
 import org.noranj.core.server.domain.MailMessage;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.type.MIMEType;
-import org.noranj.tax.shared.GlobalSettings;
+import org.noranj.tax.v2012.shared.GlobalSettings;
 
 /**
  * This class gets a MIMEMEssage and then put it in a simpler data structure named MailMessage. 

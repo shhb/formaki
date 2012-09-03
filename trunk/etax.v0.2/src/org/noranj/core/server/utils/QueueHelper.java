@@ -8,8 +8,8 @@ import javax.mail.internet.InternetAddress;
 import org.noranj.core.shared.Constants;
 import org.noranj.idnt.server.domain.User;
 /*import org.noranj.tax.server.domain.core.PendingDocument;*/ //TODO:BA:2012-AUG-10 needs to review 
-import org.noranj.tax.shared.GlobalSettings;
-import org.noranj.tax.shared.type.DocumentType;
+import org.noranj.tax.v2012.shared.GlobalSettings;
+import org.noranj.tax.v2012.shared.type.DocumentType;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
