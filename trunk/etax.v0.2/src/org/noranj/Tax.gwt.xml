@@ -1,7 +1,7 @@
 <module rename-to='tax'>
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.user.theme.clean.Clean"/>
-	<entry-point class="org.noranj.tax.client.Tax"/>
+	<entry-point class="org.noranj.tax.v2012.client.Tax"/>
 	<source path='tax/v2012/client'/>
 	<source path='idnt/shared'/>
   	<source path='core/shared'/>
