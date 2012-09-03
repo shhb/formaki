@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style src="../resources/en/css/ControlMenuStyleEn.css" />
+		
+	<g:HTMLPanel styleName='{style.base}'>
+		<g:VerticalPanel>
+			<g:ToggleButton text="New ToggleButton" height="50px" width="195px"/>
+		</g:VerticalPanel>
+		
+		<g:StackLayoutPanel unit="EM" width="100%" height="400px" ui:field='menuRoot'>
+			
+			</g:StackLayoutPanel>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 
