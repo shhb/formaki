@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import org.noranj.tax.client.service.SystemAdminService;
+import org.noranj.tax.v2012.client.service.SystemAdminService;
 import org.noranj.core.server.DAL1ToNHelper;
 import org.noranj.core.server.DALHelper;
 import org.noranj.core.server.JDOPMFactory;

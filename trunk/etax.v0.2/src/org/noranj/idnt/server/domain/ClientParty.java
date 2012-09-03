@@ -18,7 +18,7 @@ import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ParentUnownedChildEntity;
 import org.noranj.idnt.shared.dto.ClientPartyDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
-import org.noranj.tax.shared.type.PartyRoleType;
+import org.noranj.tax.v2012.shared.type.PartyRoleType;
 
 /**
  * 

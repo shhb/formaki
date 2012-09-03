@@ -17,7 +17,7 @@ import org.noranj.core.server.utils.QueueHelper;
 import org.noranj.core.server.utils.Utils;
 import org.noranj.core.shared.Constants;
 import org.noranj.idnt.server.SystemAdminHelper;
-import org.noranj.tax.shared.GlobalSettings;
+import org.noranj.tax.v2012.shared.GlobalSettings;
 
 /**
  * All the emails sent to this servlet will be processed and the attachment or body is used to build a business document.
