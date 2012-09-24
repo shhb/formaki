@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 .base{
 	background-color: #eceef4;
-	border :dotted 1.5px solid #000000;
+	border :dotted 0px solid #000000;
 	padding-left: 18px;
 }
 
@@ -46,7 +46,7 @@
 }
 .contentactive{
 		padding-top: 15px;
-		padding-left:5px;
+		padding-left:15px;
 		color: white;
 	
 }
