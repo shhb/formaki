@@ -3,6 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style src="../resources/en/css/PublicPlaceStyleEn.css" />
 	<g:HTMLPanel styleName='{style.base}'>
-		<div >Public Place </div>
+		<div >Public Place</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 
