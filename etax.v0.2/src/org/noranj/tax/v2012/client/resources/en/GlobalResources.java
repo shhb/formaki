@@ -64,7 +64,10 @@ public interface GlobalResources extends ClientBundle {
 	  
 	  @Source("org/noranj/tax/v2012/client/resources/en/css/GlobalStylesEn.css")
 	  GlobalStylesheet globalStyles();
-
+	  
+	  @Source("org/noranj/tax/v2012/client/resources/en/images/alignedmenu.png")
+	  ImageResource alignedMenu();
+	  
 	  //FIXME SA 2012-02-10 
 //	  @Source("org/noranj/tax/v2012/client/resources/en/TextResource.txt")
 //	  GlobalTextResouce bundle();		  

@@ -3,10 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:app="urn:import:org.noranj.tax.v2012.client.view">
 	<ui:style src="resources/en/css/GlobalStylesEn.css" />
-	<g:SplitLayoutPanel>
-		<g:north size="25">
-			<app:TopMenu/>
-		</g:north>
+	<g:DockLayoutPanel height="100%">
 		<g:south size="35.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
 				<div>
@@ -22,22 +19,19 @@
 				</div>
 			</g:HTMLPanel>
 		</g:south>
-		<g:east size="45">
+		<g:east size="65">
 			<app:PublicPlace/>
 		</g:east>
-		<g:west size='175'>
-	 		<app:ControlMenu/>
-		</g:west>
 
-		<g:north size='45'>
+		<g:north size='65'>
 			<app:HeaderPanel/>
 		</g:north>
 		
-		<g:center size='15'>
+		<g:center >
 			<app:MainPanel/>
 		</g:center>
-		<g:south size="55">
+		<g:south size="50">
 			<app:ProgressBar/>
 		</g:south>
-	</g:SplitLayoutPanel>
+	</g:DockLayoutPanel>
 </ui:UiBinder> 

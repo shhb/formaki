@@ -1,16 +1,28 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:image field='stepba' src='../resources/en/images/stepbackactive.png' />
+	<ui:image field='stepon' src='../resources/en/images/stepbackactive.png' />
+	<ui:image field='stepoff' src='../resources/en/images/step.png' />
 	<ui:style src="../resources/en/css/ProgressBarStylesEn.css" />
 	<g:HTMLPanel styleName='{style.base}'>
-	<g:HorizontalPanel>
-		<g:VerticalPanel styleName='{style.stepbackactive}'>
-			<g:Image url='resources/en/images/step.png'/></g:VerticalPanel>
-		<g:VerticalPanel styleName='{style.stepbackactive}'></g:VerticalPanel>
-		<g:VerticalPanel styleName='{style.stepbackactive}'>
-			<g:Image url='resources/en/images/step.png'/></g:VerticalPanel>
-		<g:VerticalPanel styleName='{style.stepbackactive}'></g:VerticalPanel>
+
+	<g:HorizontalPanel >
+	<g:HTMLPanel styleName='{style.base}'>
+	
+	<div id="progressbar">
+        <div class='{style.stepbackactive}'><div class='{style.contentactive}'>1-Select Qutions</div></div>
+        <div class='{style.stepactive}'></div>
+        <div class='{style.stepback}'><div class='{style.content}'>2-Answer Qutions</div></div>
+        <div class='{style.stepdeactive}'></div>
+        <div class='{style.stepback}'><div class='{style.content}'>3-Preview the result</div></div>
+        <div class='{style.stepdeactive}'></div>
+        <div class='{style.stepback}'><div class='{style.content}'>4-Done</div></div>
+        <div class='{style.stepdeactive}'></div>
+	</div>
+	
+	</g:HTMLPanel>	
 	</g:HorizontalPanel>
+		
 	</g:HTMLPanel>
+	
 </ui:UiBinder> 
