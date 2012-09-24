@@ -52,7 +52,7 @@ public class Tax implements EntryPoint {
 
   private static final TaxUiBinder uiBinder = GWT.create(TaxUiBinder.class);
 
-  interface TaxUiBinder extends UiBinder<SplitLayoutPanel , Tax> {
+  interface TaxUiBinder extends UiBinder<DockLayoutPanel , Tax> {
   }
 
   RootLayoutPanel root;

@@ -1,13 +1,54 @@
 @CHARSET "ISO-8859-1";
 .base{
-	background-color: #F1F1F1;
-	border-left:dotted 1.5px solid #000000;
+	background-color: #eceef4;
+	border :dotted 1.5px solid #000000;
 }
 
+#progressbar { background: #eceef4; max-height: 100px; overflow-y: hidden; }
+
+.stepback { background: #eceef4; width: 150px; height: 100px; float: left; margin: 0; }
+
 @sprite .stepbackactive {
-			margin: 0px 0 0 30px;
-			gwt-image: 'stepba';
-			background-repeat:no-repeat;
-			border: dotted q.5px solid #000000;
+			padding:0 0 0 0;
+			margin: 0 0 0 0;
+			gwt-image: 'stepon';
+			background-repeat:repeat;
+			height:49px;
+			width: 150px;
+			float: left; 
 }
 			
+@sprite .stepactive {
+			padding:0 0 0 0;
+			margin: 0 0 0 0;
+			gwt-image: 'stepoff';
+			background-repeat:no-repeat;
+			background-position: -1px -104px;
+			height: 49px;
+			width: 30px;
+			float: left; 
+}
+@sprite .stepdeactive {
+			padding:0 0 0 0;
+			margin: 0 0 0 0;
+			gwt-image: 'stepoff';
+			background-repeat:no-repeat;
+			background-position: -1px -1px;
+			height: 49px;
+			width: 30px;
+			float: left; 
+}
+.content{
+		padding-top: 15px;
+		padding-left:5px;
+	
+}
+.contentactive{
+		padding-top: 15px;
+		padding-left:5px;
+		color: white;
+	
+}
+
+
+
