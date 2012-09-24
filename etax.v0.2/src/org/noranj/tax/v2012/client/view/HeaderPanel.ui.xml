@@ -1,8 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:image field='logo' src='../resources/en/images/logo.png' />
 	<ui:style src="../resources/en/css/HeaderPanelStyleEn.css" />
 	<g:HTMLPanel styleName='{style.base}'>
-		Header Panel
+		<div class='{style.logo}' />
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -2,5 +2,12 @@
 .base{
 	background-color: #ffffff;
 	border-bottom: 0px solid #C0C0C0;
-	padding: 20px 20px 20px 20px;
+	padding-left:40px;
+	padding-top: 20px;
+}
+
+@sprite .logo{
+	gwt-image: 'logo';
+	background-repeat: no-repeat;
+	
 }
