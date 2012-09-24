@@ -19,7 +19,7 @@
 				</div>
 			</g:HTMLPanel>
 		</g:south>
-		<g:east size="65">
+		<g:east size="40">
 			<app:PublicPlace/>
 		</g:east>
 

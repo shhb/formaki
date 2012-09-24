@@ -1,11 +1,10 @@
 @CHARSET "ISO-8859-1";
 .base{
-	background-color: #eceef4;
-	border :dotted 0px solid #000000;
-	padding-left: 18px;
+	background-color: #ffffff;
+	padding-left: 34px;
 }
 
-#progressbar { background: #eceef4; max-height: 100px; overflow-y: hidden; }
+.progressbar { background: #eceef4; max-height: 100px; overflow-y: hidden;padding-left:1px;width: 1500px; }
 
 .stepback { background: #eceef4; width: 150px; height: 100px; float: left; margin: 0; }
 
