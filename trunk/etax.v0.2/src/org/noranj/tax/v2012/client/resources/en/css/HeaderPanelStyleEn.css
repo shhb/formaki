@@ -9,5 +9,6 @@
 @sprite .logo{
 	gwt-image: 'logo';
 	background-repeat: no-repeat;
-	
+	width:150px;
+	height: 80px
 }
