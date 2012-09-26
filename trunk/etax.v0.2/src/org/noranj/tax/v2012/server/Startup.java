@@ -10,6 +10,7 @@ import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
 import org.noranj.tax.v2012.shared.type.PartyRoleType;
 
+
 /**
  * This is the first class that is called at the start up to load the settings and some sample data when needed.
  * 
