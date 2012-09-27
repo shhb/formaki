@@ -200,16 +200,16 @@ public class LoginHelper extends RemoteServiceServlet {
     
     logger.info("user ["+userEmailAddress+"] tries to login");
     
-    User sysUser = SystemAdminHelper.getSystemUser(userEmailAddress); // googleUser.getName());
+    User user = SystemAdminHelper.getSystemUser(userEmailAddress); // googleUser.getName());
     
-    if (sysUser!=null) {
+    if (user!=null) {
       // update session if login was successful
-      session.setAttribute(Constants.C_USER_ID_PROPERTY_NAME, String.valueOf(sysUser.getId()));
-      session.setAttribute(Constants.C_CLIENT_ID_PROPERTY_NAME, String.valueOf(sysUser.getParentClientId()));
+      session.setAttribute(Constants.C_USER_ID_PROPERTY_NAME, String.valueOf(user.getId()));
+      session.setAttribute(Constants.C_CLIENT_ID_PROPERTY_NAME, String.valueOf(user.getAccountId()));
       session.setAttribute(Constants.C_LOGGED_IN_FLAG_PROPERTY_NAME, true);
     }
     
-    return sysUser;
+    return user;
 
     /** FIXME implement this so it updates these two attributes 
      * Another way to implement it is to rename getSystemUser to be login() and set the attributes in that method.

@@ -1,10 +1,14 @@
 package org.noranj.idnt.shared.dto;
 
-import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.tax.v2012.shared.type.PartyRoleType;
+
 
 /**
  * 
@@ -13,15 +17,13 @@ import org.noranj.tax.v2012.shared.type.PartyRoleType;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3
- * @version 0.3.20120322
  */
-public class PartyDTO implements Serializable {
+public class AccountDTO {
 
   /**
    * 
    */
-  private static final long serialVersionUID = 8032558360718706251L;
+  private static final long serialVersionUID = 6224939034974030263L;
   
   private String id;
   
@@ -44,18 +46,53 @@ public class PartyDTO implements Serializable {
    */
   private Set<PartyRoleType> roles;
 
-  
-  public PartyDTO() {
+  /** 
+   * list of users belong to the party.
+   * All the users in this list share the same namespace.
+   */
+  private List<UserDTO> users;
+
+  /**
+   * 
+   */
+  public AccountDTO() {
   }
   
-  public PartyDTO(String id, String name, String logoURI, ActivityType activityType, Set<PartyRoleType> partyRoles) {
-    
-    super();
+  /**
+   * 
+   * @param id
+   * @param name
+   * @param logoURI
+   * @param activityType
+   * @param partyRoles
+   * @param users
+   */
+  public AccountDTO(String id, String name, String logoURI,
+                              ActivityType activityType, Set<PartyRoleType> partyRoles, 
+                              List<UserDTO> users) {
     this.id = id;
     this.name = name;
     this.logoURI = logoURI;
     this.activityType = activityType;
     this.roles = partyRoles;
+    this.users = users;
+  }
+  
+  /** 
+   * @deprecated it is not a good idea to use such constructor 
+   * because then other codes have to use the same field name as used here.
+   * I don't think it is a good idea to define the named as constants. 2012-06-13 
+   */
+  public AccountDTO(Map<String, String> map) {
+  	super();
+  	setId(map.get("id"));
+  	setName(map.get("name"));
+  	setLogoURI(map.get("logoURI"));
+  	if (map.get("activityType")!=null)
+  		setActivityType(ActivityType.valueOf(map.get("activityType")));
+  	else 
+  		setActivityType(ActivityType.Deactive);
+  	setRoles(map.get("partyRoles"));
   }
 
   public String getId() {
@@ -103,7 +140,23 @@ public class PartyDTO implements Serializable {
    * @version 0.3.20120322
    */
   public void setRoles(String rolesStr) {
-  	this.roles = PartyRoleType.convertToSet(rolesStr);
+    this.roles = PartyRoleType.convertToSet(rolesStr);
+  }
+  
+  public List<UserDTO> getUsers() {
+    return users;
+  }
+
+  public void setUsers(List<UserDTO> users) {
+    this.users = users;
+  }
+
+  public void addUser(UserDTO systemUserDTO) {
+    if (users == null) {
+      users = new ArrayList<UserDTO>();
+    }
+    
+    this.users.add(systemUserDTO);
   }
   
 }

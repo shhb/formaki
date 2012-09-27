@@ -31,8 +31,8 @@ public class UserDTO implements Serializable {
   private String emailAddress;
   
   //BA-2012-AUG-11 Using the Key to have an un-owned relationship.
-  //private PartyDTO parentClient;
-  private String parentClientId;
+  //private PartyDTO account;
+  private String accountId;
 
   private ActivityType activityType = ActivityType.Deactive; 
 
@@ -55,7 +55,7 @@ public class UserDTO implements Serializable {
   }
 
   public UserDTO(String id, String firstName, String lastName,
-                      String emailAddress, String parentClientId, ActivityType activityType,
+                      String emailAddress, String accountId, ActivityType activityType,
                       long lastLoginOn,
                       long lastActive,
                       UserProfileDTO profile) {
@@ -66,7 +66,7 @@ public class UserDTO implements Serializable {
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
-    this.parentClientId = parentClientId;
+    this.accountId = accountId;
     this.activityType = activityType;
     this.lastLoginOn = lastLoginOn;
     this.lastActive = lastActive;
@@ -87,7 +87,7 @@ public class UserDTO implements Serializable {
   	setFirstName(map.get("firstName"));
   	setLastName(map.get("lastName"));
     setEmailAddress(map.get("emailAddress"));
-    setParentClientId(map.get("parentClientId"));
+    setAccountId(map.get("accountId"));
     
     if (map.get("activityType")!=null)
     	setActivityType(ActivityType.valueOf(map.get("activityType")));
@@ -167,12 +167,12 @@ public class UserDTO implements Serializable {
     this.emailAddress = emailAddress;
   }
 
-  public String getParentClientId() {
-    return parentClientId;
+  public String getAccountId() {
+    return accountId;
   }
 
-  public void setParentClientId(String parentClientId) {
-    this.parentClientId = parentClientId;
+  public void setAccountId(String accountId) {
+    this.accountId = accountId;
   }
 
   public ActivityType getActivityType() {

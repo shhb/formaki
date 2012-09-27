@@ -3,7 +3,7 @@ package org.noranj.tax.v2012.client.service;
 
 import org.noranj.core.shared.exception.NotFoundException;
 import org.noranj.core.shared.exception.NotLoggedInException;
-import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -37,9 +37,9 @@ public interface SystemAdminService extends RemoteService {
    */
   public String addSystemUser(UserDTO systemUser); // the implementation throws NotFoundException;
   
-  public String addSystemClientParty(ClientPartyDTO systemClientParty);
+  public String addSystemClientParty(AccountDTO systemClientParty);
 
-  public String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO);
+  public String signup(AccountDTO systemClientPartyDTO, UserDTO systemUserDTO);
   
   UserDTO getLoggedInUserDTO();
   

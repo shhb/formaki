@@ -7,23 +7,24 @@ import java.util.Set;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * 
+ * It defines the role of parties in general. 
+ * In TAX system, the roles can be Family and Accounting.
  * 
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
  *
  * @author
- * @since 0.3
- * @version 0.3.20120810
- * @deprecated NOT USED IN THIS PROJECT 
+ * @since 0.2
+ * @version 0.2.20120924
  * @change
  *  BA-2012-08-11 Added new method convertToSet.
- *  BA-2012-08-19 Depreacted the method.
  * 
  */
 public enum PartyRoleType implements Serializable, IsSerializable {
 
   Unknown, // not sure if this role is needed.
+  Applicant, 
+  Accounting,
   Buyer,
   Seller,
   Manufacturer,
@@ -34,8 +35,8 @@ public enum PartyRoleType implements Serializable, IsSerializable {
   
   /** 
    * @param roles separated by comma.
-   * @since 0.3.20120322
-   * @version 0.3.20120322
+   * @since 0.2.20120324
+   * @version 0.2.20120922
    */
   public static Set<PartyRoleType> convertToSet(String rolesStr) {
   	if (rolesStr == null) {

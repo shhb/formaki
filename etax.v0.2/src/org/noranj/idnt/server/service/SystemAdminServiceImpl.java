@@ -14,10 +14,10 @@ import org.noranj.core.server.JDOPMFactory;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.exception.NotLoggedInException;
 import org.noranj.idnt.server.SystemAdminHelper;
-import org.noranj.idnt.server.domain.ClientParty;
+import org.noranj.idnt.server.domain.Account;
 import org.noranj.idnt.server.domain.User;
 import org.noranj.idnt.server.servlet.LoginHelper;
-import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.appengine.api.NamespaceManager;
@@ -72,7 +72,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @param clientPartyDTO stores the party that we would like to get its users. If it is set to null, it gets all users.
    * @return the list of system users that belong to the client party. If no user is found, the list will be empty.
    */
-  public List<UserDTO> getSystemUsers(ClientPartyDTO clientPartyDTO) {
+  public List<UserDTO> getSystemUsers(AccountDTO clientPartyDTO) {
     
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
@@ -109,7 +109,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @param systemClientParty holds the data for the new client.
    * @return the id that is generated and assigned to the client party.
    */
-  public String addSystemClientParty(ClientPartyDTO systemClientParty) {
+  public String addSystemClientParty(AccountDTO systemClientParty) {
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
@@ -119,9 +119,9 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     try {
     	
     
-	    DALHelper<ClientParty> systemClientHelper = new DALHelper<ClientParty>(JDOPMFactory.getTxOptional(), ClientParty.class);
+	    DALHelper<Account> systemClientHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
 	    
-	    ClientParty newSystemClientParty = new ClientParty(systemClientParty);
+	    Account newSystemClientParty = new Account(systemClientParty);
 	    
 	    systemClientHelper.storeEntity(newSystemClientParty);
 	    
@@ -147,7 +147,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
 
     try {
     	
-	    DAL1ToNHelper<ClientParty, User> systemClientHelper = new DAL1ToNHelper<ClientParty, User>(JDOPMFactory.getTxOptional(), ClientParty.class, User.class);
+	    DAL1ToNHelper<Account, User> systemClientHelper = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
 	    User sysUser = new User(systemUserDTO);
 	    systemUserDTO.setId(systemClientHelper.addChildEntity(sysUser));
 	    return(systemUserDTO.getId());
@@ -169,11 +169,11 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @since 0.2.20120613.1740
    * @version 0.2.20120613.1740
    */
-  public String signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO) {
+  public String signup(AccountDTO systemClientPartyDTO, UserDTO systemUserDTO) {
     
     if (systemClientPartyDTO==null) {
       //Adding a new party named as user's last name.
-      systemClientPartyDTO= new ClientPartyDTO();
+      systemClientPartyDTO= new AccountDTO();
       systemClientPartyDTO.setName(systemUserDTO.getLastName());
     }
     
