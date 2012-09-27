@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.idnt.server.service.SystemAdminServiceImpl;
-import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.idnt.shared.dto.UserProfileDTO;
 import org.noranj.tax.v2012.shared.type.PartyRoleType;
@@ -36,7 +36,7 @@ public class Startup {
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Buyer);
     
-    ClientPartyDTO parentClient = new ClientPartyDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    AccountDTO parentClient = new AccountDTO(null, "Noranj-Retailer", "http://retailer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
     
     id = service.addSystemClientParty(parentClient);
     parentClient.setId(id);
@@ -70,7 +70,7 @@ public class Startup {
     //Adding Retailer Party
     HashSet<PartyRoleType> roles = new HashSet<PartyRoleType>();
     roles.add(PartyRoleType.Seller);
-    ClientPartyDTO parentClient = new ClientPartyDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
+    AccountDTO parentClient = new AccountDTO(null/*id*/, "Noranj-Manufacturer", "http://manufacturer.noranj.com", ActivityType.Active, roles /*roles*/, null /*users*/);
     id = service.addSystemClientParty(parentClient);
     parentClient.setId(id);
 

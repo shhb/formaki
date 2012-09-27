@@ -3,7 +3,7 @@ package org.noranj.tax.v2012.client.service;
 
 import org.noranj.core.shared.exception.NotFoundException;
 import org.noranj.core.shared.exception.NotLoggedInException;
-import org.noranj.idnt.shared.dto.ClientPartyDTO;
+import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -52,7 +52,7 @@ public interface SystemAdminServiceAsync {
    * @param systemUserDTO
    * @param callback
    */
-  public void signup(ClientPartyDTO systemClientPartyDTO, UserDTO systemUserDTO, AsyncCallback<String> callback);
+  public void signup(AccountDTO systemClientPartyDTO, UserDTO systemUserDTO, AsyncCallback<String> callback);
   
   /**
    * 
@@ -62,5 +62,5 @@ public interface SystemAdminServiceAsync {
   public void logout(AsyncCallback<Void> callback) throws NotLoggedInException;
   
   
-  public void addSystemClientParty(ClientPartyDTO systemClientParty,AsyncCallback<String> callback);
+  public void addSystemClientParty(AccountDTO systemClientParty,AsyncCallback<String> callback);
 }

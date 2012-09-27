@@ -96,7 +96,7 @@ public class User implements Serializable, ChildUnownedEntity {
                     UserProfile profile/*, long version*/) {
     super();
     setId(id);
-    setParentClientId(parentClientId);
+    setAccountId(parentClientId);
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
@@ -107,19 +107,19 @@ public class User implements Serializable, ChildUnownedEntity {
 
   /**
    * 
-   * @param systemUserDTO
+   * @param userDTO
    * @param parentClient
    * @deprecated NOT NEEDED AND NOT USED. REMOVE THE TAG IF NEEDED. It makes the code complicated.
    */
-  public User(UserDTO systemUserDTO) {
+  public User(UserDTO userDTO) {
     
-    this(systemUserDTO.getId(),
-          systemUserDTO.getParentClientId(),
-          systemUserDTO.getFirstName(),
-          systemUserDTO.getLastName(),
-          systemUserDTO.getEmailAddress(),
-          systemUserDTO.getActivityType(),
-          new UserProfile(systemUserDTO.getProfile()));
+    this(userDTO.getId(),
+          userDTO.getAccountId(),
+          userDTO.getFirstName(),
+          userDTO.getLastName(),
+          userDTO.getEmailAddress(),
+          userDTO.getActivityType(),
+          new UserProfile(userDTO.getProfile()));
     
   }
    
@@ -137,11 +137,11 @@ public class User implements Serializable, ChildUnownedEntity {
     this.id = (id!=null)?KeyFactory.stringToKey(id):null;
   }
 
-  public String getParentClientId() {
+  public String getAccountId() {
     return ((this.parentClientId!=null)?KeyFactory.keyToString(this.parentClientId):null);
   }
 
-  public void setParentClientId(String parentClientId) {
+  public void setAccountId(String parentClientId) {
     this.parentClientId = (parentClientId!=null)?KeyFactory.stringToKey(parentClientId):null;
   }
 
@@ -220,7 +220,7 @@ public class User implements Serializable, ChildUnownedEntity {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
     UserDTO userDTO = new UserDTO(getId(), firstName, lastName, emailAddress, 
-                                            getParentClientId(), 
+                                            getAccountId(), 
                                             activityType, 
                                             lastActive,
                                             lastLoginOn,
@@ -234,7 +234,7 @@ public class User implements Serializable, ChildUnownedEntity {
   /** This is implemented so we can use DAL1ToNHelper. */
   @Override  //ChildEntity
   public String getParentId() {
-    return getParentClientId();
+    return getAccountId();
   }
   
 }
