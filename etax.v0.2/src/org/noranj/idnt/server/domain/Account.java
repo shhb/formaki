@@ -1,10 +1,9 @@
 package org.noranj.idnt.server.domain;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.FetchGroup;
@@ -17,7 +16,7 @@ import javax.jdo.annotations.PrimaryKey;
 import org.noranj.core.shared.type.ActivityType;
 import org.noranj.core.shared.type.ParentUnownedChildEntity;
 import org.noranj.idnt.shared.dto.AccountDTO;
-import org.noranj.tax.v2012.shared.type.PartyRoleType;
+import org.noranj.idnt.shared.type.AccountType;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -33,8 +32,10 @@ import com.google.appengine.api.datastore.KeyFactory;
  * See http://www.noranj.org for further information.
  *
  * @author
- * @version 0.2.20120819
+ * @version 0.2.20120926
  * @since 0.2
+ * @change
+ * 
  */
 @PersistenceCapable(detachable="true")
 @FetchGroup(name=Account.C_FETCH_GROUP_USERS, members={@Persistent(name="users")}) //this is used with pm.getFetchPlan().setMaxFetchDepth(n) to control how deep the data is retrieved up front (used in detaching). To get only the order, setMaxFetchDepth(0) and to get order and orderItems, setMaxFetchDepth(1).
@@ -74,12 +75,10 @@ public class Account implements Serializable, ParentUnownedChildEntity {
   private String logoURI;
   
   /**
-   * An account can have one or more roles such as buyer and seller.
-   * Or client and trading party.
+   * An account can have one type such as consultant, support, or super admin.
    */
   @Persistent(defaultFetchGroup="true")
-  //private Set<PartyRoleType> roles;
-  private PartyRoleType role;
+  private AccountType type;
 
   /** 
    * This attribute is the one that is used to store the version of the object in data store.
@@ -105,11 +104,11 @@ public class Account implements Serializable, ParentUnownedChildEntity {
     
   }
 
-  public Account(String name, String logoURI, ActivityType activityType, PartyRoleType role) {
+  public Account(String name, String logoURI, ActivityType activityType, AccountType type) {
     this.name = name;
     this.logoURI = logoURI;
     this.activityType = activityType;
-    this.role = role;
+    this.type = type;
   }
 
   /** 
@@ -149,21 +148,23 @@ public class Account implements Serializable, ParentUnownedChildEntity {
     this.activityType = activityType;
   }
   
-  public PartyRoleType getRole() {
-    return role;
+  public AccountType getType() {
+    return type;
   }
   
-  /** this method is used to create PartyDTO. */
-  public PartyRoleType cloneRoles() {
-    //HashSet<PartyRoleType> clonedRoles = new HashSet<PartyRoleType>();
-    //for (PartyRoleType role : this.role) {
+  //BA:12-SEP-26 the account type is no longer a set. so no need to this method.
+  /* * this method is used to create PartyDTO. * /
+  public AccountType cloneRoles() {
+    //HashSet<AccountType> clonedRoles = new HashSet<AccountType>();
+    //for (AccountType role : this.role) {
     //  clonedRoles.add(role);
     //}
-    return PartyRoleType.Accounting; //FIXME
+    return AccountType.Accounting; //FIXME
   }
-
-  public void setRoles(PartyRoleType roles) {
-    this.role = roles;
+  */
+  
+  public void setType(AccountType type) {
+    this.type = type;
   }
 
   public String getLogoURI() {
@@ -190,7 +191,7 @@ public class Account implements Serializable, ParentUnownedChildEntity {
     this.userIds = userIds;
   }
 
-  /** this method is used to create PartyDTO. */
+  /** this method is used to create AccountDTO. */
   public List<String> cloneUserIds() {
     List<String> clonedUserIds = new ArrayList<String>();
     for (String userId : this.userIds) {
