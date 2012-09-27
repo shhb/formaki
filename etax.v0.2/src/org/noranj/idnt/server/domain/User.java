@@ -108,8 +108,6 @@ public class User implements Serializable, ChildUnownedEntity {
   /**
    * 
    * @param userDTO
-   * @param parentClient
-   * @deprecated NOT NEEDED AND NOT USED. REMOVE THE TAG IF NEEDED. It makes the code complicated.
    */
   public User(UserDTO userDTO) {
     

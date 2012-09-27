@@ -1,14 +1,13 @@
 package org.noranj.idnt.shared.dto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.noranj.core.shared.type.ActivityType;
-import org.noranj.tax.v2012.shared.type.PartyRoleType;
-
+import org.noranj.idnt.shared.type.AccountType;
 
 /**
  * 
@@ -16,9 +15,13 @@ import org.noranj.tax.v2012.shared.type.PartyRoleType;
  * This module, both source code and documentation, is in the Public Domain, and comes with NO WARRANTY.
  * See http://www.noranj.org for further information.
  *
- * @author
+ * @author BA
+ * @version 0.2.20120927
+ * @since 0.2.2012
+ * @change
+ * 
  */
-public class AccountDTO {
+public class AccountDTO implements Serializable{
 
   /**
    * 
@@ -41,10 +44,11 @@ public class AccountDTO {
   private ActivityType activityType; 
 
   /**
-   * A party can have one or more roles such as buyer and seller.
+   * A party can have one or more type such as buyer and seller.
    * Or client and trading party.
    */
-  private Set<PartyRoleType> roles;
+  //private AccountType type;
+  private AccountType type;
 
   /** 
    * list of users belong to the party.
@@ -64,17 +68,18 @@ public class AccountDTO {
    * @param name
    * @param logoURI
    * @param activityType
-   * @param partyRoles
+   * @param partyTypes
    * @param users
    */
   public AccountDTO(String id, String name, String logoURI,
-                              ActivityType activityType, Set<PartyRoleType> partyRoles, 
+                              ActivityType activityType, 
+                              AccountType partyTypes, 
                               List<UserDTO> users) {
     this.id = id;
     this.name = name;
     this.logoURI = logoURI;
     this.activityType = activityType;
-    this.roles = partyRoles;
+    this.type = partyTypes;
     this.users = users;
   }
   
@@ -92,7 +97,7 @@ public class AccountDTO {
   		setActivityType(ActivityType.valueOf(map.get("activityType")));
   	else 
   		setActivityType(ActivityType.Deactive);
-  	setRoles(map.get("partyRoles"));
+  	setType(map.get("accountType"));
   }
 
   public String getId() {
@@ -127,21 +132,26 @@ public class AccountDTO {
     this.activityType = activityType;
   }
 
-  public Set<PartyRoleType> getRoles() {
-    return roles;
+  public AccountType getType() {
+    return type;
   }
 
-  public void setRoles(Set<PartyRoleType> roles) {
-    this.roles = roles;
+  public void setType(AccountType type) {
+    this.type = type;
   }
 
-  /** roles are separated by comma.
+  public void setType(String type) {
+    this.type = AccountType.fromString(type);
+  }
+
+  /** type are separated by comma.
    * @since 0.3.20120322
    * @version 0.3.20120322
-   */
-  public void setRoles(String rolesStr) {
-    this.roles = PartyRoleType.convertToSet(rolesStr);
+   * /
+  public void setTypes(String typeStr) {
+    this.type = AccountType.convertToSet(typeStr);
   }
+  */
   
   public List<UserDTO> getUsers() {
     return users;
@@ -151,12 +161,12 @@ public class AccountDTO {
     this.users = users;
   }
 
-  public void addUser(UserDTO systemUserDTO) {
+  public void addUser(UserDTO userDTO) {
     if (users == null) {
       users = new ArrayList<UserDTO>();
     }
     
-    this.users.add(systemUserDTO);
+    this.users.add(userDTO);
   }
   
 }
