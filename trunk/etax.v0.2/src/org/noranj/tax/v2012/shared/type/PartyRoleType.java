@@ -17,7 +17,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * @since 0.2
  * @version 0.2.20120924
  * @change
- *  BA-2012-08-11 Added new method convertToSet.
+ *  BA-12-08-11 Added new method convertToSet.
+ * @deprecated PartyRoleType no longer is used. Party/ClientParty are renamed to Account. 12-SEP-26
  * 
  */
 public enum PartyRoleType implements Serializable, IsSerializable {

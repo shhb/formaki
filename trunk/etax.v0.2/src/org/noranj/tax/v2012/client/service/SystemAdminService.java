@@ -1,7 +1,6 @@
 package org.noranj.tax.v2012.client.service;
 
 
-import org.noranj.core.shared.exception.NotFoundException;
 import org.noranj.core.shared.exception.NotLoggedInException;
 import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
@@ -28,18 +27,18 @@ public interface SystemAdminService extends RemoteService {
    * @param emailAddress
    * @return
    */
-  public UserDTO getSystemUser(String emailAddress);
+  public UserDTO getUser(String emailAddress);
 
   /**
    * It adds a new user to the data store.
    * 
-   * @param systemUser holds the data for the new user.
+   * @param user holds the data for the new user.
    */
-  public String addSystemUser(UserDTO systemUser); // the implementation throws NotFoundException;
+  public void addUser(UserDTO user); // the implementation throws NotFoundException;
   
-  public String addSystemClientParty(AccountDTO systemClientParty);
+  public void addAccount(AccountDTO account);
 
-  public String signup(AccountDTO systemClientPartyDTO, UserDTO systemUserDTO);
+  public String signup(AccountDTO accountDTO, UserDTO userDTO);
   
   UserDTO getLoggedInUserDTO();
   

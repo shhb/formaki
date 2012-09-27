@@ -53,7 +53,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @param emailAddress
    * @return the system user that is associated with the emailAddress. If it can not find the user, it returns null.
    */
-  public UserDTO getSystemUser(String emailAddress) {
+  public UserDTO getUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
     User sysUser = SystemAdminHelper.getSystemUser(emailAddress);
@@ -104,12 +104,12 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
 
   // XXX TEST
   /**
-   * It adds a new party client to the data store.
+   * It adds a new account to the data store.
    * 
-   * @param systemClientParty holds the data for the new client.
-   * @return the id that is generated and assigned to the client party.
+   * @param account holds the data for the new client.
+   * @return the id that is generated and assigned to the account.
    */
-  public String addSystemClientParty(AccountDTO systemClientParty) {
+  public void addAccount(AccountDTO account) {
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
@@ -118,15 +118,13 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     
     try {
     	
-    
-	    DALHelper<Account> systemClientHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
+	    DALHelper<Account> accountHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
 	    
-	    Account newSystemClientParty = new Account(systemClientParty);
+	    Account newAccount = new Account(account);
 	    
-	    systemClientHelper.storeEntity(newSystemClientParty);
+	    accountHelper.storeEntity(newAccount);
+	    account.setId(newAccount.getId());
 	    
-	    return(newSystemClientParty.getId());
-        
     } finally {
     	NamespaceManager.set(currentNameSpace);
     }
@@ -136,11 +134,11 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
   /**
    * It adds a new user to the data store.
    * 
-   * @param systemUserDTO holds the data for the new user.
+   * @param userDTO holds the data for the new user.
    * @return the new ID assigned to the SystemUserDTO
    * 
    */
-  public String addSystemUser(UserDTO systemUserDTO) { //FIXME what will happen if it fails to add the user!!!
+  public void addUser(UserDTO userDTO) { //FIXME what will happen if it fails to add the user!!! the userID will be still null in userDTO.
 
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
@@ -148,9 +146,9 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     try {
     	
 	    DAL1ToNHelper<Account, User> systemClientHelper = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
-	    User sysUser = new User(systemUserDTO);
-	    systemUserDTO.setId(systemClientHelper.addChildEntity(sysUser));
-	    return(systemUserDTO.getId());
+	    User sysUser = new User(userDTO);
+	    String userID = systemClientHelper.addChildEntity(sysUser);
+	    userDTO.setId(userID);
 	    
     } finally {
     	NamespaceManager.set(currentNameSpace);
