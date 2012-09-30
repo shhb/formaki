@@ -11,6 +11,7 @@ import org.noranj.tax.v2012.client.service.SystemAdminService;
 import org.noranj.core.server.DAL1ToNHelper;
 import org.noranj.core.server.DALHelper;
 import org.noranj.core.server.JDOPMFactory;
+import org.noranj.core.server.utils.MailHelper;
 import org.noranj.core.shared.Constants;
 import org.noranj.core.shared.exception.NotLoggedInException;
 import org.noranj.idnt.server.SystemAdminHelper;
@@ -56,14 +57,45 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
   public UserDTO getUser(String emailAddress) {
     
     assert(emailAddress!=null && emailAddress.length()>0);
-    User sysUser = SystemAdminHelper.getSystemUser(emailAddress);
-    if (sysUser!=null)
-      return(sysUser.getUserDTO());
+    User user = SystemAdminHelper.getSystemUser(emailAddress);
+    if (user!=null)
+      return(user.getDTO());
     else 
       return(null);
     
   }
 
+  //BA:12-SEP-29 Added
+  /**
+   * It uses the users email address to find its detail information.
+   * The email address is used as the user ID to sign in to the system.
+   * 
+   * @param emailAddress
+   * @return the system user that is associated with the emailAddress. If it can not find the user, it returns null.
+   */
+  public AccountDTO getAccount(String accountId) {
+    
+    assert(accountId!=null && accountId.length()>0);
+    //TODO it may not be needed
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
+    
+    assert(NamespaceManager.get().equals(Constants.C_SYSTEM_ADMIN_NAMESPACE)); //keep this line
+    
+    try {
+      
+      DALHelper<Account> accountHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
+      
+      Account account = accountHelper.getEntityById(accountId, null, 1);
+      return(account.getDTO());
+
+    } finally {
+      NamespaceManager.set(currentNameSpace);
+    }
+    
+  }
+
+  
   // XXX TEST
   /**
    * It uses the users email address to find its detail information.
@@ -72,7 +104,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
    * @param clientPartyDTO stores the party that we would like to get its users. If it is set to null, it gets all users.
    * @return the list of system users that belong to the client party. If no user is found, the list will be empty.
    */
-  public List<UserDTO> getSystemUsers(AccountDTO clientPartyDTO) {
+  public List<UserDTO> getUsers(AccountDTO clientPartyDTO) {
     
   	//TODO it may not be needed
     String currentNameSpace = NamespaceManager.get();
@@ -92,7 +124,7 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
 	    
 	    List<UserDTO> sysUserList = new ArrayList<UserDTO>();
 	    for (User su : sysUsers) {
-	      sysUserList.add(su.getUserDTO());
+	      sysUserList.add(su.getDTO());
 	    }
 	    return(sysUserList);
 
@@ -145,9 +177,9 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
 
     try {
     	
-	    DAL1ToNHelper<Account, User> systemClientHelper = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
+	    DAL1ToNHelper<Account, User> accountHelper = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
 	    User sysUser = new User(userDTO);
-	    String userID = systemClientHelper.addChildEntity(sysUser);
+	    String userID = accountHelper.addChildEntity(sysUser);
 	    userDTO.setId(userID);
 	    
     } finally {
@@ -158,25 +190,35 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
   
   /**
    * It gets client party and user information then sign up the user for the specified party. 
-   * @param systemClientPartyDTO stores the client information. 
-   * If the id is not set, the assumption is that the party is a new party and will be added to the system.
+   * @param accountDTO (OPTIONAL) - it stores the client information. 
+   * <li>If the id is not set, the assumption is that the party is a new party and will be added to the system.
    * The only required field in that case is party Name.
-   * If it is passed as NULL, we assume the party doesn't exist so user's last name is used as party name.
-   * @param systemUserDTO
+   * <li>If accountDTO is NULL, we assume the account doesn't exist and user's last name is used as account name.
+   * @param userDTO
    * @return
    * @since 0.2.20120613.1740
    * @version 0.2.20120613.1740
    */
-  public String signup(AccountDTO systemClientPartyDTO, UserDTO systemUserDTO) {
+  public String signup(AccountDTO accountDTO, UserDTO userDTO) {
     
-    if (systemClientPartyDTO==null) {
-      //Adding a new party named as user's last name.
-      systemClientPartyDTO= new AccountDTO();
-      systemClientPartyDTO.setName(systemUserDTO.getLastName());
+    if(userDTO.getFirstName()==null) {
+      userDTO.setFirstName("");
     }
     
-    return(SystemAdminHelper.signup(systemClientPartyDTO, systemUserDTO));
-   
+    if(userDTO.getLastName()==null || userDTO.getLastName().length()==0) {
+      userDTO.setLastName(MailHelper.getUserNameFromEmailAddress(userDTO.getEmailAddress()));
+    }
+    
+    if (accountDTO==null) {
+      //Adding a new party named as user's last name.
+      accountDTO= new AccountDTO();
+      accountDTO.setName(userDTO.getLastName());
+    }
+    // FIXME I need to review all the returns. Not sure if it is a good idea to return the user Key or a boolean or return nothing!???
+    // returning the Id might be handy when the service is called from UI.
+    if (SystemAdminHelper.signup(accountDTO, userDTO))
+      return(userDTO.getId());
+    return(null);
   }
   
   //TODO:BA:2012-08-10 It should change because it can't use a reference to client
@@ -193,5 +235,4 @@ public class SystemAdminServiceImpl extends RemoteServiceServlet implements Syst
     throw new NotLoggedInException("Logged out");
   }
 
- 
 }

@@ -208,4 +208,14 @@ public class MailHelper {
 		return(InternetAddress.parse(addressesStr));
 	}
 
+	/**
+	 * It returns the user name part of email address.
+	 * For example in 'Jane.Doe@noranj.com' the user name is 'Jane.Doe'.
+	 * @param emailAddress
+	 * @return
+	 */
+	public static String getUserNameFromEmailAddress(String emailAddress) {
+	  int pos = emailAddress.indexOf(64); // @
+	  return(emailAddress.substring(0, pos)); 
+	}
 }

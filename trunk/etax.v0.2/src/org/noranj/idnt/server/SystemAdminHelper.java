@@ -47,7 +47,7 @@ public class SystemAdminHelper {
 		/**
 		1- check emailAddress and if it is already a member, throw an exception or send an email or return message that the user is already a member.
 		2- send email to notify sender about the status of their email.
-		3- add organization (client) to the body of email in case someone knows their client name. use the name to find the client and add the current user to that client.
+		3- add organisation (client) to the body of email in case someone knows their client name. use the name to find the client and add the current user to that client.
 		3-1- another way could be using the domain of email address to search for the client.
 		*/
 		
@@ -86,31 +86,31 @@ public class SystemAdminHelper {
 	 */
 	public static String signupUser(Map<String, String> dataFields) {
     
-	  AccountDTO sysClientDTO = new AccountDTO(dataFields);
+	  AccountDTO accountDTO = new AccountDTO(dataFields);
     
-    sysClientDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
+    accountDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
     
-    UserDTO sysUserDTO = new UserDTO(dataFields);
+    UserDTO userDTO = new UserDTO(dataFields);
     
-    sysUserDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
+    userDTO.setActivityType(ActivityType.Active); // to make sure the user is active and can login.
     
     //Extract First Name and Last Name from emailAddresFROM
-    if (sysUserDTO.getFirstName()==null && sysUserDTO.getLastName()==null) {
-  		sysUserDTO.setFirstName("Guest"); //TODO review 
-  		sysUserDTO.setLastName(String.valueOf(System.currentTimeMillis()));
+    if (userDTO.getFirstName()==null && userDTO.getLastName()==null) {
+  		userDTO.setFirstName("Guest"); //TODO review 
+  		userDTO.setLastName(String.valueOf(System.currentTimeMillis()));
     }
 		
     if (logger.isLoggable(Level.FINE)) {
-			logger.fine("User DTO is ["+sysUserDTO.toString()+"]");
+			logger.fine("User DTO is ["+userDTO.toString()+"]");
     }
     
     /** Sign up the user */
-    String userId = signup(sysClientDTO, sysUserDTO);
+    if (signup(accountDTO, userDTO))
+      logger.info("The new user successfully signed up. userid["+userDTO.getId()+"] email["+userDTO.getEmailAddress()+"]");
+    else
+      logger.info("The new user failed to be signed up. userid["+userDTO.getId()+"] email["+userDTO.getEmailAddress()+"]");
 
-    sysUserDTO.setId(userId);
-    logger.info("A new user successfully signed up. userid["+sysUserDTO.getId()+"] email["+sysUserDTO.getEmailAddress()+"]");
-    
-		return(sysUserDTO.getId());
+		return(userDTO.getId());
 		
 	}
 	
@@ -124,38 +124,43 @@ public class SystemAdminHelper {
    * @since 0.3.20120322
    * @version @since 0.3.20120322
 	 */
-  public static String signup(AccountDTO accountDTO, UserDTO userDTO) {
+  public static boolean signup(AccountDTO accountDTO, UserDTO userDTO) {
 
     String currentNameSpace = NamespaceManager.get();
     NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE); 
 
     try {
     	
-	  	DALHelper<Account> systemClientHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
+	  	DALHelper<Account> accountHelper = new DALHelper<Account>(JDOPMFactory.getTxOptional(), Account.class);
 
 	  	Account newAccount;
 	    
 	  	// check if client exist
 	  	if(accountDTO.getId()!=null) {
-	  		newAccount =systemClientHelper.getEntityById(accountDTO.getId(), null, 1); 
+	  		newAccount =accountHelper.getEntityById(accountDTO.getId(), null, 1); 
 	  		if (newAccount == null) {
-	  			logger.severe("SystemClientParty uses an id["+accountDTO.getId()+"] that does not exist in the system.");
-	  			return null; //FIXME here
+	  			logger.severe("Account uses an id["+accountDTO.getId()+"] that does not exist in the system.");
+	  			return false; //FIXME here
 	  		}
 	  	}
 	  	else { // add client if the id is null.
 	  		newAccount = new Account(accountDTO);
-	  		systemClientHelper.storeEntity(newAccount);
+	  		//BA:12-SEP-29 there is no need to store Account here. It must be added in transaction with user in addChildEntity.
+	  		//XXX here
+	  		//accountHelper.storeEntity(newAccount);
+	  		accountHelper.storeEntity(newAccount);
 	  	}
 	  	
-	  	//link the user to its parent.
+	  	//link the user to its account.
 	  	userDTO.setAccountId(newAccount.getId());
 	  	
 	  	// save the user in the system
-	    DAL1ToNHelper<Account, User> systemClientHelper2 = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
+	    DAL1ToNHelper<Account, User> accountHelper2 = new DAL1ToNHelper<Account, User>(JDOPMFactory.getTxOptional(), Account.class, User.class);
 	    User sysUser = new User(userDTO);
-	    userDTO.setId(systemClientHelper2.addChildEntity(sysUser));
-	    return(userDTO.getId());
+	    String userId = accountHelper2.addChildEntity(sysUser); 
+	    //XXX here String userId = accountHelper2.addChildEntity(sysUser, newAccount); //IDNT-15
+	    userDTO.setId(userId);
+	    return(true);
 	    
     } finally {
     	NamespaceManager.set(currentNameSpace);

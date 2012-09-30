@@ -214,7 +214,7 @@ public class User implements Serializable, ChildUnownedEntity {
    * 
    * @return
    */
-  public UserDTO getUserDTO () {
+  public UserDTO getDTO () {
     
     //FIXME do we need to get Profile too? should it be in another bean or call? or we can fetch what we want and use the attributes carefully to not get NullPointerException.
     UserDTO userDTO = new UserDTO(getId(), firstName, lastName, emailAddress, 
