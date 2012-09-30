@@ -16,10 +16,10 @@ import org.noranj.idnt.shared.type.AccountType;
  * See http://www.noranj.org for further information.
  *
  * @author BA
- * @version 0.2.20120927
+ * @version 0.2.20120929
  * @since 0.2.2012
  * @change
- * 
+ *  12-SEP-29 users attribute data type is changed to be List<String> instead of be List<UserDTO>.
  */
 public class AccountDTO implements Serializable{
 
@@ -53,8 +53,9 @@ public class AccountDTO implements Serializable{
   /** 
    * list of users belong to the party.
    * All the users in this list share the same namespace.
-   */
-  private List<UserDTO> users;
+   */ //BA:12-SEP-29 Account does not own Users and the relation is unowned.
+  //private List<UserDTO> users;
+  private List<String> users;
 
   /**
    * 
@@ -74,7 +75,8 @@ public class AccountDTO implements Serializable{
   public AccountDTO(String id, String name, String logoURI,
                               ActivityType activityType, 
                               AccountType partyTypes, 
-                              List<UserDTO> users) {
+                              //List<UserDTO> users
+                              List<String> users) {
     this.id = id;
     this.name = name;
     this.logoURI = logoURI;
@@ -153,20 +155,41 @@ public class AccountDTO implements Serializable{
   }
   */
   
-  public List<UserDTO> getUsers() {
+  public List<String> getUsers() {
     return users;
   }
 
-  public void setUsers(List<UserDTO> users) {
+  public void setUsers(List<String> users) {
     this.users = users;
   }
 
   public void addUser(UserDTO userDTO) {
     if (users == null) {
-      users = new ArrayList<UserDTO>();
+      users = new ArrayList<String>();
     }
     
-    this.users.add(userDTO);
+    this.users.add(userDTO.getId());
   }
   
+  public String toString() {
+    
+    StringBuilder str = new StringBuilder();
+    str.append("First Name[");
+    str.append(getName());
+    str.append("] Logo[");
+    str.append(getLogoURI());
+    str.append("] ActivityType[");
+    str.append(getActivityType());
+    str.append("] Type[");
+    str.append(getType());
+    str.append("] Users[");
+    for (String userId : getUsers()) {
+      str.append(userId);
+      str.append(",");
+    }
+    str.append("]");
+    
+    return(str.toString());
+    
+  }
 }

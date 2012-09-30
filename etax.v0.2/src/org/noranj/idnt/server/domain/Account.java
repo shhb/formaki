@@ -104,24 +104,23 @@ public class Account implements Serializable, ParentUnownedChildEntity {
     
   }
 
-  public Account(String name, String logoURI, ActivityType activityType, AccountType type) {
+  public Account(String name, String logoURI, ActivityType activityType, AccountType type, List<String> userIds) {
     this.name = name;
     this.logoURI = logoURI;
     this.activityType = activityType;
     this.type = type;
+    this.userIds = userIds;
   }
 
   /** 
    * @deprecated BA:12-SEP-26 the UserIDs are missing from the constructor!!!!
    */ 
   public Account(AccountDTO accountDTO) {
-    /*
     this(accountDTO.getName(), 
          accountDTO.getLogoURI(), 
          accountDTO.getActivityType(), 
-         accountDTO.getRoles());
-         */
-    //FIXME BA:12-SEP-36 HOW ABOUT USER-IDs??!?!?
+         accountDTO.getType(),
+         accountDTO.getUsers());
   }
 
   public String getId() {
@@ -222,15 +221,13 @@ public class Account implements Serializable, ParentUnownedChildEntity {
     return getUserIds();
   }
 
-  /** creates DTO and fill it with the data.
-   *  
-   * BA:12-SEP-26 It is commented out because not sure if it is needed and do not know how to resolve the conflict between DTO and Entity. AccountDTO has the list of UserDTOs but here we have the list of UserIds.
-   *
-   *  
-  public AccountDTO getPartyDTO() {
+  /** 
+   * creates DTO and fill it with the data.
+   */
+  public AccountDTO getDTO() {
     
-    AccountDTO partyDTO = new AccountDTO(getId(), name, logoURI.toString(), activityType, cloneRoles(), userIds);
-    return(partyDTO);
+    AccountDTO accountDTO = new AccountDTO(getId(), name, (logoURI!=null?logoURI.toString():""), activityType, type, userIds);
+    return(accountDTO);
   }
-  */
+  
 }

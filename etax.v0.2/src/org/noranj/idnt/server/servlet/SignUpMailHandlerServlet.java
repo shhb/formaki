@@ -21,7 +21,7 @@ import org.noranj.tax.v2012.shared.GlobalSettings;
 
 /**
  * All the emails sent to this servlet will be processed and the attachment or body is used to build a business document.
- *  * 
+ *  
  * For sake of simplicity, in the first version, we assume the business documents are attached to the email.
  * Later, we will try to parse the body and look for business document data.
  * 
@@ -82,7 +82,7 @@ public class SignUpMailHandlerServlet extends HttpServlet {
 	        String userId = SystemAdminHelper.signupUser(mail);
 	      	
 	        // 4- send confirmation email
-	        QueueHelper.sendMailNotification(mail.getFrom(), "Welcome to Formak.", "The user is added successfully.\r\nYou can login to formak using your Google Account.\r\nThe unique ID assigned to your account is ["+userId+"]."); //FIXME
+	        QueueHelper.sendMailNotification(mail.getFrom(), "Welcome to TAXLET.", "Your account is created successfully.\r\nYou can login to TAXLET using your Email Account provider login page.\r\nThe unique ID assigned to your account is ["+userId+"]."); //FIXME
 	      } 
 	      else {
 		      logger.warning("A WRONG email is received from email["+mail.getFrom()+"]. The subject is ["+mail.getSubject()+"]");

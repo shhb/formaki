@@ -54,6 +54,24 @@ public class UserDTO implements Serializable {
   public UserDTO() {
   }
 
+  /**
+   * This method is used when we really don't know anything about the user.
+   * @param firstName
+   * @param lastName
+   * @param emailAddress
+   */
+  public UserDTO (String firstName, 
+                  String lastName,
+                  String emailAddress) {
+  
+    this(null, firstName, lastName, emailAddress, 
+      null, 
+      null,
+      0,
+      0,
+      null);    
+  }
+
   public UserDTO(String id, String firstName, String lastName,
                       String emailAddress, String accountId, ActivityType activityType,
                       long lastLoginOn,
@@ -213,7 +231,7 @@ public class UserDTO implements Serializable {
   	str.append("First Name[");
   	str.append(getFirstName());
   	str.append("] Last Name[");
-  	str.append(getFirstName());
+  	str.append(getLastName());
   	str.append("] Email[");
   	str.append(getEmailAddress());
   	str.append("]");

@@ -85,6 +85,45 @@ public class DAL1ToNHelper<T extends ParentUnownedChildEntity, K extends ChildUn
     return(childId);
   }
 
+  /**
+   * 
+   * @param entity is a detached object.
+   */
+  public String addChildEntity(K child, T parent) {
+    
+    String childId = null;
+    PersistenceManager pm = getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    
+    try {
+      tx.begin();
+
+      pm.makePersistent(child);
+      assert (parent!=null);
+      //NO NEED TO DETACH!!! 
+      ////Detach our owner objects for use elsewhere
+      //detachedEntity = pm.detachCopy(entity);
+
+      // It adds the child entity to the list of parent entity. 
+      parent.addChildId(child.getId());
+
+      pm.makePersistent(parent);
+            
+      tx.commit();
+      
+      childId = child.getId();
+      
+    //} catch (Exception ex) {
+    //  ex.printStackTrace(); // FIXME
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
+      pm.close();
+    }
+    return(childId);
+  }
+  
   // XXX HERE deleting child and update the parents.
   /**
    * @param id is the purchase order unique identifier assigned by the application.
