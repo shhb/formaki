@@ -9,7 +9,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.noranj.core.shared.type.ActivityType;
+import org.noranj.idnt.server.domain.Account;
 import org.noranj.idnt.server.service.SystemAdminServiceImpl;
+import org.noranj.idnt.shared.dto.AccountDTO;
 import org.noranj.idnt.shared.dto.UserDTO;
 import org.noranj.tax.v2012.server.Startup;
 
@@ -50,8 +53,8 @@ public class SystemAdminServiceImplTest {
   public void tearDown() throws Exception {
   }
 
-  @Test
-  public void testGetSystemUsers() throws Exception  {
+  //@Test
+  public void testGetUsers() throws Exception  {
     
     if (generateTestData) {
       Startup.makeTestDataUserRetailerParty();
@@ -64,10 +67,10 @@ public class SystemAdminServiceImplTest {
       
       SystemAdminServiceImpl service = new SystemAdminServiceImpl();
 
-      List<UserDTO> sysUserList = service.getSystemUsers(null);
+      List<UserDTO> sysUserList = service.getUsers(null);
       if (sysUserList != null) {
         for (UserDTO dto : sysUserList) {
-          System.out.printf("*** System user [%s] found. email is [%s] and parentClient ID [%s]\r\n", dto.getFirstName(), dto.getFirstName(), dto.getId());
+          System.out.printf("*** User [%s] found. email is [%s] and account ID [%s]\r\n", dto.getFirstName(), dto.getFirstName(), dto.getId());
         }
       } 
       else {
@@ -82,18 +85,19 @@ public class SystemAdminServiceImplTest {
   }
 
 
-  @Test
-  public void testGetSystemUser() {
+  //@Test
+  public void testGetUser() {
     try {
       System.out.println("--------------------------------------------------------------------");
       
-      String emailAddress = "babak@noranj.com";
+      //String emailAddress = "babak@noranj.com";
+      String emailAddress = "dalish@gmail.com";
       
       SystemAdminServiceImpl service = new SystemAdminServiceImpl();
 
       UserDTO sysUser = service.getUser(emailAddress);
       if (sysUser != null) {
-        System.out.printf("System user [%s] found. parentClient ID [%s]\r\n", emailAddress, sysUser.getAccountId());
+        System.out.printf("User [%s] found. parentClient ID [%s]\r\n", emailAddress, sysUser.getAccountId());
       } 
       else {
         fail(String.format("User not found [%s]", emailAddress));
@@ -105,6 +109,36 @@ public class SystemAdminServiceImplTest {
     System.out.println("=====================================================================");
   }
 
+  @Test
+  public void testSignup() {
+    try {
+      System.out.println("--------------------------------------------------------------------");
+      
+      String emailAddress = "dalish@gmail.com";
+      
+      SystemAdminServiceImpl service = new SystemAdminServiceImpl();
+      UserDTO user = new UserDTO(null, null, emailAddress);
+      if (service.signup(null, user)!=null) {
+        UserDTO savedUser = service.getUser(emailAddress);
+        if (savedUser!=null) {
+          AccountDTO account = service.getAccount(savedUser.getAccountId());
+          System.out.printf("User [%s] is signed up successfully email[%s]. The account is [%s]\r\n", user.toString(), emailAddress, account.toString());
+        }
+        else {
+          fail(String.format("Signup failed because we can not retrieve the signed up user using their email address", savedUser.toString()));
+        }
+          
+      } 
+      else {
+        fail(String.format("Failed to sign up user with email [%s]", emailAddress));
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      fail("AN exception happened " + ex.getMessage());
+    }
+    System.out.println("=====================================================================");
+  }
+  
   //@ Test
   public void testCreateUser() {
     System.out.println("--------------------------------------------------------------------");
