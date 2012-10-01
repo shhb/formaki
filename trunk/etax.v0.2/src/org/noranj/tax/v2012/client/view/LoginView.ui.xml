@@ -20,7 +20,7 @@
 		<g:Label text="Use one of the account providers in below to login to Taxlet."/>
 	</g:VerticalPanel>
 	<g:VerticalPanel width="559px" height="191px">
-		<g:HorizontalPanel height="122px" width="80px">
+		<g:HorizontalPanel height="122px" width="559px">
 			<g:PushButton ui:field='googleButton' width='80px'   height='103px'>
 		<g:upFace image='{google}' />
 	</g:PushButton>
@@ -36,8 +36,9 @@
 		</g:HorizontalPanel>
 	</g:VerticalPanel>
 	<g:VerticalPanel width="559px" height="191px">
-		<g:Label text="Why not login directly?"/>
-		<g:Label text="Instead of implementing a login mechanisim, we are using login services from the most service providers."/>
+		<g:Label text="Why using other login services?"/>
+		<g:Label text="Short answer, to have more secure and convenient login system for users." /> 
+		<g:Label text="Instead of implementing a login mechanisim, we are using login services from the most popular and secure service providers. You don&apos;t need to remember another password and just use your current account to login."/>
 	</g:VerticalPanel>
 </g:HTMLPanel>
 </ui:UiBinder> 
