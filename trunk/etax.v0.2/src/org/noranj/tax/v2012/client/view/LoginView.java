@@ -11,10 +11,12 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class LoginView<T> extends Composite implements ILoginView<T> {
 	  
 	  @UiField PushButton googleButton;
+	
 	  
 	  /* SA:12-AUG-19 Commented out
 	  @ UiField PushButton twitterButton;
