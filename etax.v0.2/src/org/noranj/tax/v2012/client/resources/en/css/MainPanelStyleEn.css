@@ -39,10 +39,31 @@
 	background-repeat: repeat;
 }
 
-lineBottom
- .topBorder{
+.lineBottom .topBorder{
 	border: 1px solid #D9D9D9;
     border-radius: 3px 3px 3px 3px;
     box-shadow: 0 1px 1px #DDDDDD;
     padding: 25px 20px 20px;
 }
+.page{
+	width:300px;
+	height: 500px;
+	border-bottom: 5px dotted #D9D9D9;
+	overflow: hidden; 
+}
+.group{
+	background-color: #ffffff;
+	border: 1px dotted #D9D9D9;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px #DDDDDD;
+    padding: 25px 20px 20px;
+}
+
+.item{
+	border: 0px solid #ffffff;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px #DDDDDD;
+    padding: 25px 20px 20px;
+}
+
+

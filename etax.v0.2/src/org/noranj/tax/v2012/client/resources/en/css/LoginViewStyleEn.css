@@ -1,0 +1,152 @@
+@CHARSET "ISO-8859-1";
+a,a:VISITED{
+	text-decoration: none;
+	color: black;
+	cursor: hand;cursor: pointer;
+}
+.base{
+	background-color: #FFFFFF;
+	
+}
+.comment{
+	background-color: #42426F;
+	color: Yellow;
+	padding: 25px 20px;
+	font-size: 1.5em;
+	font-weight: bold;
+	font-family: 'Georgia';
+	padding: 25px 25px 25px 25px; 
+}
+
+.simpleText{
+	color: #000000;
+	font-size:1em;
+	font-weight: normal;
+	font-family: 'Tahoma';
+	padding: 2px 20px;
+	width:'300';
+	font-weight: bold;
+}
+
+/*header*/
+ .topPanel{
+ 	background-color: #F1F1F1;
+	color: white;
+	border-bottom: 1px solid #000000;
+   	box-shadow:  5px 5px 5px #7D7E80;
+   	
+  }
+ 
+@sprite .pagePanel{
+	border-top: 1px solid #7D7E80;
+	gwt-image: 'sheet';
+	background-repeat: repeat;
+}
+
+.titleBar {
+	background-color: #2f2f4f;
+	color: #FFFF00;
+	padding: 25px 100px;
+	font-size: 2.5em;
+	font-weight: bold;
+	font-family: 'Georgia';
+}
+.childBar {
+	background-color: #CDCDCD;
+	color: #000000;
+	padding: 25px 20px;
+	font-size: 1.5em;
+	font-family: 'Georgia';
+	margin: 0 0 0 0 ;
+	height: 25px;
+}
+
+@sprite .headerPanel {
+	background-color: #2f2f4f;
+	gwt-image: 'logoo';
+	background-repeat: no-repeat;
+	color: white;
+	margin:20px 10px 30px 20px;
+	padding: 8px 4px;
+	border: 1px solid balck;
+ 	-moz-box-shadow:    inset 0 0 10px #000000;
+   	-webkit-box-shadow: inset 0 0 10px #000000;
+   	box-shadow:         1px 1px 5px #000000;
+   	
+}
+
+/*body*/
+.absolutePanel{
+	position: absolute;
+	top:200px;
+	left:25px;
+	background-color: #ffffff;
+	border: 1px dotted #7D7E80;
+	width:500px;
+	height: 500px;
+	
+}
+
+.absolutePanelTitleBar{
+background-color: #c3c3c3;
+	color: #FFFFFF;
+	padding: 25px 20px;
+	font-size: 1.1em;
+	font-weight: bold;
+	font-family: 'Georgia';
+}
+
+.leftPanel{
+	padding-top: 25px;
+	padding-left: 20px;
+	border: 1px dotted #c3c3c3;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    background: none repeat scroll 0 0 #ffffff;
+    box-shadow: 0 1 5px rgba(0, 0, 0, 0.2);
+    margin: 10px 10px 10px 10px;
+    width:300px;
+}
+
+@sprite  .rightPanel{
+	border-top: 1px solid #7D7E80;
+	gwt-image: 'intro';
+	background-repeat: no-repeat;
+	position: absolute;
+	top:-3px;
+	left:835px;
+	background-color: #ffffff;
+	border: 1px dotted #7D7E80;
+	width: 490px;
+}
+
+.simplePanel{
+	border-bottom: 1px dotted #7D7E80;
+	padding-top: 25px;
+	padding-left: 20px;
+	padding-bottom: 25px;
+	padding-right: 25px;
+}
+/*footer*/
+.footerPanel {
+	position: absolute;
+	bottom:20px;
+	padding-top: 25px;
+	padding-left: 50px;
+	padding-bottom: 25px;
+	background-color: #ffffff;
+	border:dotted 1px #c3c3c3;
+	text-decoration: none;
+	color: black;
+	cursor: hand;
+}
+
+.pushButton{
+	border: 0px solid #ffffff;
+	padding-top: 25px;
+	padding-left: 25px;
+	padding-bottom: 25px;
+	padding-right: 25px;
+}
