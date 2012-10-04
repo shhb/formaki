@@ -22,7 +22,7 @@
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 		<g:HorizontalPanel >
-			<g:VerticalPanel width="40px" height="641px">
+			<g:VerticalPanel width="40px" >
 				<g:HorizontalPanel height="65px" width="40px"
 					styleName='{style.alignedMenuBack}' />
 				<g:HorizontalPanel height="170px" width="40px"
@@ -32,47 +32,49 @@
 				<g:HorizontalPanel height="236px" width="40px"
 					styleName='{style.alignedMenuBack}' />
 			</g:VerticalPanel>
-			<g:VerticalPanel  styleName="{style.workspace}">
-				<g:TabLayoutPanel ui:field="rightTabPanel" width="1400px" height="100%" barUnit="EM" barHeight="2" >
+			<g:VerticalPanel >
+			
+				<g:TabLayoutPanel width="1400px" height="640px"   barUnit="EM" barHeight="2" >
 					<g:tab >
-						<g:header>Start</g:header>
-						<g:FlowPanel />
+						<g:header>Start</g:header>tes
+						<g:HTMLPanel >
+							<div >
+								FirstGroup
+							</div>
+							<div >
+								<g:CheckBox></g:CheckBox>
+								<div >The first text of first box</div>
+							</div>
+						</g:HTMLPanel>
 					</g:tab>
 					<g:tab>
 						<g:header>Basic</g:header>
-						<g:FlowPanel ui:field="dataContent" />
+						<g:HTMLPanel width="">
+							<div>FirstGroup</div>
+						</g:HTMLPanel>
 					</g:tab>
 					<g:tab>
 						<g:header>
-							UiBinder Tab 1
+							3rd
 						</g:header>
 						<g:HTML>
-							Hello tab 1
-							<br />
-							Good bye!
+							
 						</g:HTML>
 					</g:tab>
 					<g:tab>
-						<g:header>
-							UiBinder Tab 2
-						</g:header>
+						<g:header>indeTab 2</g:header>
 						<g:HTML>
-							<h2>Hello tab 2</h2>
+							FirstGroup
 						</g:HTML>
 					</g:tab>
 					<g:tab>
-						<g:header>
-							UiBinder Tab 3
-						</g:header>
+						<g:header>Binder</g:header>
 						<g:HTML>
-							<strong>
-								<i>
-									<u>Hello tab number 3</u>
-								</i>
-							</strong>
+							FirstGroup
 						</g:HTML>
 					</g:tab>
 				</g:TabLayoutPanel>
+		
 			</g:VerticalPanel>
 		</g:HorizontalPanel>
 		<g:HorizontalPanel>
