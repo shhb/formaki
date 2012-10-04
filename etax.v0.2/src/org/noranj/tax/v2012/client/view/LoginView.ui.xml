@@ -8,37 +8,87 @@
       change 
    -->
 <ui:image field='logo' src='../resources/en/images/flogo.png' /> <!-- FIXME "en" path must be based on user's locale.  -->
-<ui:image field='google' src='../resources/en/images/googlelogo.gif' />
-<ui:image field='facebook' src='../resources/en/images/facebooklogo.jpg' />
-<ui:image field='twitter' src='../resources/en/images/twitterlogo.jpg' />
-<ui:image field='yahoo' src='../resources/en/images/yahoologo.jpg' />
-<g:HTMLPanel>
-	<g:VerticalPanel width="559px" height="191px">
-		<g:Cell horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="Welcome To Taxlet!!!"/>
+<ui:image field='google' src='../resources/en/images/google2.png' />
+<ui:image field='facebook' src='../resources/en/images/facebook.png' />
+<ui:image field='twitter' src='../resources/en/images/twitter.png' />
+<ui:image field='yahoo' src='../resources/en/images/yahoo.png' />
+<ui:image field='sheet' src='../resources/en/images/sheet.png' />
+<ui:image field='intro' src='../resources/en/images/intro.png' />
+<ui:image field='logoo' src='../resources/en/images/logoo.png' />
+<ui:style src="../resources/en/css/LoginViewStyleEn.css" />
+
+<g:HTMLPanel styleName='{style.base}'>
+	<g:VerticalPanel width="100%" height="115px" styleName='{style.topPanel}'>
+		<g:VerticalPanel width="97%" height="108px" styleName='{style.headerPanel}'>
+		<g:Cell horizontalAlignment="ALIGN_LEFT" >
+			<g:Label text="Welcome To TAXLET!!!" styleName='{style.titleBar}'/>
 		</g:Cell>
-		<g:Label text="Use one of the account providers in below to login to Taxlet."/>
 	</g:VerticalPanel>
-	<g:VerticalPanel width="559px" height="191px">
-		<g:HorizontalPanel height="122px" width="559px">
-			<g:PushButton ui:field='googleButton' width='80px'   height='103px'>
-		<g:upFace image='{google}' />
-	</g:PushButton>
-		<g:PushButton ui:field='twitterButton' width='80px'   height='103px'>
-		<g:upFace image='{twitter}' />
-	</g:PushButton>
-			<g:PushButton ui:field='facebookButton' width='80px'   height='103px'>
-		<g:upFace image='{facebook}' />
-	</g:PushButton>
-			<g:PushButton ui:field='yahooButton' width='80px'   height='103px'>
-		<g:upFace image='{yahoo}' />
-	</g:PushButton>
+	</g:VerticalPanel>
+	
+	<g:VerticalPanel height='100%' width='100%' styleName='{style.pagePanel}'>
+		<g:HorizontalPanel  width='100%'>
+		<g:VerticalPanel  />
+		<g:VerticalPanel  />
+	</g:HorizontalPanel>
+	</g:VerticalPanel>
+	<g:VerticalPanel styleName='{style.absolutePanel}' width="800px" >
+		<g:VerticalPanel  width="100%">
+			<g:Label text="Use one of the account providers in below to login to Taxlet." styleName='{style.childBar}'/>
+		</g:VerticalPanel>
+		<g:VerticalPanel styleName='{style.rightPanel}' height="100%">
+			<g:Label text="Let us to help you to make it easier." styleName='{style.comment}'/>
+		</g:VerticalPanel>
+		<g:HorizontalPanel styleName='{style.simplePanel}' width="100%">
+			<g:VerticalPanel>
+				<g:HorizontalPanel styleName='{style.leftPanel}'>
+				<g:PushButton ui:field='googleButton' styleName='{style.pushButton}'  >
+			<g:upFace image='{google}' />
+			</g:PushButton>
+				<g:Label text="Google" styleName='{style.simpleText}'/>
+			</g:HorizontalPanel>
+				<g:HorizontalPanel  styleName='{style.leftPanel}'>
+			<g:PushButton ui:field='yahooButton' styleName='{style.pushButton}'>
+			<g:upFace image='{yahoo}' />
+			</g:PushButton>
+			<g:Label text="Yahoo" styleName='{style.simpleText}'/>
+			</g:HorizontalPanel>
+			</g:VerticalPanel>
+		<g:VerticalPanel>
+			<g:HorizontalPanel styleName='{style.leftPanel}' >
+				<g:PushButton ui:field='facebookButton' styleName='{style.pushButton}'>
+			<g:upFace image='{facebook}' />
+			</g:PushButton>
+				<g:Label text="Facebook" styleName='{style.simpleText}'/>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel styleName='{style.leftPanel}'>
+			<g:PushButton ui:field='twitterButton' styleName='{style.pushButton}'>
+			<g:upFace image='{twitter}' />
+			</g:PushButton>
+			<g:Label text="Twitter" styleName='{style.simpleText}'/>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
 		</g:HorizontalPanel>
+	<g:VerticalPanel   >
+		<g:Label text="Instead of implementing a login mechanisim, " styleName='{style.simpleText}' />
+		<g:Label text="we are using login services from the most service providers." styleName='{style.simpleText}'/>
 	</g:VerticalPanel>
-	<g:VerticalPanel width="559px" height="191px">
-		<g:Label text="Why using other login services?"/>
-		<g:Label text="Short answer, to have more secure and convenient login system for users." /> 
-		<g:Label text="Instead of implementing a login mechanisim, we are using login services from the most popular and secure service providers. You don&apos;t need to remember another password and just use your current account to login."/>
+	</g:VerticalPanel>
+	
+	<g:VerticalPanel width="100%" styleName='{style.footerPanel}'>
+		<g:HTMLPanel >
+					<div>
+					<g:Anchor >Contact us</g:Anchor>
+					|
+					<g:Anchor >Privacy</g:Anchor>
+					|
+					<g:Anchor >About</g:Anchor> 
+					|
+					<g:Anchor  ui:field="openHelp">Help</g:Anchor>
+					|
+					© Copyright Our Company, 2020. All Rights Reserved.
+				</div>
+		</g:HTMLPanel>
 	</g:VerticalPanel>
 </g:HTMLPanel>
 </ui:UiBinder> 
