@@ -20,7 +20,7 @@ import org.noranj.core.shared.type.ActivityType;
  */
 public class UserDTO implements Serializable {
 
-  private static final long serialVersionUID = 85316669519477098L;
+  protected static final long serialVersionUID = 85316669519477098L;
 
   private String id;
 
@@ -72,6 +72,18 @@ public class UserDTO implements Serializable {
       null);    
   }
 
+  /**
+   * 
+   * @param id
+   * @param firstName
+   * @param lastName
+   * @param emailAddress
+   * @param accountId
+   * @param activityType
+   * @param lastLoginOn
+   * @param lastActive
+   * @param profile
+   */
   public UserDTO(String id, String firstName, String lastName,
                       String emailAddress, String accountId, ActivityType activityType,
                       long lastLoginOn,
@@ -92,11 +104,28 @@ public class UserDTO implements Serializable {
   }
 
   /**
+   * 
+   * @param user
+   */
+  public UserDTO(UserDTO user) {
+    super();
+    setId (user.getId());
+    this.firstName = user.getFirstName();
+    this.lastName = user.getLastName();
+    this.emailAddress = user.getEmailAddress();
+    this.accountId = user.getAccountId();
+    this.activityType = user.getActivityType();
+    this.lastLoginOn = user.getLastLoginOn();
+    this.lastActive = user.getLastActive();
+    this.profile = user.getProfile();
+  }
+  
+  /**
    * mapString format is like a properties file.
    * 
    * @param mapString
-   * @since 0.3.2012081
-   * @version 0.3.2012081
+   * @since 0.2.2012081
+   * @version 0.2.2012081
    */
   public UserDTO(Map<String, String> map) {
   	super();
@@ -137,7 +166,8 @@ public class UserDTO implements Serializable {
   }
 
   public void setId(String id) {
-    this.id = id;
+    //BA:12-10-11
+    this.id = (id!=null && !id.equals("")?id:null); // null and empty string means the user is a new entity. [TAX-22]
   }
 
   public String getFirstName() {

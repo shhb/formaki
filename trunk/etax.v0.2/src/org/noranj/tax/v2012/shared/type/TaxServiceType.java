@@ -21,7 +21,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 public enum TaxServiceType implements Serializable, IsSerializable {
 
-	Student,
+	Unknown,
+  Student,
 	Basic,
 	Investment,
 	Intermediate,
