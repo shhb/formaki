@@ -22,7 +22,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * @since 0.2.2012
  * @change
  */
-public enum SimplifiedCategoryType implements Serializable, IsSerializable {
+public enum QuestionCategoryType implements Serializable, IsSerializable {
 
 	Unknown(0), Introduction(10), // identification or registration or sign up
 									// data
@@ -34,13 +34,13 @@ public enum SimplifiedCategoryType implements Serializable, IsSerializable {
 	Other9(90), // other will be used later
 	Other10(100);// other will be used later
 
-	SimplifiedCategoryType() {
+	QuestionCategoryType() {
 		code = 0;
 	}
 
 	private int code;
 
-	SimplifiedCategoryType(int code) {
+	QuestionCategoryType(int code) {
 		this.code = code;
 	}
 
@@ -52,31 +52,31 @@ public enum SimplifiedCategoryType implements Serializable, IsSerializable {
 	 * @param codeStr
 	 * @return
 	 */
-	public static SimplifiedCategoryType fromCodeString(String codeStr) {
+	public static QuestionCategoryType fromCodeString(String codeStr) {
 
 		switch (Integer.valueOf(codeStr)) {
 		case 10:
-			return (SimplifiedCategoryType.Introduction);
+			return (QuestionCategoryType.Introduction);
 		case 20:
-			return (SimplifiedCategoryType.Income);
+			return (QuestionCategoryType.Income);
 		case 30:
-			return (SimplifiedCategoryType.Deduction);
+			return (QuestionCategoryType.Deduction);
 		case 40:
-			return (SimplifiedCategoryType.Other4);
+			return (QuestionCategoryType.Other4);
 		case 50:
-			return (SimplifiedCategoryType.Other5);
+			return (QuestionCategoryType.Other5);
 		case 60:
-			return (SimplifiedCategoryType.Other6);
+			return (QuestionCategoryType.Other6);
 		case 70:
-			return (SimplifiedCategoryType.Other7);
+			return (QuestionCategoryType.Other7);
 		case 80:
-			return (SimplifiedCategoryType.Other8);
+			return (QuestionCategoryType.Other8);
 		case 90:
-			return (SimplifiedCategoryType.Other9);
+			return (QuestionCategoryType.Other9);
 		case 100:
-			return (SimplifiedCategoryType.Other10);
+			return (QuestionCategoryType.Other10);
 		default:
-			return (SimplifiedCategoryType.Unknown);
+			return (QuestionCategoryType.Unknown);
 		} // switch
 
 	} // toString

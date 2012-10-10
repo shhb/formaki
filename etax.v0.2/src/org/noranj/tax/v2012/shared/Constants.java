@@ -67,17 +67,29 @@ public class Constants {
 	/** the property/parameter name used for FROM Address of the email. */
 	public final static String C_MAIL_FROM_ADDRESS_PROP_NAME = "from";
 
+	//BA-12-OCT-06 used as default when adding new Applicant.
+	////////////////////////////////////////////////////////
+	/// VIEW/PAGES
+  public final static String C_SIMPLIFIED_QUESTION_PAGE = "simplifiedQuestion";
+	
 	
   ///////////////////////////////////////////////////////////
   /// Document
   ///
-  /** the property/parameter name used for document type. */
+  /** the property/parameter name used for document type.    
+   * @deprecated copied from Formak. remove this tag if it is used in TAX. */
   public final static String C_DOC_TYPE_PROP_NAME = "docType";
   
-  /** the property/parameter name used for subject of the email. */
+  /** the property/parameter name used for subject of the email.    
+   * @deprecated copied from Formak. remove this tag if it is used in TAX. */
   public final static String C_DOC_ID_PROP_NAME = "docID";
 
-  /** the property/parameter name used for TO Address of the email. */
+  /** the property/parameter name used for TO Address of the email. 
+   * @deprecated copied from Formak. remove this tag if it is used in TAX.
+   */
   public final static String C_DOC_NS_PROP_NAME = "docNS";
   
+  
+  
+  ////////////////////////////////////////////////////////////////
 }

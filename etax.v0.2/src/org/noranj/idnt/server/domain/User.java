@@ -39,7 +39,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class User implements Serializable, ChildUnownedEntity {
 
   @NotPersistent
-  private static final long serialVersionUID = 2739249843928429147L;
+  protected static final long serialVersionUID = 2739249843928429147L;
 
   public static final String C_FETCH_GROUP_PROFILE = "profile"; 
   public static final String C_FETCH_GROUP_PARENT_CLIENT= "parentClient"; 
