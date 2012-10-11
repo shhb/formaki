@@ -1,7 +1,5 @@
 package org.noranj.tax.v2012.server.service;
 
-
-
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -35,10 +33,14 @@ public class QuestionServiceImpl extends RemoteServiceServlet implements Questio
    * @deprecated HAS NOT BEEN IMPLEMENTED YET.
    */
   @Override
-  public Map<String, QuestionSettingsDTO> getListOfQuestions(ApplicantDTO applicant, QuestionCategoryType questionCategoryType) {
+  public Map<Long, QuestionSettingsDTO> getListOfQuestionSettings(ApplicantDTO applicant, QuestionCategoryType questionCategoryType) {
     // TODO HERE
+    // it should get list of questions and build the map.
+    // the question IDs carry the question category type.
+    // so as building the map the questions are being filtered.
+    // we also need to use CacheMem to look up the data before going to data store.
+    // the question is what needs to be added to cacheMem and where the cache is being used.
     return null;
   }
-
 
 }
