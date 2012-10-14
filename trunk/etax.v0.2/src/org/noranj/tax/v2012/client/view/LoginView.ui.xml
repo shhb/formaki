@@ -14,7 +14,7 @@
 <ui:image field='yahoo' src='../resources/en/images/yahoo.png' />
 <ui:image field='sheet' src='../resources/en/images/sheet.png' />
 <ui:image field='intro' src='../resources/en/images/intro.png' />
-<ui:image field='logoo' src='../resources/en/images/logoo.png' />
+<ui:image field='logo3' src='../resources/en/images/logo3.png' />
 <ui:style src="../resources/en/css/LoginViewStyleEn.css" />
 
 <g:HTMLPanel styleName='{style.base}'>
