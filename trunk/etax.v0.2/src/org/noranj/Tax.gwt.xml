@@ -1,6 +1,10 @@
 <module rename-to='tax'>
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.user.theme.clean.Clean"/>
+	<inherits name="com.google.gwt.i18n.I18N"/>
+	<extend-property name="locale" values="en"/>
+	<extend-property name="locale" values="de_DE"/>
+	<set-property-fallback name="locale" value="en"/>
 	<entry-point class="org.noranj.tax.v2012.client.Tax"/>
 	<source path='tax/v2012/client'/>
 	<source path='idnt/shared'/>
