@@ -1,14 +1,21 @@
 package org.noranj.tax.v2012.server.service;
 
+
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.noranj.core.server.DALHelper;
+import org.noranj.core.server.JDOPMFactory;
+import org.noranj.core.shared.exception.ServiceCallFailed;
 import org.noranj.tax.v2012.client.service.QuestionService;
+import org.noranj.tax.v2012.server.domain.Question;
+import org.noranj.tax.v2012.shared.Constants;
 import org.noranj.tax.v2012.shared.dto.ApplicantDTO;
 import org.noranj.tax.v2012.shared.dto.QuestionDTO;
 import org.noranj.tax.v2012.shared.dto.QuestionSettingsDTO;
 import org.noranj.tax.v2012.shared.type.QuestionCategoryType;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -43,4 +50,37 @@ public class QuestionServiceImpl extends RemoteServiceServlet implements Questio
     return null;
   }
 
+  /**
+   * It gets a question DTO and add it to the data store.
+   * If the question already exists, it will overwrite it.
+   * 
+   * NOTE: questions belong to SysAdmin namespace
+   * NOTE: This is not accessible to Client.
+   * 
+   * @param question
+   * @throws ServiceCallFailed if for any reason it can not add the question.
+   */
+  public long addQuestion(QuestionDTO question) throws ServiceCallFailed {
+    //TODO it may not be needed
+    String currentNameSpace = NamespaceManager.get();
+    NamespaceManager.set(Constants.C_SYSTEM_ADMIN_NAMESPACE);
+    
+    assert(NamespaceManager.get().equals(Constants.C_SYSTEM_ADMIN_NAMESPACE)); //keep this line
+    
+    try {
+    
+      DALHelper<Question> questionHelper = new DALHelper<Question>(JDOPMFactory.getTxOptional(), Question.class);
+      
+      Question newQuestion = new Question(question);
+      
+      questionHelper.storeEntity(newQuestion);
+      
+      return(newQuestion.getId());
+      
+    } finally {
+      NamespaceManager.set(currentNameSpace);
+    }
+    
+  }
+  
 }
