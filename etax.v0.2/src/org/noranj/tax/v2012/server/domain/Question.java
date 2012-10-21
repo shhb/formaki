@@ -1,11 +1,15 @@
 package org.noranj.tax.v2012.server.domain;
 
+
 import java.io.Serializable;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.Version;
+import javax.jdo.annotations.VersionStrategy;
+import javax.jdo.annotations.Extension;
 
 import org.noranj.tax.v2012.shared.dto.QuestionDTO;
 import org.noranj.tax.v2012.shared.type.QuestionCategoryType;
@@ -26,6 +30,9 @@ import org.noranj.tax.v2012.shared.type.QuestionCategoryType;
  * @change
  */
 @PersistenceCapable(detachable = "true")
+@Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION", //@Version is used to implement optimistic locking but we may use it for another purposes.
+         extensions={@Extension(vendorName="datanucleus", key="field-name", value="version")}
+        )
 public class Question implements Serializable {
 
 	@NotPersistent
@@ -43,6 +50,9 @@ public class Question implements Serializable {
 	/**
 	 * It is the resource key that stores the question text.
 	 * It is used to get the localized question text and display it on screen.
+   * @deprecated WE MAY NOT NEED THIS ONE. WE CAN USE Question ID instead.
+   * An idea is to use formated ID 10-200-02-01 instead of 102000201 which is harder to read.
+   * The data doesn't need to be stored in data store but at retrieval, it can be converted to formated String and stored in DTO.  
 	 */
 	@Persistent
 	private String questionRKey;
@@ -55,6 +65,9 @@ public class Question implements Serializable {
 	
   /**
    * It is the resource key that stores the localized description text for the question.
+   * @deprecated WE MAY NOT NEED THIS ONE. WE CAN USE Question ID instead.
+   * An idea is to use formated ID 10-200-02-01 instead of 102000201 which is harder to read.
+   * The data doesn't need to be stored in data store but at retrieval, it can be converted to formated String and stored in DTO.  
    */
   @Persistent
   private String descriptionRKey;
@@ -73,14 +86,34 @@ public class Question implements Serializable {
 	// //// //////
 	// //////////////////////////////////////////////
 
-	public Question(long id, String questionRKey,
-			QuestionCategoryType category) {
+	public Question(){
+	}
+	
+	public Question(long id, 
+	                String questionRKey,
+			            QuestionCategoryType category,
+			            String descriptionRKey) {
 		super();
 		setId(id);
 		this.questionRKey = questionRKey;
 		this.category = category;
+    this.descriptionRKey = descriptionRKey;
+    //FIXME do we need to set the version? or how about Version? is it set by data store?
+    //this.version = question.getVersion();
 	}
 
+  public Question( QuestionDTO question) {
+    super();
+    setId(question.getId());
+    this.questionRKey = question.getQuestionRKey();
+    this.category = question.getCategory();
+    this.descriptionRKey = question.getDescriptionRKey();
+    
+    //FIXME do we need to set the version? or how about Version? is it set by data store?
+    //this.version = question.getVersion();
+  }
+
+	
 	public Long getId() {
 		return (id);
 	}

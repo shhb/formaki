@@ -26,6 +26,9 @@ public class QuestionDTO {
   /**
    * It is the resource key that stores the question text.
    * It is used to get the localized question text and display it on screen.
+   * @deprecated WE MAY NOT NEED THIS ONE. WE CAN USE Question ID instead.
+   * An idea is to use formated ID 10-200-02-01 instead of 102000201 which is harder to read.
+   * The data doesn't need to be stored in data store but at retrieval, it can be converted to formated String and stored in DTO.  
    */
   private String questionRKey;
 
@@ -36,6 +39,9 @@ public class QuestionDTO {
   
   /**
    * It is the resource key that stores the localized description text for the question.
+   * @deprecated WE MAY NOT NEED THIS ONE. WE CAN USE Question ID instead.
+   * An idea is to use formated ID 10-200-02-01 instead of 102000201 which is harder to read.
+   * The data doesn't need to be stored in data store but at retrieval, it can be converted to formated String and stored in DTO.  
    */
   private String descriptionRKey;
   
@@ -50,6 +56,15 @@ public class QuestionDTO {
     
   }
 
+  public QuestionDTO(String formattedId, QuestionCategoryType category) {
+    super();
+    setIdAsFormattedString(formattedId);
+    this.questionRKey = formattedId;
+    this.category = category;
+    this.descriptionRKey = formattedId;
+    this.version = version;
+  }
+
   public QuestionDTO(Long id, String questionRKey, QuestionCategoryType category, String descriptionRKey, long version) {
     super();
     this.id = id;
@@ -58,7 +73,7 @@ public class QuestionDTO {
     this.descriptionRKey = descriptionRKey;
     this.version = version;
   }
-
+  
   public Long getId() {
     return id;
   }
@@ -66,7 +81,20 @@ public class QuestionDTO {
   public void setId(Long id) {
     this.id = id;
   }
-
+  public void setIdAsFormattedString(String formattedId) {
+    // 10-001-00-00
+    String idStr = formattedId.substring(0, 2)+formattedId.substring(3, 6)+formattedId.substring(7, 9) + formattedId.substring(10);
+    System.out.printf("String [%s] stripped [%s]", formattedId, idStr);
+    this.id = new Long(idStr);
+  }
+  public String getIdAsFormattedString() {
+    // 10-001-00-00
+    String IdStr = String.valueOf(getId());
+    String formattedId = String.format("%s-%s-%s-%s", IdStr.substring(0, 2),IdStr.substring(3, 6),IdStr.substring(7, 9),IdStr.substring(10));
+    System.out.printf("Stripped [%s] Formatted [%s]", IdStr, formattedId);
+    return(formattedId);
+  }
+  
   public String getQuestionRKey() {
     return questionRKey;
   }
