@@ -3,17 +3,18 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:app="urn:import:org.noranj.tax.v2012.client.view">
 	<ui:style src="resources/en/css/GlobalStylesEn.css" />
+	<ui:with field='i18n' type='org.noranj.tax.v2012.client.resources.Text'/>
 	<g:DockLayoutPanel height="100%">
 		<g:south size="35.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
 				<div>
-					<g:Anchor >Contact us</g:Anchor>
+					<g:Anchor text="{i18n.contactus}"></g:Anchor>
 					|
-					<g:Anchor >Privacy</g:Anchor>
+					<g:Anchor text="{i18n.privacy}"></g:Anchor>
 					|
-					<g:Anchor >About</g:Anchor> 
+					<g:Anchor text="{i18n.about}"></g:Anchor> 
 					|
-					<g:Anchor  ui:field="openHelp">Help</g:Anchor>
+					<g:Anchor  ui:field="openHelp" text="{i18n.help}"></g:Anchor>
 					|
 					© Copyright Our Company, 2020. All Rights Reserved.
 				</div>
