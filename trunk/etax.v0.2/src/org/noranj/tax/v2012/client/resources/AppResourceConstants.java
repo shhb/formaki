@@ -6,7 +6,7 @@ import com.google.gwt.i18n.client.Constants.DefaultStringValue;
 import com.google.gwt.i18n.server.Message;
 
 public interface AppResourceConstants extends Constants {
-	 public static final AppResource LANG = GWT.create(AppResource.class);
+	 public static final AppResourceConstants LANG = GWT.create(AppResourceConstants.class);
 	 @DefaultStringValue("contactus")
 	 String contactus();
 	 
