@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:app="urn:import:org.noranj.tax.v2012.client.view">
 	<ui:style src="resources/en/css/GlobalStylesEn.css" />
-	<ui:with field='i18n' type='org.noranj.tax.v2012.client.resources.AppResource'/>
+	<ui:with field='i18n' type='org.noranj.tax.v2012.client.resources.AppResourceConstants'/>
 	<g:DockLayoutPanel height="100%">
 		<g:south size="35.0">
 			<g:HTMLPanel  styleName='{style.footerPanel}'>
