@@ -13,6 +13,12 @@
 @sprite .alignedMenuOff{
 	gwt-image: 'amenuoff';
 }
+@sprite .alignedMenuOff2{
+	gwt-image: 'amenuoff2';
+}
+@sprite .alignedMenuOff3{
+	gwt-image: 'amenuoff3';
+}
 
 @sprite .alignedMenuBack{
 	gwt-image: 'amenuback';

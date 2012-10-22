@@ -4,12 +4,14 @@
 	<ui:image field='amenu' src='../resources/en/images/alignedmenu.png' />
 	<ui:image field='amenuback' src='../resources/en/images/alignedmenuback.png' />
 	<ui:image field='amenuoff' src='../resources/en/images/alignedmenuoff.png' />
+	<ui:image field='amenuoff2' src='../resources/en/images/alignedmenuoff2.png' />
+	<ui:image field='amenuoff3' src='../resources/en/images/alignedmenuoff3.png' />
 	<ui:image field='leftcornerdown' src='../resources/en/images/leftcornerdown.png' />
 	<ui:image field='leftcornertop' src='../resources/en/images/leftcornertop.png' />
 	<ui:image field='lineTop' src='../resources/en/images/linetop.png' />
 	<ui:image field='lineBottom' src='../resources/en/images/linebottom.png' />
 	<ui:style src="../resources/en/css/MainPanelStyleEn.css" />
-		
+	<ui:with field='i18n' type='org.noranj.tax.v2012.client.resources.AppResourceConstants'/>
 	<g:HTMLPanel styleName="{style.base}">
 		<g:HorizontalPanel>
 			<g:VerticalPanel>
@@ -23,14 +25,12 @@
 		</g:HorizontalPanel>
 		<g:HorizontalPanel >
 			<g:VerticalPanel width="40px" >
-				<g:HorizontalPanel height="65px" width="40px"
-					styleName='{style.alignedMenuBack}' />
-				<g:HorizontalPanel height="170px" width="40px"
-					styleName='{style.alignedMenu}' />
-				<g:HorizontalPanel height="170px" width="40px"
-					styleName='{style.alignedMenuOff}' />
-				<g:HorizontalPanel height="236px" width="40px"
-					styleName='{style.alignedMenuBack}' />
+				<g:HorizontalPanel height="28px" width="40px"  styleName='{style.alignedMenuBack}' />
+				<g:HorizontalPanel height="134px" width="40px" styleName='{style.alignedMenu}' />
+				<g:HorizontalPanel height="134px" width="40px" styleName='{style.alignedMenuOff}' />
+				<g:HorizontalPanel height="134px" width="40px" styleName='{style.alignedMenuOff2}' />
+				<g:HorizontalPanel height="134px" width="40px" styleName='{style.alignedMenuOff3}' />
+				<g:HorizontalPanel height="80px" width="40px"  styleName='{style.alignedMenuBack}' />
 			</g:VerticalPanel>
 			<g:VerticalPanel >
 			
