@@ -1,0 +1,1 @@
+The idea is to develop a system that easily can be extended by adding forms and workflows.
